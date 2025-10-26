@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Like a Flame to Me - Free Sample | Seethala Devi Chandu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --cream: #faf8f5;
+            --dark-cream: #f0ede6;
+            --burgundy: #800020;
+            --gold: #b8860b;
+            --text-dark: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* === SPLASH SCREEN === */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a0f0a 0%, #000000 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-out;
+            overflow: hidden;
+        }
+
+        #flame-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .main-fire-container {
+            position: absolute;
+            width: 180px;
+            height: 220px;
+            animation: fire-travel 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+            filter: drop-shadow(0 0 50px rgba(255, 140, 0, 1));
+            will-change: transform;
+            z-index: 10;
+        }
+
+        @keyframes fire-travel {
+            0% {
+                transform: translate(-30vw, 60vh) scale(0.5) rotate(-20deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            15% {
+                transform: translate(5vw, 35vh) scale(1.2) rotate(0deg);
+            }
+            30% {
+                transform: translate(25vw, 20vh) scale(1.5) rotate(15deg);
+            }
+            50% {
+                transform: translate(50vw, 25vh) scale(1.6) rotate(-10deg);
+            }
+            70% {
+                transform: translate(75vw, 15vh) scale(1.4) rotate(20deg);
+            }
+            85% {
+                transform: translate(100vw, 5vh) scale(1.1) rotate(-15deg);
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(130vw, -15vh) scale(0.5) rotate(10deg);
+                opacity: 0;
+            }
+        }
+
+        #main-content {
+            display: none;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--dark-cream) 100%);
+            color: var(--text-dark);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -webkit-touch-callout: none;
+        }
+
+        .book-header {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, rgba(128, 0, 32, 0.05) 0%, transparent 100%);
+            border-bottom: 3px solid var(--burgundy);
+            position: relative;
+            z-index: 2;
+        }
+
+        .book-cover-display {
+            max-width: 350px;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            pointer-events: none;
+        }
+
+        .book-cover-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .book-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: 1rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .dedication, .preface, .prologue, .chapter {
+            margin-bottom: 5rem;
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 1rem;
+        }
+
+        .content-text {
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-text:first-of-type::first-letter {
+            font-size: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--burgundy);
+            float: left;
+            line-height: 0.8;
+            margin: 0.1em 0.1em 0 0;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-left: 4px solid var(--burgundy);
+            background: rgba(128, 0, 32, 0.03);
+        }
+
+        .character-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--burgundy);
+            text-align: center;
+            margin: 3rem 0 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 6rem;
+            color: rgba(128, 0, 32, 0.03);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .purchase-cta {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(128, 0, 32, 0.05) 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+        }
+
+        .purchase-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .purchase-link {
+            padding: 1.5rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .purchase-link:hover {
+            background: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        /* === BACKGROUND FIRE FLAMES === */
+        .background-flames-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-flame {
+            position: absolute;
+            bottom: -100px;
+            opacity: 0;
+            animation: flame-float-up 14s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+
+        @keyframes flame-float-up {
+            0% {
+                transform: translate(0, 0) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(var(--drift-x), -60vh) scale(1) rotate(var(--rotate));
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(var(--drift-x-end), -110vh) scale(0.5) rotate(calc(var(--rotate) * 2));
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dedication, .preface, .prologue, .chapter {
+                padding: 2rem;
+            }
+
+            .content-container {
+                padding: 2rem 5%;
+            }
+        }
+
+        * {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+    
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <canvas id="flame-canvas"></canvas>
+        <div class="main-fire-container" id="mainFire"></div>
+    </div>
+
+    <div id="main-content">
+        <!-- Background flames -->
+        <div class="background-flames-container" id="flamesContainer"></div>
+        
+        <div class="watermark">SAMPLE COPY</div>
+
+        <header class="book-header">
+            <div class="book-cover-display">
+                <img src="you are like a flame to me pic 1.png" alt="You Are Like a Flame to Me Book Cover" draggable="false">
+            </div>
+            <h1 class="book-title">You Are Like a Flame to Me</h1>
+            <p class="book-subtitle">The Algorithm of Letting Go</p>
+            <p class="author-name">Seethala Devi Chandu</p>
+            <a href="index.html#books" class="back-btn">← Back to Books</a>
+        </header>
+
+        <div class="content-container">
+            
+            <section class="dedication">
+                <h2 class="section-title">Dedication</h2>
+                
+                <div class="inline-image-container">
+                    <img src="you are like a flame to me pic 2.png" alt="Book dedication illustration" draggable="false" style="max-width: 400px; margin: 2rem auto; display: block; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                </div>
+                
+                <p class="content-text">
+                    For the woman whose strength is a quiet anchor, not a performance for the world's applause. Who balances the chaos of her life and the joy of her family drawing validation from within, not from the judgment of others.
+                </p>
+                <p class="content-text">
+                    For her who adorns herself in her own truth, whether in kurtas or western wear, not as a weapon for jealousy or a plea for attention, but as a simple, beautiful expression of the self. For the woman who knows her worth is built in her character and her work, a beauty that no dress or makeup can contain.
+                </p>
+                <p class="content-text">
+                    And for the man who has stood at the edge of family pressure, career failure, and heartbreaking loss, and chose the hard path of living over the easy escape. For the one who rebuilt himself from the wreckage.
+                </p>
+                <p class="content-text">
+                    Finally, for the man called "old-fashioned" or a "red flag" in a world that moves too fast to see the difference. To the one who loves protectively, and who truly understands the sacred, invisible line between caring for a heart and caging it.
+                </p>
+            </section>
+
+            <section class="preface">
+                <h2 class="section-title">Preface</h2>
+                <p class="content-text">
+                    We are all architects of the lives we think we're supposed to want. We build facades of independence, wear confidence like a costume, and post our #NewBeginnings from the bathroom floor. We are all performers in the theater of being "okay."
+                </p>
+                <p class="content-text">
+                    This is a story about what happens when the performance ends and the set collapses. What happens when love, in its most desperate and protective form, builds a cage instead of a sanctuary? Where is the invisible, sacred line between a hand that holds you and a hand that holds you back?
+                </p>
+                <p class="content-text">
+                    This is not a story about how love conquers all. It is a story about the wreckage - and the painful, necessary architecture of rebuilding.
+                </p>
+                <p class="content-text">
+                    It is for every person who has ever loved so hard they dissolved. For the "old-fashioned" heart that loved so protectively it suffocated the very thing it was trying to save. And for the woman who had to burn down her entire life to find the person she was before she became someone else's "everything".
+                </p>
+                <p class="content-text">
+                    It asks: What if the real happy ending isn't finding a home in someone else, but finally, terrifyingly, building one within yourself?
+                </p>
+            </section>
+
+            <section class="prologue">
+                <h2 class="section-title">Prologue</h2>
+                <p class="content-text">
+                    There are two ways to drown. The first is violent. A sudden fall, the shock of cold, water in the lungs. It is a fight - a desperate thrashing against the inevitable, ending in a terrible, final silence.
+                </p>
+                <p class="content-text">
+                    The second is slow. It begins not as a flood, but as a comfort. A warmth that starts at your ankles. You tell yourself it's fine; you can still breathe. The water rises to your waist, and you accommodate it. You make yourself smaller to fit the space it leaves you.
+                </p>
+                <p class="content-text">
+                    By the time the water is at your neck, you have forgotten what it feels like to stand on solid ground. You have forgotten how to swim. You have accepted the rising tide as your reality, mistaking the anchor that holds you under for the safety of a hand holding you steady.
+                </p>
+                <p class="content-text">
+                    This is how love can kill you. Not with the violence of a storm, but with the slow, patient suffocation of a rising sea.
+                </p>
+                <p class="content-text">
+                    For Rohan, love was a fortress he built to keep Priya safe. For Priya, that fortress was a cage.
+                </p>
+                <p class="content-text">
+                    This is not the story of their drowning. This is the story of what comes after. It is the story of what you find at rock bottom, after the water has receded and left you gasping on the shore. It is the story of two people who must, for the first time, learn to breathe on their own.
+                </p>
+                
+                <div class="quote">
+                    They ask me what love is. And I tell them: For me, it's not about losing yourself to someone, it's about finding peace beside them. Love meant giving her a home not made of walls, but of warmth. A space where she could drop all her masks, and breathe without pretending.
+                </div>
+            </section>
+
+            <section class="chapter">
+                <h2 class="section-title">Chapter One: The Art of Falling Apart</h2>
+                
+                <div class="character-name">ROHAN</div>
+                
+                <p class="content-text">
+                    There's a specific kind of rock bottom that comes with a soundtrack. Mine sounds like this: my mother crying in the kitchen at 3 AM, my phone buzzing with increasingly aggressive messages from debt collectors, and somewhere in the distance, a dog barking at absolutely nothing because even the universe's pets are losing their shit.
+                </p>
+                <p class="content-text">
+                    I'm on the bathroom floor cold tiles, fluorescent lighting that makes my skin look like a corpse, the faint smell of the cleaning chemicals Ma uses every Sunday and I'm staring at my bank balance like it might spontaneously regenerate the two lakhs I just set on fire.
+                </p>
+                <p class="content-text">
+                    Balance: ₹347
+                </p>
+                <p class="content-text">
+                    Three hundred and forty-seven rupees. That's what's left of my father's retirement fund after I gave it to a "company" that turned out to be three guys in a rented office with fake business cards and very convincing smiles.
+                </p>
+                <p class="content-text">
+                    My phone lights up. Another message.
+                </p>
+                <p class="content-text">
+                    Priya: we need to talk
+                </p>
+                <p class="content-text">
+                    Four words. Lowercase. No punctuation. No emojis. The digital equivalent of a funeral notice.
+                </p>
+                <p class="content-text">
+                    I should've known we were over when she stopped using hearts. Then she stopped capitalizing my name. Then she stopped responding with anything except single-word answers that felt like tiny acts of violence.
+                </p>
+                <p class="content-text">
+                    But I kept trying. Kept texting. Kept showing up. Kept shrinking myself smaller and smaller, convinced that if I just disappeared enough, she'd finally have room to love me again.
+                </p>
+                <p class="content-text">
+                    Turns out, you can't love someone into staying. You can only suffocate them so slowly they don't realize they're dying until they're already gone.
+                </p>
+                <p class="content-text">
+                    The bathroom door opens without knocking because privacy is a Western concept and this is a middle-class Indian household where your breakdown is a family affair.
+                </p>
+                <p class="content-text">
+                    Ma. Of course it's Ma. She's wearing that ancient night-gown, the one with the faded flowers that she's had since I was in school and she's holding two cups of chai like she's about to negotiate a hostage situation.
+                </p>
+                <p class="content-text">
+                    Which, technically, she is.
+                </p>
+                <p class="content-text">
+                    "How much?" she asks, sitting down on the floor beside me like this is normal. Like her son having a complete mental collapse at 3 AM on bathroom tiles is just another Tuesday.
+                </p>
+
+                <div class="character-name">PRIYA</div>
+                
+                <p class="content-text">
+                    I'm going to throw up. Not metaphorically. Actually, literally vomit on the bathroom floor of Café Noir while my friends are outside doing shots and wondering where I've disappeared to for the last twenty minutes.
+                </p>
+                <p class="content-text">
+                    My phone is in my hand. Screen cracked I dropped it last week and can't afford to fix it because I spent my stipend on this outfit I'm wearing that makes me look confident but feel like a fraud.
+                </p>
+                <p class="content-text">
+                    Seventeen missed calls from Rohan. Three voicemails I can't bring myself to listen to. And one text I just sent that's going to end everything:
+                </p>
+                <p class="content-text">
+                    Me: we need to talk. tomorrow. call me.
+                </p>
+                <p class="content-text">
+                    My hands are shaking. The bathroom smells like expensive perfume and poor choices. Someone's written "HE'S NOT WORTH IT BABE" on the mirror in lipstick, and I want to laugh because how do they know? How does some drunk girl with a Maybelline tube know exactly what I'm going through?
+                </p>
+                <p class="content-text">
+                    There's a knock on the door.
+                </p>
+                <p class="content-text">
+                    "Priya? You've been in there for like twenty minutes. Are you okay?"
+                </p>
+                <p class="content-text">
+                    Shreya's voice. Concerned but also impatient because we have bottle service and apparently that expires or something.
+                </p>
+                <p class="content-text">
+                    "Yeah. Just... upset stomach. Go ahead. I'll be out soon."
+                </p>
+                <p class="content-text">
+                    "Okay but hurry. Aditya's here and he keeps asking about you."
+                </p>
+                <p class="content-text">
+                    Aditya. Tall, handsome, emotionally unavailable Aditya who treats relationships like Tinder swipe through until something better comes along. The exact kind of guy Rohan was terrified I'd meet.
+                </p>
+                <p class="content-text">
+                    And the worst part? I'm considering it. Actually, considering going out there and flirting with him just to prove... what? That I can? That I'm not Rohan's anymore? That the girl who used to wear kurtas and go to bed at 10 PM is dead and buried under this crop top and four shots of tequila?
+                </p>
+                <p class="content-text">
+                    When did I become this person?
+                </p>
+                
+                <div class="quote">
+                    I've never done well with closed spaces. The air feels too heavy, my chest tightens, and my heart beats like it's trying to escape. It's scary that kind of fear that makes you feel trapped, helpless. But the closed space isn't this bathroom. It's me.
+                </div>
+            </section>
+
+        </div>
+
+        <section class="purchase-cta">
+            <h2 class="cta-title">Continue Reading</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--text-dark);">
+                This is just a glimpse. Experience the complete journey of Rohan and Priya.
+            </p>
+            <div class="purchase-links">
+                <a href="https://www.amazon.com/dp/B0FXG6PZ6Z" target="_blank" rel="noopener" class="purchase-link">
+                    📚 Buy Paperback on Amazon
+                </a>
+                <a href="https://www.amazon.in/dp/B0FXBR5C9B" target="_blank" rel="noopener" class="purchase-link">
+                    📱 Buy Kindle Edition
+                </a>
+                <a href="https://play.google.com/store/audiobooks/details?id=AQAAAEBqlj3WRM" target="_blank" rel="noopener" class="purchase-link">
+                    🎧 Listen on Google Play
+                </a>
+            </div>
+            <br><br>
+            <a href="index.html#books" class="back-btn">← Back to All Books</a>
+        </section>
+
+    </div>
+
+    <script>
+        // === LARGE FIRE FLAME SPLASH SYSTEM ===
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+            const canvas = document.getElementById('flame-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            ctx.globalCompositeOperation = "lighter";
+            
+            const flames = [];
+            const maxFlames = 200;
+            
+            class LargeFlame {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.baseSize = 15 + Math.random() * 25; // Large flames 15-40px
+                    this.size = this.baseSize;
+                    
+                    // Explosive spread
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 3 + Math.random() * 8;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed - 2; // Slight upward bias
+                    
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.15;
+                    
+                    this.life = 80; // Longer lifetime
+                    this.age = 0;
+                    
+                    this.flickerPhase = Math.random() * Math.PI * 2;
+                    this.flickerSpeed = 0.15 + Math.random() * 0.1;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // Physics
+                    this.vy -= 0.12; // Gravity
+                    this.vx *= 0.97; // Air resistance
+                    this.vy *= 0.98;
+                    
+                    this.rotation += this.rotationSpeed;
+                    this.age++;
+                    this.flickerPhase += this.flickerSpeed;
+                    
+                    // Size pulsing
+                    const pulse = 1 + Math.sin(this.flickerPhase) * 0.2;
+                    this.size = this.baseSize * pulse;
+                }
+                
+                draw() {
+                    const lifeRatio = 1 - (this.age / this.life);
+                    if (lifeRatio <= 0) return;
+                    
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    
+                    // Fire color gradient based on age
+                    let r, g, b, coreAlpha;
+                    
+                    if (lifeRatio > 0.75) {
+                        // White-hot core
+                        r = 255;
+                        g = 255;
+                        b = 240;
+                        coreAlpha = lifeRatio * 0.9;
+                    } else if (lifeRatio > 0.5) {
+                        // Bright yellow-orange
+                        r = 255;
+                        g = 200 + (lifeRatio - 0.5) * 220;
+                        b = 80 + (lifeRatio - 0.5) * 320;
+                        coreAlpha = lifeRatio * 0.8;
+                    } else if (lifeRatio > 0.25) {
+                        // Orange-red
+                        r = 255;
+                        g = 100 + (lifeRatio - 0.25) * 400;
+                        b = 30;
+                        coreAlpha = lifeRatio * 0.7;
+                    } else {
+                        // Deep red fading
+                        r = 200 + (lifeRatio * 220);
+                        g = 30 + (lifeRatio * 120);
+                        b = 10;
+                        coreAlpha = lifeRatio * 0.6;
+                    }
+                    
+                    // Flicker effect
+                    const flicker = 0.8 + Math.sin(this.flickerPhase) * 0.2;
+                    coreAlpha *= flicker;
+                    
+                    // Draw flame shape (teardrop)
+                    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${coreAlpha})`);
+                    gradient.addColorStop(0.3, `rgba(${r}, ${g * 0.9}, ${b * 0.7}, ${coreAlpha * 0.8})`);
+                    gradient.addColorStop(0.6, `rgba(${r * 0.9}, ${g * 0.6}, ${b * 0.4}, ${coreAlpha * 0.4})`);
+                    gradient.addColorStop(1, `rgba(${r * 0.8}, ${g * 0.3}, ${b * 0.2}, 0)`);
+                    
+                    ctx.fillStyle = gradient;
+                    
+                    // Flame shape
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size * 0.8, this.size * 1.3, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Inner bright core
+                    const coreGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 0.4);
+                    coreGradient.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha * 0.6})`);
+                    coreGradient.addColorStop(0.5, `rgba(255, 240, 180, ${coreAlpha * 0.3})`);
+                    coreGradient.addColorStop(1, `rgba(255, 150, 50, 0)`);
+                    
+                    ctx.fillStyle = coreGradient;
+                    ctx.beginPath();
+                    ctx.arc(0, -this.size * 0.2, this.size * 0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+                
+                isDead() {
+                    return this.age >= this.life;
+                }
+            }
+            
+            function getFirePosition() {
+                const container = document.getElementById('mainFire');
+                if (!container) return { x: canvas.width / 2, y: canvas.height / 2 };
+                const rect = container.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+            }
+            
+            function createFlames() {
+                const pos = getFirePosition();
+                
+                // Create burst of large flames
+                for (let i = 0; i < 12; i++) {
+                    if (flames.length < maxFlames) {
+                        const offsetAngle = Math.random() * Math.PI * 2;
+                        const offsetDist = Math.random() * 40;
+                        const x = pos.x + Math.cos(offsetAngle) * offsetDist;
+                        const y = pos.y + Math.sin(offsetAngle) * offsetDist;
+                        flames.push(new LargeFlame(x, y));
+                    }
+                }
+            }
+            
+            let flameInterval;
+            function animateFlames() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = flames.length - 1; i >= 0; i--) {
+                    flames[i].update();
+                    flames[i].draw();
+                    
+                    if (flames[i].isDead()) {
+                        flames.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animateFlames);
+            }
+            
+            // Create flames continuously
+            flameInterval = setInterval(createFlames, 40);
+            animateFlames();
+            
+            setTimeout(() => {
+                clearInterval(flameInterval);
+            }, 5500);
+            
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.style.display = 'block';
+                    createBackgroundFlames();
+                }, 1500);
+            }, 6000);
+        });
+        
+        // Background floating flames
+        function createBackgroundFlames() {
+            const container = document.getElementById('flamesContainer');
+            const flameCount = 20;
+            
+            for (let i = 0; i < flameCount; i++) {
+                const flameDiv = document.createElement('div');
+                flameDiv.className = 'floating-flame';
+                
+                // Create canvas for each flame
+                const canvas = document.createElement('canvas');
+                canvas.width = 60;
+                canvas.height = 80;
+                canvas.style.width = '60px';
+                canvas.style.height = '80px';
+                const ctx = canvas.getContext('2d');
+                
+                // Draw flame shape
+                ctx.globalCompositeOperation = "lighter";
+                
+                function drawFlameShape() {
+                    ctx.clearRect(0, 0, 60, 80);
+                    
+                    const time = Date.now() * 0.003;
+                    const flicker = 0.8 + Math.sin(time + i) * 0.2;
+                    
+                    // Gradient
+                    const gradient = ctx.createRadialGradient(30, 50, 0, 30, 50, 30);
+                    gradient.addColorStop(0, `rgba(255, 255, 200, ${0.4 * flicker})`);
+                    gradient.addColorStop(0.3, `rgba(255, 180, 80, ${0.35 * flicker})`);
+                    gradient.addColorStop(0.7, `rgba(255, 100, 30, ${0.2 * flicker})`);
+                    gradient.addColorStop(1, 'rgba(200, 50, 20, 0)');
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.ellipse(30, 50, 20, 35, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    requestAnimationFrame(drawFlameShape);
+                }
+                drawFlameShape();
+                
+                flameDiv.appendChild(canvas);
+                
+                // Random positioning
+                flameDiv.style.left = `${Math.random() * 100}%`;
+                flameDiv.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 100}px`);
+                flameDiv.style.setProperty('--drift-x-end', `${(Math.random() - 0.5) * 150}px`);
+                flameDiv.style.setProperty('--rotate', `${(Math.random() - 0.5) * 60}deg`);
+                
+                // Random timing
+                const duration = 12 + Math.random() * 6;
+                const delay = Math.random() * 10;
+                flameDiv.style.animationDuration = `${duration}s`;
+                flameDiv.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(flameDiv);
+            }
+        }
+
+        // Anti-copy protection
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gravity of Us: Broken Lanes - Free Sample | Seethala Devi Chandu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --cream: #faf8f5;
+            --dark-cream: #f0ede6;
+            --burgundy: #800020;
+            --gold: #b8860b;
+            --text-dark: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--dark-cream) 100%);
+            color: var(--text-dark);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -webkit-touch-callout: none;
+        }
+
+        .book-header {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, rgba(128, 0, 32, 0.05) 0%, transparent 100%);
+            border-bottom: 3px solid var(--burgundy);
+        }
+
+        .book-cover-display {
+            max-width: 350px;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            pointer-events: none;
+        }
+
+        .book-cover-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .book-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: 1rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .prologue, .part-header, .chapter {
+            margin-bottom: 5rem;
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 1rem;
+        }
+
+        .content-text {
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-text:first-of-type::first-letter {
+            font-size: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--burgundy);
+            float: left;
+            line-height: 0.8;
+            margin: 0.1em 0.1em 0 0;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 6rem;
+            color: rgba(128, 0, 32, 0.03);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .purchase-cta {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(128, 0, 32, 0.05) 100%);
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+        }
+
+        .purchase-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .purchase-link {
+            padding: 1.5rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .purchase-link:hover {
+            background: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .prologue, .part-header, .chapter {
+                padding: 2rem;
+            }
+
+            .content-container {
+                padding: 2rem 5%;
+            }
+        }
+
+        * {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+    
+    <div class="watermark">SAMPLE COPY</div>
+
+    <header class="book-header">
+        <div class="book-cover-display">
+            <img src="the gravity of us.jpeg" alt="The Gravity of Us: Broken Lanes Book Cover" draggable="false">
+        </div>
+        <h1 class="book-title">The Gravity of Us: Broken Lanes</h1>
+        <p class="book-subtitle">A Story for Every Heart That's Chased a Firework and Almost Missed the Sunrise</p>
+        <p class="author-name">Seethala Devi Chandu</p>
+        <a href="index.html#books" class="back-btn">← Back to Books</a>
+    </header>
+
+    <div class="content-container">
+        
+        <section class="prologue">
+            <h2 class="section-title">Prologue: The Rearview Mirror</h2>
+            <p class="content-text">
+                The Eluru night air, thick and still damp after an evening shower, pressed in through the open car window. It was a tangible presence, a heavy, wet blanket clinging to my skin, smelling of petrichor and the faint, sweet decay of roadside blossoms. Streetlights cast long, distorted reflections on the puddled asphalt, making the familiar road home look alien, like a scene from a dream sequence I couldn't quite grasp. The world outside was a smear of bleeding neon and deep, velvety shadows. My hands felt clammy where they gripped the steering wheel of my Vitara Brezza, the worn leather a familiar, grounding anchor in the sudden, sharp disorientation.
+            </p>
+            <p class="content-text">
+                The radio mumbled softly, some melancholic Telugu tune about love gone wrong. The singer's voice, a reedy, heartbreaking tenor, seemed determined to score the soundtrack of my current emotional state. Which was, to put it mildly, precarious. The gnawing ache in my chest had been a constant companion for weeks, a dull, throbbing entity with a life of its own.
+            </p>
+            <p class="content-text">
+                Then, a pair of headlights sliced through the gloom ahead, emerging from a side street. As the car turned, it passed under the fleeting, sickly yellow glow of a streetlight. For a fraction of a second, the interior was illuminated, and I saw a face in the driver's seat. Her face. Venu.
+            </p>
+            <p class="content-text">
+                My ex. The paradox who took nine painstaking months – months filled with hopeful, over-analyzed texts, long, anxious silences, and carefully curated playlists sent like messages in a bottle – to finally accept my heart, only to shatter it with a breathtaking, casual efficiency in less time than it takes for the seasons to change.
+            </p>
+            <p class="content-text">
+                Something inside me didn't just snap; it disintegrated. The carefully constructed dam of composure I had been building for weeks, brick by painful brick, crumbled into dust. Rational thought evaporated, replaced by a primal, blinding impulse. A guttural sound, a half-sob, half-roar, tore from my throat, raw and animalistic. My foot, clad in a worn-out sneaker, crushed the accelerator. The engine roared in protest, a sudden, violent scream in the quiet night. With a wrench of my arms, I sent the car veering violently towards the oncoming lane.
+            </p>
+            <p class="content-text">
+                For one terrifying, suspended moment, our vehicles were on a collision course. Two metal beasts, hurtling towards mutual destruction under the indifferent gaze of the city. Time slowed. I could see the startled look in her eyes, the widening of her pupils as she registered the dark shape of my Brezza careening towards her. It wasn't a conscious desire to hit her, not really. It was more like a desperate, destructive lunge towards something, anything, to make the gnawing ache in my chest manifest physically. To make the invisible wound visible, to give it form in shattered glass and twisted metal, a pain the whole world could see.
+            </p>
+            <p class="content-text">
+                Then, just as abruptly, some vestige of self-preservation kicked in. A panicked, vivid image of my mother's face, her eyes wide with a grief I could not bear to cause, flashed through my mind. With another violent twist of the wheel, I swerved back sharply. The tires screeched on the wet road, a high-pitched scream of tortured rubber. The smell of it filled the car, acrid and sharp. I missed her little hatchback by inches that felt both infinite and terrifyingly small.
+            </p>
+            <p class="content-text">
+                Five hundred meters down the road, the world tilted, the streetlights swimming in my vision. I yanked the car over onto the gravel shoulder, the engine sputtering into silence as I stalled it. My hands were shaking uncontrollably, tremors running up my arms like electrical currents. Sweat beaded on my forehead, cold despite the humid night air, and my breath came in ragged, shallow gasps. The familiar pressure built in my chest, a monstrous invisible hand squeezing the air from my lungs. Panic. Again. My unwelcome, constant companion since the world went sideways.
+            </p>
+            <p class="content-text">
+                And as I sat there, gasping on the side of a dark, indifferent road, the whole story spooled out behind me, a tangled, heartbreaking mess of a flashback, a history of broken lanes and wrong turns that had led me to this exact, pathetic moment. It all started so long ago…
+            </p>
+        </section>
+
+        <section class="part-header">
+            <h2 class="section-title">Part 1: Childhood and School Years</h2>
+        </section>
+
+        <section class="chapter">
+            <h2 class="section-title">Chapter 1: Small Town Beginnings</h2>
+            <p class="content-text">
+                My world began in dust and devotion. The small village in Andhra Pradesh where I was born didn't measure time in hours or minutes, but in the slow, deliberate arc of the sun and the rhythmic chime of temple bells from the Sri Venkateswara shrine at the center of town. Mornings were announced by the distant, melodic call of the muezzin from the small mosque on the outskirts, a sound that bled into the gentle clatter of steel tiffins as mothers packed lunches of rice and dal, and the lowing of cattle being led to pasture by men with weathered faces and patient hands.
+            </p>
+            <p class="content-text">
+                The air itself was a living thing, thick with the scent of damp earth after the morning dew, the sweet, heavy perfume of night-blooming jasmine clinging to compound walls, and the sharp, not-unpleasant tang of cow dung being patted into fuel cakes by the women of the village, their hands moving with an ancient, practiced rhythm. Their laughter, sharp and sudden, would often punctuate the morning quiet as they traded gossip over their work.
+            </p>
+            <p class="content-text">
+                Our home was a two-story structure painted a faded yellow, a colour that seemed to sigh under the relentless gaze of the sun. It stood unassumingly amongst a cluster of similar houses, their shared walls creating a labyrinth of narrow, dusty lanes where chickens scattered at your approach and children's laughter echoed off the plaster. Life here was lived publicly. Every argument was a piece of street theatre, every celebration a community affair. Secrets were a currency traded in hushed tones over compound walls, discussed and dissected under the watchful eyes of neighbours and the stricter, more judgmental gaze of our orthodox relatives.
+            </p>
+            <p class="content-text">
+                My family was steeped in these traditions. My grandmother, my Ammamma, was the formidable matriarch who dictated the unspoken laws of our household from her throne, a worn, teak armchair in the coolest corner of the living room. Her eyes, clouded with age but missing nothing, could quell a rising argument with a single, sharp glance. "Respect for elders is paramount," she would declare, her voice thin but wiry. "Religious duties are non-negotiable. And the family's reputation is a fragile, priceless treasure to be guarded at all costs. What will people say?" That question was the compass by which our family navigated the world.
+            </p>
+            <p class="content-text">
+                My father, a man carved from the unyielding teak of pragmatism, saw education as the only ladder out of this life. He was a stern figure, his love expressed not in hugs or praise, but in ensuring my notebooks were full and my pencils were sharp. His words were few but heavy with the weight of expectation. He believed in hard work, discipline, and the irrefutable logic of mathematics. Dreams, to him, were a frivolous distraction.
+            </p>
+            <p class="content-text">
+                I learned this early. Once, when I was perhaps four, I had tried to tell him a fantastical story I'd made up about a monkey who could fly using large banana leaves as wings. He had listened with a stony patience, his face impassive as I gesticulated wildly, describing the monkey's journey to the moon. When I finished, breathless and proud, he simply patted my head with a hand that felt as heavy as a stone. "Stories won't fill your stomach, Vikram," he had said, his voice not unkind, but firm as the earth. "Numbers will. Focus on what is real."
+            </p>
+            <p class="content-text">
+                My mother, in contrast, was a gentle stream, her love a constant, flowing presence in our home. She was the one who would indulge my stories, her eyes lighting up as she listened. She worried about me. I was a quiet child, more comfortable in the silent company of the characters in my storybooks than in the boisterous, rough-and-tumble games of the other village boys. I was a dreamer, my head filled with stories of ancient kings from the Mahabharata and epic battles from the Ramayana, worlds far removed from the dusty reality of our village.
+            </p>
+            <p class="content-text">
+                The day I started school marked the first real shift in my small universe. I remember the feeling of the new uniform, the fabric stiff and unfamiliar against my skin, smelling of the shop it came from and the naphthalene balls my mother had stored it with. She had oiled my hair until it shone, parting it perfectly to one side, and the scent of coconut followed me as I walked, my small hand swallowed in my father's much larger one, to the designated bus stop at the edge of the village.
+            </p>
+            <p class="content-text">
+                "Vikram," my father said, stopping and crouching down to look me in the eye, an act so rare it startled me. His voice was gruff, but I could see a flicker of something softer in his gaze, a rare vulnerability. "You will be a good boy. You will listen to your teacher. You will study hard. This is your only job. Understand?"
+            </p>
+            <p class="content-text">
+                I nodded, my throat too tight to speak. My world, which had until this moment been the safe, predictable space between my home and the temple, was about to expand in a terrifying way. The school bus, a monstrous yellow beast, rumbled to a stop before us, its engine a coughing giant. It kicked up a cloud of fine, red dust that coated my new, shiny black shoes, instantly dulling them.
+            </p>
+        </section>
+
+    </div>
+
+    <section class="purchase-cta">
+        <h2 class="cta-title">Continue Vikram's Journey</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--text-dark);">
+            Follow the complete story of friendship, love, and self-discovery.
+        </p>
+        <div class="purchase-links">
+            <a href="https://www.amazon.com/dp/B0FPLF9CKB" target="_blank" rel="noopener" class="purchase-link">
+                📚 Buy Paperback on Amazon
+            </a>
+            <a href="https://www.amazon.in/dp/B0FPBQ7RVC" target="_blank" rel="noopener" class="purchase-link">
+                📱 Buy Kindle Edition
+            </a>
+            <a href="https://play.google.com/store/audiobooks/details?id=AQAAAECqeiY6nM" target="_blank" rel="noopener" class="purchase-link">
+                🎧 Listen on Google Play
+            </a>
+        </div>
+        <br><br>
+        <a href="index.html#books" class="back-btn">← Back to All Books</a>
+    </section>
+
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+    </script>
+
+</body>
+</html>

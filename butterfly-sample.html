@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Butterfly Effect of Bad Decisions - Free Sample | Seethala Devi Chandu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --cream: #faf8f5;
+            --dark-cream: #f0ede6;
+            --burgundy: #800020;
+            --gold: #b8860b;
+            --text-dark: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --butterfly-gold: #FFD700;
+            --butterfly-gold-dark: #DAA520;
+            --butterfly-gold-light: #FFF8DC;
+        }
+
+        /* === ENHANCED SPLASH SCREEN === */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-out;
+            overflow: hidden;
+        }
+
+        /* Canvas for particle trail */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .splash-butterfly-container {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            animation: splash-fly-path 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)) drop-shadow(0 0 50px rgba(255, 215, 0, 0.6));
+            will-change: transform;
+            z-index: 10;
+        }
+
+        .splash-butterfly-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* Enhanced wing animation */
+        .wing-left, .wing-right {
+            transform-origin: center;
+            animation: wing-flap-enhanced 0.25s ease-in-out infinite alternate;
+        }
+
+        .wing-right {
+            animation-delay: 0.125s;
+        }
+
+        @keyframes wing-flap-enhanced {
+            0% { 
+                transform: scaleX(1) scaleY(1); 
+            }
+            100% { 
+                transform: scaleX(0.75) scaleY(1.05); 
+            }
+        }
+
+        /* Improved flight path with more curves */
+        @keyframes splash-fly-path {
+            0% {
+                transform: translate(-30vw, 70vh) rotate(-35deg) scale(0.4);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            15% {
+                transform: translate(-10vw, 45vh) rotate(-20deg) scale(0.9);
+            }
+            25% {
+                transform: translate(15vw, 25vh) rotate(5deg) scale(1.3);
+            }
+            40% {
+                transform: translate(40vw, 35vh) rotate(-8deg) scale(1.4);
+            }
+            55% {
+                transform: translate(60vw, 20vh) rotate(15deg) scale(1.3);
+            }
+            70% {
+                transform: translate(80vw, 30vh) rotate(-5deg) scale(1.2);
+            }
+            85% {
+                transform: translate(100vw, 10vh) rotate(25deg) scale(0.9);
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(120vw, -10vh) rotate(35deg) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        #main-content {
+            display: none;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--dark-cream) 100%);
+            color: var(--text-dark);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -webkit-touch-callout: none;
+        }
+
+        .book-header {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, rgba(128, 0, 32, 0.05) 0%, transparent 100%);
+            border-bottom: 3px solid var(--burgundy);
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .book-cover-display {
+            max-width: 350px;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            pointer-events: none;
+        }
+
+        .book-cover-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .book-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: 1rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .dedication, .foreword, .introduction, .preface, .chapter {
+            margin-bottom: 5rem;
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow);
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 1rem;
+        }
+
+        .content-text {
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-text:first-of-type::first-letter {
+            font-size: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--burgundy);
+            float: left;
+            line-height: 0.8;
+            margin: 0.1em 0.1em 0 0;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 2rem;
+            color: var(--gold);
+            font-size: 1.3rem;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 6rem;
+            color: rgba(128, 0, 32, 0.03);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 1; 
+            white-space: nowrap;
+        }
+
+        .purchase-cta {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(128, 0, 32, 0.05) 100%);
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+        }
+
+        .purchase-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .purchase-link {
+            padding: 1.5rem 3rem;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .purchase-link:hover {
+            background: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .dedication, .foreword, .introduction, .preface, .chapter {
+                padding: 2rem;
+            }
+
+            .content-container {
+                padding: 2rem 5%;
+            }
+        }
+
+        /* === ENHANCED BACKGROUND BUTTERFLIES === */
+        .svg-butterfly-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0; 
+            overflow: hidden;
+        }
+
+        .background-butterfly-animator {
+            position: absolute;
+            bottom: -15%; 
+            opacity: 0;
+            animation: flutter-fly-enhanced 22s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+
+        .background-butterfly-svg {
+            width: 70px;
+            height: 70px;
+            overflow: visible;
+            filter: drop-shadow(0 0 8px rgba(218, 165, 32, 0.6)) drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+        }
+
+        /* Enhanced background butterfly animation with more visibility */
+        @keyframes flutter-fly-enhanced {
+            0% {
+                transform: translate(0, 10vh) rotate(-20deg) scale(0.8);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.6; 
+            }
+            15% {
+                transform: translate(3vw, -10vh) rotate(15deg) scale(0.9);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translate(-2vw, -30vh) rotate(-10deg) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(4vw, -55vh) rotate(20deg) scale(0.95);
+                opacity: 0.75;
+            }
+            70% {
+                transform: translate(-3vw, -75vh) rotate(-15deg) scale(0.9);
+                opacity: 0.7;
+            }
+            85% {
+                transform: translate(2vw, -90vh) rotate(10deg) scale(0.85);
+                opacity: 0.6;
+            }
+            92% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(0, -110vh) rotate(5deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* Wing flapping for background butterflies */
+        .bg-wing-left, .bg-wing-right {
+            transform-origin: center;
+            animation: bg-wing-flap 0.4s ease-in-out infinite alternate;
+        }
+
+        .bg-wing-right {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bg-wing-flap {
+            0% { transform: scaleX(1); }
+            100% { transform: scaleX(0.8); }
+        }
+
+        /* Individual butterfly variations */
+        .background-butterfly-animator:nth-child(1) {
+            left: 8%;
+            animation-delay: 0s;
+            animation-duration: 22s;
+        }
+        .background-butterfly-animator:nth-child(2) {
+            left: 25%;
+            animation-delay: -6s; 
+            animation-duration: 20s; 
+        }
+        .background-butterfly-animator:nth-child(3) {
+            left: 45%;
+            animation-delay: -14s;
+            animation-duration: 24s;
+        }
+        .background-butterfly-animator:nth-child(4) {
+            left: 62%;
+            animation-delay: -9s;
+            animation-duration: 19s;
+        }
+        .background-butterfly-animator:nth-child(5) {
+            left: 78%;
+            animation-delay: -3s;
+            animation-duration: 23s;
+        }
+        .background-butterfly-animator:nth-child(6) {
+            left: 92%;
+            animation-delay: -17s;
+            animation-duration: 21s;
+        }
+        .background-butterfly-animator:nth-child(7) {
+            left: 15%;
+            animation-delay: -11s;
+            animation-duration: 26s;
+        }
+        .background-butterfly-animator:nth-child(8) {
+            left: 70%;
+            animation-delay: -5s;
+            animation-duration: 18s;
+        }
+
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+
+    <div id="splash-screen">
+        <canvas id="particle-canvas"></canvas>
+        <div class="splash-butterfly-container" id="splashButterfly">
+            <svg class="splash-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="goldWing" cx="35%" cy="35%">
+                        <stop offset="0%" style="stop-color:#FFFACD;stop-opacity:1" />
+                        <stop offset="25%" style="stop-color:#FFD700;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#FFA500;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.95" />
+                    </radialGradient>
+                    <radialGradient id="bodyGrad" cx="50%" cy="50%">
+                        <stop offset="0%" style="stop-color:#A0522D;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#2C1810;stop-opacity:1" />
+                    </radialGradient>
+                    <filter id="innerGlow">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                        <feOffset dx="0" dy="0" result="offsetblur"/>
+                        <feFlood flood-color="#FFD700" flood-opacity="0.8"/>
+                        <feComposite in2="offsetblur" operator="in"/>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Left Wings -->
+                <g class="wing-left">
+                    <!-- Upper left wing -->
+                    <path d="M 100 90 Q 45 45, 25 35 Q 15 30, 18 45 Q 22 68, 48 88 Q 72 98, 100 90 Z" 
+                          fill="url(#goldWing)" stroke="#B8860B" stroke-width="2" opacity="0.98" filter="url(#innerGlow)"/>
+                    <ellipse cx="55" cy="58" rx="14" ry="18" fill="#CD853F" opacity="0.5"/>
+                    <ellipse cx="45" cy="75" rx="10" ry="13" fill="#8B4513" opacity="0.4"/>
+                    <circle cx="38" cy="65" r="5" fill="#654321" opacity="0.3"/>
+                    
+                    <!-- Lower left wing -->
+                    <path d="M 100 95 Q 65 112, 48 125 Q 38 132, 43 145 Q 55 158, 73 145 Q 92 125, 100 105 Z" 
+                          fill="url(#goldWing)" stroke="#B8860B" stroke-width="2" opacity="0.93" filter="url(#innerGlow)"/>
+                    <ellipse cx="62" cy="125" rx="12" ry="15" fill="#CD853F" opacity="0.5"/>
+                    <circle cx="55" cy="138" r="6" fill="#8B4513" opacity="0.4"/>
+                </g>
+                
+                <!-- Right Wings -->
+                <g class="wing-right">
+                    <!-- Upper right wing -->
+                    <path d="M 100 90 Q 155 45, 175 35 Q 185 30, 182 45 Q 178 68, 152 88 Q 128 98, 100 90 Z" 
+                          fill="url(#goldWing)" stroke="#B8860B" stroke-width="2" opacity="0.98" filter="url(#innerGlow)"/>
+                    <ellipse cx="145" cy="58" rx="14" ry="18" fill="#CD853F" opacity="0.5"/>
+                    <ellipse cx="155" cy="75" rx="10" ry="13" fill="#8B4513" opacity="0.4"/>
+                    <circle cx="162" cy="65" r="5" fill="#654321" opacity="0.3"/>
+                    
+                    <!-- Lower right wing -->
+                    <path d="M 100 95 Q 135 112, 152 125 Q 162 132, 157 145 Q 145 158, 127 145 Q 108 125, 100 105 Z" 
+                          fill="url(#goldWing)" stroke="#B8860B" stroke-width="2" opacity="0.93" filter="url(#innerGlow)"/>
+                    <ellipse cx="138" cy="125" rx="12" ry="15" fill="#CD853F" opacity="0.5"/>
+                    <circle cx="145" cy="138" r="6" fill="#8B4513" opacity="0.4"/>
+                </g>
+                
+                <!-- Body with segments -->
+                <ellipse cx="100" cy="100" rx="11" ry="58" fill="url(#bodyGrad)" stroke="#1a0f08" stroke-width="1.5"/>
+                
+                <!-- Body segments -->
+                <line x1="94" y1="75" x2="106" y2="75" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                <line x1="94" y1="85" x2="106" y2="85" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                <line x1="94" y1="95" x2="106" y2="95" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                <line x1="94" y1="105" x2="106" y2="105" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                <line x1="94" y1="115" x2="106" y2="115" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                <line x1="94" y1="125" x2="106" y2="125" stroke="#DAA520" stroke-width="1.5" opacity="0.4"/>
+                
+                <!-- Head -->
+                <ellipse cx="100" cy="52" rx="13" ry="16" fill="#2C1810" stroke="#1a0f08" stroke-width="1.5"/>
+                <ellipse cx="95" cy="48" rx="4" ry="5" fill="#4a4a4a" opacity="0.9"/>
+                <ellipse cx="105" cy="48" rx="4" ry="5" fill="#4a4a4a" opacity="0.9"/>
+                <circle cx="95" cy="47" r="2" fill="#ffffff" opacity="0.6"/>
+                <circle cx="105" cy="47" r="2" fill="#ffffff" opacity="0.6"/>
+                
+                <!-- Antennae -->
+                <path d="M 93 45 Q 80 30, 72 18" stroke="#2C1810" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M 107 45 Q 120 30, 128 18" stroke="#2C1810" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <circle cx="72" cy="18" r="4" fill="#2C1810"/>
+                <circle cx="128" cy="18" r="4" fill="#2C1810"/>
+            </svg>
+        </div>
+    </div>
+
+    
+    <div id="main-content">
+        <div class="svg-butterfly-container">
+            <!-- 8 enhanced background butterflies -->
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold1" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold1)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold1)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold1)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold1)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold2" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold2)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold2)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold2)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold2)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold3" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold3)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold3)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold3)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold3)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold4" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold4)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold4)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold4)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold4)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold5" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold5)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold5)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold5)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold5)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold6" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold6)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold6)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold6)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold6)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold7" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold7)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold7)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold7)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold7)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+            <div class="background-butterfly-animator">
+                <svg class="background-butterfly-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bgGold8" cx="40%" cy="40%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0.3" />
+                        </radialGradient>
+                    </defs>
+                    <g class="bg-wing-left">
+                        <path d="M 100 90 Q 50 50, 30 40 Q 25 50, 50 85 Q 70 95, 100 90 Z" fill="url(#bgGold8)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 70 110, 55 120 Q 50 135, 75 135 Q 90 120, 100 105 Z" fill="url(#bgGold8)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <g class="bg-wing-right">
+                        <path d="M 100 90 Q 150 50, 170 40 Q 175 50, 150 85 Q 130 95, 100 90 Z" fill="url(#bgGold8)" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M 100 95 Q 130 110, 145 120 Q 150 135, 125 135 Q 110 120, 100 105 Z" fill="url(#bgGold8)" stroke="#B8860B" stroke-width="1"/>
+                    </g>
+                    <ellipse cx="100" cy="100" rx="8" ry="45" fill="rgba(44,24,16,0.3)"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="watermark">SAMPLE COPY</div>
+
+        <header class="book-header">
+            <div class="book-cover-display">
+                <img src="the buterfly effect of bad decisions 1.png" alt="The Butterfly Effect of Bad Decisions Book Cover" draggable="false">
+            </div>
+            <h1 class="book-title">The Butterfly Effect of Bad Decisions</h1>
+            <p class="book-subtitle">A Love Story About Learning to Love Yourself First</p>
+            <p class="author-name">Seethala Devi Chandu</p>
+            <a href="index.html#books" class="back-btn">← Back to Books</a>
+        </header>
+
+        <div class="content-container">
+            
+            <section class="dedication">
+                <h2 class="section-title">Dedication</h2>
+                
+                <div class="inline-image-container">
+                    <img src="the buterfly effect of bad decisions 2.png" alt="Book dedication illustration" draggable="false" style="max-width: 400px; margin: 2rem auto; display: block; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                </div>
+                
+                <p class="content-text">
+                    For every woman who has faced an impossible choice and found the unwavering strength to choose her child.
+                </p>
+                <p class="content-text">
+                    And for the men whose love is a sanctuary, proving that true strength is not in the leaving, but in the staying.
+                </p>
+                <p class="content-text">
+                    And to the friends who become family, who share the weight of sorrow and champion the bravest of choices.
+                </p>
+            </section>
+
+            <section class="foreword">
+                <h2 class="section-title">Foreword</h2>
+                <p class="content-text">
+                    When Dr. Jhanavi Nair first walked into my ward at ASRAM, I saw what everyone else saw: a brilliant young doctor with a mind as sharp as a scalpel and a focus that was nothing short of formidable. Her life was a fortress of academic achievement and quiet control. But as her mentor, and later her friend, I also saw the vulnerability she kept so carefully guarded behind her glasses - a deep well of sensitivity and a heart that, for all its defenses, was profoundly open.
+                </p>
+                <p class="content-text">
+                    I watched as a force of nature, in the form of Dr. Surya, entered her life and breached those walls with an intensity that was both beautiful and terrifying to witness. I saw the light he brought to her eyes, and later, the devastating storm he left in his wake.
+                </p>
+                <p class="content-text">
+                    What you are about to read is more than a love story. It is a testament to a woman's resilience in the face of impossible choices. It is a clinical study of the human heart - how it can break in the most catastrophic ways and still find the unwavering strength to heal, to protect, and to love again.
+                </p>
+                <p class="content-text">
+                    I was a witness to Jhanavi's darkest moments and her quietest triumphs. Her journey is a profound reminder that the most powerful love isn't always the one that burns the brightest, but the one that offers a steady light in the darkness. This story is for anyone who has had to rebuild their life from the ashes, and for those who understand that true strength is not in never falling, but in the courage to rise, again and again.
+                </p>
+                <p class="signature">— Dr. Shreya</p>
+            </section>
+
+            <section class="introduction">
+                <h2 class="section-title">Introduction</h2>
+                <p class="content-text">
+                    My life, until that point, had been a perfectly managed case. I was the chief physician of my own existence, and the diagnosis was simple: chronic overachievement with a prognosis of predictable, controlled success. Emotions were symptoms to be monitored and managed, not indulged. Love was a cardiac arrhythmia I had neither the time nor the inclination to treat. My world was one of sterile, logical precision, where every outcome could be anticipated and every variable controlled.
+                </p>
+                <p class="content-text">
+                    My treatment protocol was flawless: graduate top of my class from AIIMS Delhi, conquer the NEET PG exam, and build a career so formidable that there would be no room for the messy complications of the heart. I had built walls around myself made of textbooks and ambition, a fortress of competence that no one had ever tried to breach.
+                </p>
+                <p class="content-text">
+                    The night before my first shift at ASRAM Government Hospital, I laid out my freshly ironed scrubs in my childhood bedroom, the scent of home a comforting, familiar prescription. I saw the path ahead as a clean, straight line - another sterile, predictable environment where my focus would be my only partner. I believed I was immune to the chaos that derailed other people's lives.
+                </p>
+                <p class="content-text">
+                    I thought I knew the prognosis.
+                </p>
+                <p class="content-text">
+                    But there is no textbook, no diagnostic manual, for the moment a foreign pathogen enters your system - something so potent and destabilizing that it bypasses all your defenses and rewrites your entire biology from the inside out.
+                </p>
+                <p class="content-text">
+                    I was wrong. So clinically, devastatingly wrong.
+                </p>
+            </section>
+
+            <section class="preface">
+                <h2 class="section-title">Preface</h2>
+                <p class="content-text">
+                    We are raised on stories of a certain kind of love - the kind that strikes like lightning, an all-consuming fire that feels like destiny. We are told that this is the love worth fighting for, the one that is meant to be our forever.
+                </p>
+                <p class="content-text">
+                    But what happens when that forever comes with conditions? What happens when the man who promised you the world asks you to sacrifice a part of your soul to keep it?
+                </p>
+                <p class="content-text">
+                    This is not a story about a perfect, fated love. This is a story about what comes after.
+                </p>
+                <p class="content-text">
+                    It is a story about a woman's choice. A choice between the man her heart still beats for and the new life beating within her. It is about the lonely battle that follows, the quiet wars fought in the stillness of the night when it feels like the world has moved on and left you behind.
+                </p>
+                <p class="content-text">
+                    Through Jhanavi's journey, I wanted to explore what real strength looks like. It is often not found in grand gestures, but in the quiet, unwavering resolve to get up every morning and choose hope over despair, to choose motherhood when the world offers you easier, more convenient paths.
+                </p>
+                <p class="content-text">
+                    This novel asks what true love really is. Is it the intoxicating, possessive fire that burns bright and fast, leaving devastation in its wake? Or is it the quiet, steady hand that offers a sanctuary, the love that chooses to stay and help rebuild, proving that it is not a feeling, but a choice made every single day?
+                </p>
+                <p class="content-text">
+                    This book is for anyone who has ever had to build a new dream from the ashes of an old one. It is a testament to the resilience of a woman's heart and a tribute to the quiet, unconditional love that has the power to heal our deepest wounds.
+                </p>
+                <p class="content-text">
+                    Thank you for choosing to walk this path with Jhanavi. I hope her story reminds you that even after the most devastating storm, there is a way to find the sun again.
+                </p>
+            </section>
+
+            <section class="chapter">
+                <h2 class="section-title">Chapter 1: The First Shift</h2>
+                <p class="content-text">
+                    The thing about being the girl who always has her shit together is that no one warns you about the moment when everything spectacularly falls apart. And by everything, I mean your ability to form coherent sentences in the presence of a man who.
+                </p>
+                <p class="content-text">
+                    But let's back up.
+                </p>
+                <p class="content-text">
+                    The air in ASRAM Government Hospital still carried that distinctive cocktail of hometown nostalgia - sea salt mixed with industrial-strength disinfectant - that should have been comforting. After all, I was back where I belonged, wasn't I? Dr. Jhanavi Nair, MBBS graduate from AIIMS Delhi, academic topper, future NEET PG conqueror, and generally functioning human being.
+                </p>
+                <p class="content-text">
+                    Functioning being the operative term here, because what I was about to experience could hardly be classified as normal human behavior.
+                </p>
+                <p class="content-text">
+                    I clutched my notepad like a security blanket, my lucky pen - the same one that had survived four years of brutal medical school - gripped in my other hand. A rebellious strand of hair had escaped my carefully constructed bun, and I pushed it back with the pen cap, adjusting my glasses as I surveyed the bustling corridor.
+                </p>
+                <p class="content-text">
+                    That's when the universe decided to play its little joke.
+                </p>
+                <p class="content-text">
+                    He was standing maybe twenty feet away, talking to a nurse about something undoubtedly medical and important, but honestly? The specifics became irrelevant the moment my brain registered his existence.
+                </p>
+                <p class="content-text">
+                    Six feet of what I can only describe as walking testosterone, wearing a doctor's coat like it was designer wear. His hair was that perfect shade of dark that caught the fluorescent hospital lighting just right, styled in a way that suggested he'd rolled out of bed looking effortlessly gorgeous - which, let's be honest, was probably exactly what happened.
+                </p>
+                <p class="content-text">
+                    And those veins. Jesus Christ, those veins.
+                </p>
+                <p class="content-text">
+                    I'm a medical student. I've dissected cadavers. I've studied vascular anatomy until I could draw it blindfolded. But there was something about the way his veins traced along his forearms, prominent and strong, that made my brain short-circuit in ways that definitely weren't covered in our cardiovascular system modules.
+                </p>
+                <p class="content-text">
+                    My carefully constructed world of logic and clinical detachment? It didn't just crack - it imploded.
+                </p>
+            </section>
+
+        </div>
+
+        <section class="purchase-cta">
+            <h2 class="cta-title">Continue Reading</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--text-dark);">
+                Discover Dr. Jhanavi's complete journey of love, loss, and self-discovery.
+            </p>
+            <div class="purchase-links">
+                <a href="https://www.amazon.com/dp/B0FQJTR5DT" target="_blank" rel="noopener" class="purchase-link">
+                    📚 Buy Paperback on Amazon
+                </a>
+                <a href="https://www.amazon.in/dp/B0FQFWN166" target="_blank" rel="noopener" class="purchase-link">
+                    📱 Buy Kindle Edition
+                </a>
+                <a href="https://play.google.com/store/audiobooks/details?id=AQAAAECqhjXGjM" target="_blank" rel="noopener"class="purchase-link">
+                    🎧 Listen on Google Play
+                </a>
+            </div>
+            <br><br>
+            <a href="index.html#books" class="back-btn">← Back to All Books</a>
+        </section>
+
+    </div>
+
+    <script>
+        // === ENHANCED GOLDEN BUTTERFLY WITH IMPROVED PARTICLE EFFECTS ===
+        
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+            const butterflyContainer = document.getElementById('splashButterfly');
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Particle system
+            const particles = [];
+            const maxParticles = 250;
+            
+            // Enhanced golden color palette
+            const goldColors = [
+                { r: 255, g: 215, b: 0 },   // Gold
+                { r: 255, g: 248, b: 220 }, // Cornsilk
+                { r: 218, g: 165, b: 32 },  // Goldenrod
+                { r: 255, g: 223, b: 0 },   // Golden Yellow
+                { r: 255, g: 255, b: 224 }, // Light Yellow
+                { r: 255, g: 165, b: 0 }    // Orange Gold
+            ];
+            
+            class Particle {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.size = Math.random() * 5 + 2;
+                    this.speedX = (Math.random() - 0.5) * 4;
+                    this.speedY = (Math.random() - 0.5) * 4 + 1;
+                    this.life = 1;
+                    this.decay = Math.random() * 0.012 + 0.004;
+                    this.color = goldColors[Math.floor(Math.random() * goldColors.length)];
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.3;
+                    this.isStar = Math.random() > 0.4;
+                    this.twinkle = Math.random() * Math.PI;
+                    this.scale = 1;
+                    this.scaleSpeed = (Math.random() - 0.5) * 0.02;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.life -= this.decay;
+                    this.rotation += this.rotationSpeed;
+                    this.twinkle += 0.15;
+                    this.scale += this.scaleSpeed;
+                    this.speedY += 0.08; // Gravity
+                    this.speedX *= 0.99; // Air resistance
+                }
+                
+                draw() {
+                    if (this.life <= 0) return;
+                    
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    ctx.scale(this.scale, this.scale);
+                    
+                    const alpha = this.life * (0.7 + Math.sin(this.twinkle) * 0.3);
+                    
+                    if (this.isStar) {
+                        // Enhanced star/sparkle with 4 points
+                        ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})`;
+                        ctx.lineWidth = 2.5;
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha * 0.8})`;
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(-this.size * 1.2, 0);
+                        ctx.lineTo(this.size * 1.2, 0);
+                        ctx.moveTo(0, -this.size * 1.2);
+                        ctx.lineTo(0, this.size * 1.2);
+                        ctx.stroke();
+                        
+                        // Diagonal cross
+                        ctx.beginPath();
+                        ctx.moveTo(-this.size * 0.8, -this.size * 0.8);
+                        ctx.lineTo(this.size * 0.8, this.size * 0.8);
+                        ctx.moveTo(-this.size * 0.8, this.size * 0.8);
+                        ctx.lineTo(this.size * 0.8, -this.size * 0.8);
+                        ctx.stroke();
+                        
+                        // Center glow
+                        ctx.shadowBlur = 25;
+                        ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha * 0.4})`;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        // Enhanced glowing dot with stronger glow
+                        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 1.5);
+                        gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})`);
+                        gradient.addColorStop(0.4, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha * 0.7})`);
+                        gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+                        
+                        ctx.shadowBlur = 20;
+                        ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})`;
+                        ctx.fillStyle = gradient;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 1.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+            
+            // Get butterfly position
+            function getButterflyPosition() {
+                const rect = butterflyContainer.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+            }
+            
+            // Create enhanced particle bursts
+            function createParticles() {
+                const pos = getButterflyPosition();
+                
+                // Create larger burst of particles
+                for (let i = 0; i < 8; i++) {
+                    if (particles.length < maxParticles) {
+                        const angle = (Math.random() * Math.PI * 2);
+                        const distance = Math.random() * 50;
+                        const offsetX = Math.cos(angle) * distance;
+                        const offsetY = Math.sin(angle) * distance;
+                        particles.push(new Particle(pos.x + offsetX, pos.y + offsetY));
+                    }
+                }
+            }
+            
+            // Animation loop for particles
+            let particleInterval;
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw particles
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    if (particles[i].life <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            // Start particle creation with higher frequency
+            particleInterval = setInterval(createParticles, 40);
+            animateParticles();
+            
+            // Stop creating particles after 5.5 seconds
+            setTimeout(() => {
+                clearInterval(particleInterval);
+            }, 5500);
+            
+            // Hide splash screen after 6 seconds
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.style.display = 'block';
+                }, 1500);
+            }, 6000);
+        });
+
+        // Anti-copy protection
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+    </script>
+
+</body>
+</html>
