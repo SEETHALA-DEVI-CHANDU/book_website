@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gravity of Us: Broken Lanes - Free Sample | Seethala Devi Chandu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --cream: #faf8f5;
+            --dark-cream: #f0ede6;
+            --burgundy: #800020;
+            --gold: #b8860b;
+            --text-dark: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --space-deep: #0a0e27;
+            --space-blue: #1a1f3a;
+            --cosmic-purple: #4a148c;
+            --star-white: #ffffff;
+        }
+
+        /* === ENHANCED SPLASH SCREEN === */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1f3a 0%, #0a0e27 40%, #000000 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-out;
+            overflow: hidden;
+        }
+
+        #cosmic-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .splash-planet-container {
+            position: absolute;
+            width: clamp(140px, 28vw, 200px);
+            height: clamp(140px, 28vw, 200px);
+            animation: planet-orbit 8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+            filter: drop-shadow(0 0 60px rgba(138, 43, 226, 1)) drop-shadow(0 0 100px rgba(72, 61, 139, 0.8));
+            will-change: transform;
+            z-index: 10;
+        }
+
+        @keyframes planet-orbit {
+            0% {
+                transform: translate(-45vw, 75vh) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            8% {
+                opacity: 1;
+            }
+            18% {
+                transform: translate(-10vw, 45vh) scale(1) rotate(45deg);
+            }
+            30% {
+                transform: translate(20vw, 25vh) scale(1.4) rotate(90deg);
+            }
+            45% {
+                transform: translate(50vw, 30vh) rotate(135deg) scale(1.6);
+            }
+            60% {
+                transform: translate(75vw, 20vh) rotate(180deg) scale(1.5);
+            }
+            75% {
+                transform: translate(95vw, 30vh) rotate(225deg) scale(1.3);
+            }
+            88% {
+                transform: translate(115vw, 15vh) rotate(270deg) scale(0.9);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(145vw, -15vh) rotate(315deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .planet {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #8a2be2, #4b0082 40%, #1a0033 100%);
+            position: relative;
+            box-shadow: 
+                inset -20px -20px 50px rgba(0, 0, 0, 0.8),
+                inset 10px 10px 30px rgba(138, 43, 226, 0.4),
+                0 0 80px rgba(138, 43, 226, 0.6);
+            animation: planet-rotate 8s linear infinite;
+        }
+
+        .planet::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(8px);
+        }
+
+        .planet::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            right: 25%;
+            width: 30%;
+            height: 30%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        @keyframes planet-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            width: 160%;
+            height: 160%;
+            border: 3px solid rgba(138, 43, 226, 0.4);
+            border-radius: 50%;
+            animation: ring-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes ring-glow {
+            0% { 
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+                border-color: rgba(138, 43, 226, 0.4);
+            }
+            100% { 
+                box-shadow: 0 0 40px rgba(138, 43, 226, 0.8);
+                border-color: rgba(138, 43, 226, 0.7);
+            }
+        }
+
+        #main-content {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: radial-gradient(ellipse at center, #1a1f3a 0%, #0f1428 50%, #000000 100%);
+            color: var(--text-dark);
+            line-height: 1.9;
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -webkit-touch-callout: none;
+        }
+
+        /* === ANIMATED COSMIC BACKGROUND === */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .gradient-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 25% 70%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 30%, rgba(72, 61, 139, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 60%, rgba(75, 0, 130, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 40%, rgba(138, 43, 226, 0.08) 0%, transparent 65%),
+                radial-gradient(ellipse at 80% 75%, rgba(72, 61, 139, 0.07) 0%, transparent 70%);
+            animation: cosmicShimmer 35s ease-in-out infinite alternate;
+        }
+
+        @keyframes cosmicShimmer {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            25% {
+                transform: translate(-5%, 4%) scale(1.08) rotate(4deg);
+                filter: hue-rotate(20deg) brightness(1.2);
+            }
+            50% {
+                transform: translate(4%, -5%) scale(1.15) rotate(-3deg);
+                filter: hue-rotate(35deg) brightness(0.9);
+            }
+            75% {
+                transform: translate(-3%, 6%) scale(1.05) rotate(5deg);
+                filter: hue-rotate(25deg) brightness(1.1);
+            }
+            100% {
+                transform: translate(-7%, 7%) scale(1.12) rotate(-4deg);
+                filter: hue-rotate(40deg) brightness(1.25);
+            }
+        }
+
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Floating stars */
+        .star-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 1) 0%,
+                rgba(200, 200, 255, 0.8) 50%,
+                transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: starFloat linear infinite;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes starFloat {
+            0% {
+                transform: translateY(110vh) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-15vh) translateX(var(--drift)) scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        /* Cosmic dust particles */
+        .cosmic-dust {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, 
+                rgba(138, 43, 226, 0.9) 0%,
+                rgba(72, 61, 139, 0.7) 50%,
+                transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: dustFloat linear infinite;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+        }
+
+        @keyframes dustFloat {
+            0% {
+                transform: translateY(108vh) translateX(0) scale(0.7) rotate(0deg);
+                opacity: 0;
+            }
+            12% {
+                opacity: 0.85;
+            }
+            88% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: translateY(-18vh) translateX(var(--dust-drift)) scale(0.25) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Nebula wisps */
+        .nebula-wisp {
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background: radial-gradient(ellipse 70% 90% at 50% 95%, 
+                rgba(138, 43, 226, 0.4) 0%,
+                rgba(72, 61, 139, 0.3) 40%,
+                rgba(75, 0, 130, 0.2) 70%,
+                transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: nebulaFloat linear infinite;
+            filter: blur(2px);
+            box-shadow: 0 0 40px rgba(138, 43, 226, 0.4);
+        }
+
+        @keyframes nebulaFloat {
+            0% {
+                transform: translateY(125vh) translateX(0) scale(0.4) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(50vh) translateX(var(--nebula-drift)) scale(1.2) rotate(180deg);
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-25vh) translateX(var(--nebula-final)) scale(0.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* === HEADER - REARRANGED LAYOUT === */
+        .book-header {
+            text-align: center;
+            padding: clamp(2rem, 8vw, 4rem) 5%;
+            background: linear-gradient(180deg, rgba(128, 0, 32, 0.08) 0%, transparent 100%);
+            border-bottom: 3px solid var(--burgundy);
+            position: relative;
+            z-index: 2;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Title moved to top */
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 6.5vw, 3.5rem);
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            animation: fadeIn 1.3s ease-out 0.1s both;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+            order: 1;
+        }
+
+        .book-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.1rem, 3.8vw, 2rem);
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.3s ease-out 0.2s both;
+            order: 2;
+        }
+
+        /* Image after title */
+        .book-cover-display {
+            max-width: min(380px, 85vw);
+            margin: 0 auto 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 70px var(--shadow),
+                0 0 50px rgba(138, 43, 226, 0.3);
+            pointer-events: none;
+            transition: transform 0.5s ease;
+            animation: floatIn 1.6s ease-out 0.3s both;
+            order: 3;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.75) rotateY(-20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateY(0deg);
+            }
+        }
+
+        .book-cover-display:hover {
+            transform: scale(1.08) rotateY(10deg) rotateX(3deg);
+        }
+
+        .book-cover-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .author-name {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.05rem, 3.2vw, 1.5rem);
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.6vw, 3px);
+            animation: fadeIn 1.3s ease-out 0.4s both;
+            margin-bottom: 0;
+            order: 4;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: clamp(0.9rem, 2.2vw, 1.2rem) clamp(2rem, 5vw, 3.5rem);
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.4vw, 2px);
+            box-shadow: 
+                0 6px 20px rgba(128, 0, 32, 0.4),
+                0 0 30px rgba(138, 43, 226, 0.25);
+            animation: pulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 6px 20px rgba(128, 0, 32, 0.4),
+                    0 0 30px rgba(138, 43, 226, 0.25);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 
+                    0 8px 25px rgba(128, 0, 32, 0.5),
+                    0 0 40px rgba(138, 43, 226, 0.35);
+            }
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(184, 134, 11, 0.4),
+                0 0 50px rgba(138, 43, 226, 0.4);
+            animation: none;
+        }
+
+        /* === CONTENT SECTIONS === */
+        .content-container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: clamp(2rem, 6vw, 4rem) 5%;
+        }
+
+        .prologue, .part-header, .chapter {
+            margin-bottom: clamp(3rem, 8vw, 5rem);
+            background: linear-gradient(135deg, rgba(250, 248, 245, 0.98) 0%, rgba(240, 237, 230, 0.98) 100%);
+            padding: clamp(2rem, 6.5vw, 4rem);
+            border-radius: 25px;
+            box-shadow: 
+                0 15px 50px var(--shadow),
+                0 0 30px rgba(138, 43, 226, 0.15);
+            position: relative;
+            z-index: 2;
+            animation: slideInUp 0.9s ease-out both;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .prologue:hover, .part-header:hover, .chapter:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                0 0 40px rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(70px) rotateX(12deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        .prologue { animation-delay: 0.1s; }
+        .part-header { animation-delay: 0.2s; }
+        .chapter { animation-delay: 0.3s; }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5.5vw, 2.5rem);
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.6vw, 3px);
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--burgundy);
+            transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .prologue:hover .section-title::after,
+        .part-header:hover .section-title::after,
+        .chapter:hover .section-title::after {
+            width: 100%;
+        }
+
+        .content-text {
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 1.8rem;
+            line-height: 2;
+            font-size: clamp(1.02rem, 2.8vw, 1.15rem);
+        }
+
+        .content-text:first-of-type::first-letter {
+            font-size: clamp(3rem, 9vw, 4rem);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--burgundy);
+            float: left;
+            line-height: 0.75;
+            margin: 0.1em 0.15em 0 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: clamp(3rem, 12vw, 6rem);
+            color: rgba(128, 0, 32, 0.04);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* === CTA SECTION === */
+        .purchase-cta {
+            text-align: center;
+            padding: clamp(2.5rem, 7vw, 4rem) 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(128, 0, 32, 0.08) 100%);
+            position: relative;
+            z-index: 2;
+            animation: slideInUp 0.9s ease-out 0.4s both;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5.5vw, 2.5rem);
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+        }
+
+        .purchase-links {
+            display: flex;
+            gap: clamp(1.2rem, 3.5vw, 2rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .purchase-link {
+            padding: clamp(1.1rem, 2.8vw, 1.5rem) clamp(2rem, 4.5vw, 3rem);
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 6px 20px rgba(128, 0, 32, 0.4),
+                0 0 30px rgba(138, 43, 226, 0.25);
+            flex: 1 1 auto;
+            min-width: min(260px, 100%);
+        }
+
+        .purchase-link:hover {
+            background: var(--gold);
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 
+                0 12px 35px rgba(184, 134, 11, 0.4),
+                0 0 50px rgba(138, 43, 226, 0.4);
+        }
+
+        /* Back to Books button positioned last */
+        .purchase-cta .back-btn {
+            margin-top: 3rem;
+            order: 10;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .prologue, .part-header, .chapter {
+                padding: clamp(1.5rem, 6vw, 2rem);
+            }
+
+            .content-container {
+                padding: clamp(1.5rem, 6vw, 2rem) 5%;
+            }
+
+            .purchase-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .purchase-link {
+                width: 100%;
+            }
+
+            .star-particle, .cosmic-dust {
+                width: 2.5px;
+                height: 2.5px;
+            }
+
+            .nebula-wisp {
+                width: 20px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: clamp(0.95rem, 4vw, 1rem);
+            }
+
+            .book-header {
+                padding: clamp(1.5rem, 8vw, 2rem) 5%;
+            }
+
+            .section-title {
+                font-size: clamp(1.4rem, 7vw, 1.8rem);
+            }
+
+            .watermark {
+                font-size: clamp(2rem, 15vw, 3rem);
+            }
+        }
+
+        /* Protection - keeping original */
+        * {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+    
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <canvas id="cosmic-canvas"></canvas>
+        <div class="splash-planet-container">
+            <div class="planet"></div>
+            <div class="orbit-ring"></div>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <!-- Enhanced Animated Cosmic Background -->
+        <div class="animated-background">
+            <div class="gradient-layer"></div>
+            <canvas id="particles-canvas"></canvas>
+        </div>
+        
+        <div class="watermark">SAMPLE COPY</div>
+
+        <header class="book-header">
+            <h1 class="book-title">The Gravity of Us: Broken Lanes</h1>
+            <p class="book-subtitle">A Story for Every Heart That's Chased a Firework and Almost Missed the Sunrise</p>
+            <div class="book-cover-display">
+                <img src="the gravity of us.jpeg" alt="The Gravity of Us: Broken Lanes Book Cover" draggable="false">
+            </div>
+            <p class="author-name">Seethala Devi Chandu</p>
+        </header>
+
+        <div class="content-container">
+            
+            <section class="prologue">
+                <h2 class="section-title">Prologue: The Rearview Mirror</h2>
+                <p class="content-text">
+                    The Eluru night air, thick and still damp after an evening shower, pressed in through the open car window. It was a tangible presence, a heavy, wet blanket clinging to my skin, smelling of petrichor and the faint, sweet decay of roadside blossoms. Streetlights cast long, distorted reflections on the puddled asphalt, making the familiar road home look alien, like a scene from a dream sequence I couldn't quite grasp. The world outside was a smear of bleeding neon and deep, velvety shadows. My hands felt clammy where they gripped the steering wheel of my Vitara Brezza, the worn leather a familiar, grounding anchor in the sudden, sharp disorientation.
+                </p>
+                <p class="content-text">
+                    The radio mumbled softly, some melancholic Telugu tune about love gone wrong. The singer's voice, a reedy, heartbreaking tenor, seemed determined to score the soundtrack of my current emotional state. Which was, to put it mildly, precarious. The gnawing ache in my chest had been a constant companion for weeks, a dull, throbbing entity with a life of its own.
+                </p>
+                <p class="content-text">
+                    Then, a pair of headlights sliced through the gloom ahead, emerging from a side street. As the car turned, it passed under the fleeting, sickly yellow glow of a streetlight. For a fraction of a second, the interior was illuminated, and I saw a face in the driver's seat. Her face. Venu.
+                </p>
+                <p class="content-text">
+                    My ex. The paradox who took nine painstaking months – months filled with hopeful, over-analyzed texts, long, anxious silences, and carefully curated playlists sent like messages in a bottle – to finally accept my heart, only to shatter it with a breathtaking, casual efficiency in less time than it takes for the seasons to change.
+                </p>
+                <p class="content-text">
+                    Something inside me didn't just snap; it disintegrated. The carefully constructed dam of composure I had been building for weeks, brick by painful brick, crumbled into dust. Rational thought evaporated, replaced by a primal, blinding impulse. A guttural sound, a half-sob, half-roar, tore from my throat, raw and animalistic. My foot, clad in a worn-out sneaker, crushed the accelerator. The engine roared in protest, a sudden, violent scream in the quiet night. With a wrench of my arms, I sent the car veering violently towards the oncoming lane.
+                </p>
+                <p class="content-text">
+                    For one terrifying, suspended moment, our vehicles were on a collision course. Two metal beasts, hurtling towards mutual destruction under the indifferent gaze of the city. Time slowed. I could see the startled look in her eyes, the widening of her pupils as she registered the dark shape of my Brezza careening towards her. It wasn't a conscious desire to hit her, not really. It was more like a desperate, destructive lunge towards something, anything, to make the gnawing ache in my chest manifest physically. To make the invisible wound visible, to give it form in shattered glass and twisted metal, a pain the whole world could see.
+                </p>
+                <p class="content-text">
+                    Then, just as abruptly, some vestige of self-preservation kicked in. A panicked, vivid image of my mother's face, her eyes wide with a grief I could not bear to cause, flashed through my mind. With another violent twist of the wheel, I swerved back sharply. The tires screeched on the wet road, a high-pitched scream of tortured rubber. The smell of it filled the car, acrid and sharp. I missed her little hatchback by inches that felt both infinite and terrifyingly small.
+                </p>
+                <p class="content-text">
+                    Five hundred meters down the road, the world tilted, the streetlights swimming in my vision. I yanked the car over onto the gravel shoulder, the engine sputtering into silence as I stalled it. My hands were shaking uncontrollably, tremors running up my arms like electrical currents. Sweat beaded on my forehead, cold despite the humid night air, and my breath came in ragged, shallow gasps. The familiar pressure built in my chest, a monstrous invisible hand squeezing the air from my lungs. Panic. Again. My unwelcome, constant companion since the world went sideways.
+                </p>
+                <p class="content-text">
+                    And as I sat there, gasping on the side of a dark, indifferent road, the whole story spooled out behind me, a tangled, heartbreaking mess of a flashback, a history of broken lanes and wrong turns that had led me to this exact, pathetic moment. It all started so long ago…
+                </p>
+            </section>
+
+            <section class="part-header">
+                <h2 class="section-title">Part 1: Childhood and School Years</h2>
+            </section>
+
+            <section class="chapter">
+                <h2 class="section-title">Chapter 1: Small Town Beginnings</h2>
+                <p class="content-text">
+                    My world began in dust and devotion. The small village in Andhra Pradesh where I was born didn't measure time in hours or minutes, but in the slow, deliberate arc of the sun and the rhythmic chime of temple bells from the Sri Venkateswara shrine at the center of town. Mornings were announced by the distant, melodic call of the muezzin from the small mosque on the outskirts, a sound that bled into the gentle clatter of steel tiffins as mothers packed lunches of rice and dal, and the lowing of cattle being led to pasture by men with weathered faces and patient hands.
+                </p>
+                <p class="content-text">
+                    The air itself was a living thing, thick with the scent of damp earth after the morning dew, the sweet, heavy perfume of night-blooming jasmine clinging to compound walls, and the sharp, not-unpleasant tang of cow dung being patted into fuel cakes by the women of the village, their hands moving with an ancient, practiced rhythm. Their laughter, sharp and sudden, would often punctuate the morning quiet as they traded gossip over their work.
+                </p>
+                <p class="content-text">
+                    Our home was a two-story structure painted a faded yellow, a colour that seemed to sigh under the relentless gaze of the sun. It stood unassumingly amongst a cluster of similar houses, their shared walls creating a labyrinth of narrow, dusty lanes where chickens scattered at your approach and children's laughter echoed off the plaster. Life here was lived publicly. Every argument was a piece of street theatre, every celebration a community affair. Secrets were a currency traded in hushed tones over compound walls, discussed and dissected under the watchful eyes of neighbours and the stricter, more judgmental gaze of our orthodox relatives.
+                </p>
+                <p class="content-text">
+                    My family was steeped in these traditions. My grandmother, my Ammamma, was the formidable matriarch who dictated the unspoken laws of our household from her throne, a worn, teak armchair in the coolest corner of the living room. Her eyes, clouded with age but missing nothing, could quell a rising argument with a single, sharp glance. "Respect for elders is paramount," she would declare, her voice thin but wiry. "Religious duties are non-negotiable. And the family's reputation is a fragile, priceless treasure to be guarded at all costs. What will people say?" That question was the compass by which our family navigated the world.
+                </p>
+                <p class="content-text">
+                    My father, a man carved from the unyielding teak of pragmatism, saw education as the only ladder out of this life. He was a stern figure, his love expressed not in hugs or praise, but in ensuring my notebooks were full and my pencils were sharp. His words were few but heavy with the weight of expectation. He believed in hard work, discipline, and the irrefutable logic of mathematics. Dreams, to him, were a frivolous distraction.
+                </p>
+                <p class="content-text">
+                    I learned this early. Once, when I was perhaps four, I had tried to tell him a fantastical story I'd made up about a monkey who could fly using large banana leaves as wings. He had listened with a stony patience, his face impassive as I gesticulated wildly, describing the monkey's journey to the moon. When I finished, breathless and proud, he simply patted my head with a hand that felt as heavy as a stone. "Stories won't fill your stomach, Vikram," he had said, his voice not unkind, but firm as the earth. "Numbers will. Focus on what is real."
+                </p>
+                <p class="content-text">
+                    My mother, in contrast, was a gentle stream, her love a constant, flowing presence in our home. She was the one who would indulge my stories, her eyes lighting up as she listened. She worried about me. I was a quiet child, more comfortable in the silent company of the characters in my storybooks than in the boisterous, rough-and-tumble games of the other village boys. I was a dreamer, my head filled with stories of ancient kings from the Mahabharata and epic battles from the Ramayana, worlds far removed from the dusty reality of our village.
+                </p>
+                <p class="content-text">
+                    The day I started school marked the first real shift in my small universe. I remember the feeling of the new uniform, the fabric stiff and unfamiliar against my skin, smelling of the shop it came from and the naphthalene balls my mother had stored it with. She had oiled my hair until it shone, parting it perfectly to one side, and the scent of coconut followed me as I walked, my small hand swallowed in my father's much larger one, to the designated bus stop at the edge of the village.
+                </p>
+                <p class="content-text">
+                    "Vikram," my father said, stopping and crouching down to look me in the eye, an act so rare it startled me. His voice was gruff, but I could see a flicker of something softer in his gaze, a rare vulnerability. "You will be a good boy. You will listen to your teacher. You will study hard. This is your only job. Understand?"
+                </p>
+                <p class="content-text">
+                    I nodded, my throat too tight to speak. My world, which had until this moment been the safe, predictable space between my home and the temple, was about to expand in a terrifying way. The school bus, a monstrous yellow beast, rumbled to a stop before us, its engine a coughing giant. It kicked up a cloud of fine, red dust that coated my new, shiny black shoes, instantly dulling them.
+                </p>
+            </section>
+
+        </div>
+
+        <section class="purchase-cta">
+            <h2 class="cta-title">Continue Vikram's Journey</h2>
+            <p style="font-size: clamp(1.15rem, 3.2vw, 1.4rem); margin-bottom: 2rem; color: var(--cream); font-weight: 600; text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 30px rgba(138, 43, 226, 0.5);">
+                Follow the complete story of friendship, love, and self-discovery.
+            </p>
+            <div class="purchase-links">
+                <a href="https://www.amazon.com/dp/B0FPLF9CKB" target="_blank" rel="noopener" class="purchase-link">
+                    📚 Buy Paperback on Amazon
+                </a>
+                <a href="https://www.amazon.in/dp/B0FPBQ7RVC" target="_blank" rel="noopener" class="purchase-link">
+                    📱 Buy Kindle Edition
+                </a>
+                <a href="https://play.google.com/store/audiobooks/details?id=AQAAAECqeiY6nM" target="_blank" rel="noopener" class="purchase-link">
+                    🎧 Listen on Google Play
+                </a>
+            </div>
+            <br><br>
+            <a href="index.html#books" class="back-btn">← Back to All Books</a>
+        </section>
+
+    </div>
+
+    <script>
+        // === ENHANCED COSMIC SPLASH SCREEN ===
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+            const canvas = document.getElementById('cosmic-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            ctx.globalCompositeOperation = "lighter";
+            
+            const stars = [];
+            const maxStars = 200;
+            
+            class Star {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.baseSize = Math.random() * 3 + 1;
+                    this.size = this.baseSize;
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 2 + Math.random() * 6;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed - 2;
+                    
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.15;
+                    
+                    this.life = 80;
+                    this.age = 0;
+                    
+                    this.twinkle = Math.random() * Math.PI * 2;
+                    this.twinkleSpeed = 0.15 + Math.random() * 0.1;
+                    this.intensity = 0.7 + Math.random() * 0.5;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    this.vy -= 0.12;
+                    this.vx *= 0.97;
+                    this.vy *= 0.98;
+                    
+                    this.rotation += this.rotationSpeed;
+                    this.age++;
+                    this.twinkle += this.twinkleSpeed;
+                    
+                    const pulse = 1 + Math.sin(this.twinkle) * 0.3;
+                    this.size = this.baseSize * pulse;
+                }
+                
+                draw() {
+                    const lifeRatio = 1 - (this.age / this.life);
+                    if (lifeRatio <= 0) return;
+                    
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    
+                    const alpha = lifeRatio * this.intensity;
+                    
+                    // Star glow
+                    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 3);
+                    gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+                    gradient.addColorStop(0.3, `rgba(200, 200, 255, ${alpha * 0.7})`);
+                    gradient.addColorStop(0.6, `rgba(138, 43, 226, ${alpha * 0.4})`);
+                    gradient.addColorStop(1, `rgba(72, 61, 139, 0)`);
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Star core
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.9})`;
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = `rgba(138, 43, 226, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+                
+                isDead() {
+                    return this.age >= this.life;
+                }
+            }
+            
+            function getPlanetPosition() {
+                const container = document.querySelector('.splash-planet-container');
+                if (!container) return { x: canvas.width / 2, y: canvas.height / 2 };
+                const rect = container.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+            }
+            
+            function createStars() {
+                const pos = getPlanetPosition();
+                
+                for (let i = 0; i < 12; i++) {
+                    if (stars.length < maxStars) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = Math.random() * 70;
+                        const x = pos.x + Math.cos(angle) * distance;
+                        const y = pos.y + Math.sin(angle) * distance;
+                        stars.push(new Star(x, y));
+                    }
+                }
+            }
+            
+            let starInterval;
+            function animateStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = stars.length - 1; i >= 0; i--) {
+                    stars[i].update();
+                    stars[i].draw();
+                    
+                    if (stars[i].isDead()) {
+                        stars.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animateStars);
+            }
+            
+            starInterval = setInterval(createStars, 40);
+            animateStars();
+            
+            setTimeout(() => {
+                clearInterval(starInterval);
+            }, 7500);
+            
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.style.display = 'block';
+                    initEnhancedBackgroundAnimations();
+                }, 1500);
+            }, 8000);
+        });
+        
+        // === ENHANCED BACKGROUND ANIMATIONS WITH COSMIC EFFECTS ===
+        function initEnhancedBackgroundAnimations() {
+            const particlesCanvas = document.getElementById('particles-canvas');
+            const ctx = particlesCanvas.getContext('2d');
+            
+            function resizeCanvas() {
+                particlesCanvas.width = window.innerWidth;
+                particlesCanvas.height = document.body.scrollHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Enhanced particle system
+            const particles = [];
+            const particleCount = Math.min(90, Math.floor(window.innerWidth / 18));
+            
+            class EnhancedParticle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * particlesCanvas.width;
+                    this.y = Math.random() * particlesCanvas.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = (Math.random() - 0.5) * 0.8;
+                    this.speedY = (Math.random() - 0.5) * 0.8;
+                    this.opacity = Math.random() * 0.65 + 0.35;
+                    this.hue = 260 + Math.random() * 30; // Purple/violet hues
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x < 0 || this.x > particlesCanvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > particlesCanvas.height) this.speedY *= -1;
+                    
+                    this.hue += 0.2;
+                    if (this.hue > 290) this.hue = 260;
+                }
+                
+                draw() {
+                    ctx.fillStyle = `hsla(${this.hue}, 80%, 60%, ${this.opacity})`;
+                    ctx.shadowBlur = 16;
+                    ctx.shadowColor = `hsla(${this.hue}, 80%, 50%, 0.85)`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new EnhancedParticle());
+            }
+            
+            function animateEnhancedParticles() {
+                ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                // Enhanced connections with cosmic colors
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 130) {
+                            const avgHue = (particles[i].hue + particles[j].hue) / 2;
+                            ctx.strokeStyle = `hsla(${avgHue}, 75%, 55%, ${0.3 * (1 - distance / 130)})`;
+                            ctx.lineWidth = 1.1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animateEnhancedParticles);
+            }
+            
+            animateEnhancedParticles();
+            
+            // Create floating cosmic elements
+            createCosmicElements();
+        }
+        
+        function createCosmicElements() {
+            const background = document.querySelector('.animated-background');
+            
+            // Create star particles
+            const starCount = Math.min(55, Math.floor(window.innerWidth / 22));
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.setProperty('--drift', `${(Math.random() - 0.5) * 300}px`);
+                star.style.animationDuration = `${14 + Math.random() * 9}s`;
+                star.style.animationDelay = `${Math.random() * 14}s`;
+                star.style.width = `${Math.random() * 2 + 2}px`;
+                star.style.height = star.style.width;
+                background.appendChild(star);
+            }
+            
+            // Create cosmic dust
+            const dustCount = Math.min(65, Math.floor(window.innerWidth / 20));
+            for (let i = 0; i < dustCount; i++) {
+                const dust = document.createElement('div');
+                dust.className = 'cosmic-dust';
+                dust.style.left = `${Math.random() * 100}%`;
+                dust.style.setProperty('--dust-drift', `${(Math.random() - 0.5) * 280}px`);
+                dust.style.animationDuration = `${16 + Math.random() * 10}s`;
+                dust.style.animationDelay = `${Math.random() * 16}s`;
+                dust.style.width = `${Math.random() * 3 + 2}px`;
+                dust.style.height = dust.style.width;
+                background.appendChild(dust);
+            }
+            
+            // Create nebula wisps
+            const nebulaCount = Math.min(25, Math.floor(window.innerWidth / 50));
+            for (let i = 0; i < nebulaCount; i++) {
+                const nebula = document.createElement('div');
+                nebula.className = 'nebula-wisp';
+                nebula.style.left = `${Math.random() * 100}%`;
+                nebula.style.setProperty('--nebula-drift', `${(Math.random() - 0.5) * 200}px`);
+                nebula.style.setProperty('--nebula-final', `${(Math.random() - 0.5) * 350}px`);
+                nebula.style.animationDuration = `${24 + Math.random() * 14}s`;
+                nebula.style.animationDelay = `${Math.random() * 22}s`;
+                nebula.style.width = `${Math.random() * 15 + 20}px`;
+                nebula.style.height = `${Math.random() * 25 + 35}px`;
+                background.appendChild(nebula);
+            }
+        }
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.11,
+            rootMargin: '0px 0px -55px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.prologue, .part-header, .chapter');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Anti-copy protection (keeping original)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+    </script>
+
+</body>
+</html>

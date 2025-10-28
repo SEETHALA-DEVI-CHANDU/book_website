@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Like a Flame to Me - Free Sample | Seethala Devi Chandu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --cream: #faf8f5;
+            --dark-cream: #f0ede6;
+            --burgundy: #800020;
+            --gold: #b8860b;
+            --text-dark: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* === ENHANCED ANIMATED BACKGROUND WITH REALISTIC FLAMES === */
+        body {
+            font-family: 'Crimson Text', serif;
+            color: var(--text-dark);
+            line-height: 1.9;
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a0f0a 0%, #0a0505 50%, #000000 100%);
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Enhanced gradient layers with more flame-like appearance */
+        .gradient-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 15% 80%, rgba(255, 100, 0, 0.25) 0%, transparent 40%),
+                radial-gradient(ellipse at 85% 20%, rgba(255, 140, 0, 0.20) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 70%, rgba(255, 69, 0, 0.18) 0%, transparent 50%),
+                radial-gradient(ellipse at 25% 30%, rgba(220, 20, 60, 0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 60%);
+            animation: flameShift 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes flameShift {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            25% {
+                transform: translate(-3%, 2%) scale(1.05) rotate(2deg);
+                filter: hue-rotate(10deg) brightness(1.1);
+            }
+            50% {
+                transform: translate(2%, -3%) scale(1.1) rotate(-1deg);
+                filter: hue-rotate(20deg) brightness(0.9);
+            }
+            75% {
+                transform: translate(-1%, 4%) scale(1.03) rotate(3deg);
+                filter: hue-rotate(15deg) brightness(1.05);
+            }
+            100% {
+                transform: translate(-5%, 5%) scale(1.08) rotate(-2deg);
+                filter: hue-rotate(25deg) brightness(1.15);
+            }
+        }
+
+        /* Enhanced particle canvas for flame particles */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Realistic floating flame particles */
+        .flame-particle {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: radial-gradient(ellipse 50% 70% at 50% 80%, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 200, 0, 0.8) 20%,
+                rgba(255, 100, 0, 0.6) 50%,
+                rgba(255, 0, 0, 0.4) 80%,
+                transparent 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            pointer-events: none;
+            animation: flameParticleFloat linear infinite;
+            box-shadow: 
+                0 0 20px rgba(255, 140, 0, 0.8),
+                0 0 40px rgba(255, 69, 0, 0.6),
+                0 0 60px rgba(255, 0, 0, 0.4);
+            filter: blur(0.5px);
+        }
+
+        @keyframes flameParticleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0.8) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+            }
+            15% {
+                transform: translateY(80vh) translateX(var(--drift-small)) scale(1) rotate(var(--rotation));
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(30vh) translateX(var(--drift-mid)) scale(1.2) rotate(calc(var(--rotation) * 2));
+                opacity: 0.9;
+            }
+            80% {
+                transform: translateY(10vh) translateX(var(--drift-large)) scale(0.6) rotate(calc(var(--rotation) * 3));
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-20vh) translateX(var(--drift-final)) scale(0.2) rotate(calc(var(--rotation) * 4));
+                opacity: 0;
+            }
+        }
+
+        /* Large flame wisps */
+        .flame-wisp {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            background: radial-gradient(ellipse 60% 80% at 50% 90%, 
+                rgba(255, 255, 255, 0.7) 0%,
+                rgba(255, 220, 0, 0.6) 15%,
+                rgba(255, 140, 0, 0.5) 40%,
+                rgba(255, 69, 0, 0.4) 70%,
+                rgba(139, 0, 0, 0.3) 85%,
+                transparent 100%);
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            pointer-events: none;
+            animation: flameWispFloat linear infinite;
+            box-shadow: 
+                0 0 30px rgba(255, 140, 0, 0.6),
+                0 0 60px rgba(255, 69, 0, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            filter: blur(1px);
+        }
+
+        @keyframes flameWispFloat {
+            0% {
+                transform: translateY(120vh) translateX(0) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            30% {
+                transform: translateY(70vh) translateX(var(--wisp-drift-1)) scale(1.1) rotate(var(--wisp-rotation));
+                opacity: 0.8;
+            }
+            60% {
+                transform: translateY(25vh) translateX(var(--wisp-drift-2)) scale(1.3) rotate(calc(var(--wisp-rotation) * 2));
+                opacity: 0.7;
+            }
+            90% {
+                transform: translateY(-10vh) translateX(var(--wisp-drift-3)) scale(0.4) rotate(calc(var(--wisp-rotation) * 3));
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-30vh) translateX(var(--wisp-drift-final)) scale(0.1) rotate(calc(var(--wisp-rotation) * 4));
+                opacity: 0;
+            }
+        }
+
+        /* Ember trails */
+        .ember-trail {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 1) 0%,
+                rgba(255, 180, 0, 0.8) 30%,
+                rgba(255, 69, 0, 0.6) 70%,
+                transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: emberTrailFloat linear infinite;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
+        }
+
+        @keyframes emberTrailFloat {
+            0% {
+                transform: translateY(110vh) translateX(0) scale(1);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(var(--ember-drift)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* === ENHANCED SPLASH SCREEN === */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #2a1510 0%, #1a0f0a 40%, #000000 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-out;
+            overflow: hidden;
+        }
+
+        #flame-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .main-fire-container {
+            position: absolute;
+            width: clamp(150px, 30vw, 220px);
+            height: clamp(180px, 35vw, 280px);
+            animation: fire-travel 7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+            filter: drop-shadow(0 0 80px rgba(255, 140, 0, 1)) drop-shadow(0 0 120px rgba(255, 69, 0, 0.8));
+            will-change: transform;
+            z-index: 10;
+        }
+
+        @keyframes fire-travel {
+            0% {
+                transform: translate(-40vw, 70vh) scale(0.4) rotate(-25deg);
+                opacity: 0;
+            }
+            8% {
+                opacity: 1;
+            }
+            20% {
+                transform: translate(0vw, 40vh) scale(1.3) rotate(-5deg);
+            }
+            35% {
+                transform: translate(30vw, 20vh) scale(1.6) rotate(10deg);
+            }
+            55% {
+                transform: translate(60vw, 25vh) scale(1.8) rotate(-15deg);
+            }
+            75% {
+                transform: translate(85vw, 10vh) scale(1.5) rotate(25deg);
+            }
+            88% {
+                transform: translate(110vw, -5vh) scale(1.2) rotate(-20deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(140vw, -20vh) scale(0.3) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        #main-content {
+            display: none;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, rgba(250, 248, 245, 0.95) 0%, rgba(240, 237, 230, 0.95) 100%);
+            backdrop-filter: blur(15px);
+        }
+
+        /* === HEADER - REARRANGED LAYOUT === */
+        .book-header {
+            text-align: center;
+            padding: clamp(2rem, 8vw, 4rem) 5%;
+            background: linear-gradient(180deg, rgba(128, 0, 32, 0.08) 0%, transparent 100%);
+            border-bottom: 3px solid var(--burgundy);
+            position: relative;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Title moved to top */
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6.5vw, 4rem);
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            animation: fadeIn 1.2s ease-out 0.1s both;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+            order: 1;
+        }
+
+        .book-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.2rem, 3.8vw, 2.2rem);
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out 0.2s both;
+            order: 2;
+        }
+
+        /* Image after title */
+        .book-cover-display {
+            max-width: min(380px, 85vw);
+            margin: 0 auto 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 70px var(--shadow),
+                0 0 50px rgba(255, 140, 0, 0.2);
+            transition: transform 0.5s ease;
+            animation: floatIn 1.5s ease-out 0.3s both;
+            order: 3;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8) rotateY(-15deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateY(0deg);
+            }
+        }
+
+        .book-cover-display:hover {
+            transform: scale(1.08) rotateY(8deg) rotateX(2deg);
+        }
+
+        .book-cover-display img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .author-name {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.1rem, 3.2vw, 1.7rem);
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.6vw, 4px);
+            animation: fadeIn 1.2s ease-out 0.4s both;
+            margin-bottom: 2rem;
+            order: 4;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: clamp(0.9rem, 2.2vw, 1.2rem) clamp(2rem, 5vw, 4rem);
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.4vw, 3px);
+            box-shadow: 
+                0 6px 20px rgba(128, 0, 32, 0.4),
+                0 0 30px rgba(255, 140, 0, 0.2);
+            animation: pulse 2.5s ease-in-out infinite;
+            order: 5;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 6px 20px rgba(128, 0, 32, 0.4),
+                    0 0 30px rgba(255, 140, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 
+                    0 8px 25px rgba(128, 0, 32, 0.5),
+                    0 0 40px rgba(255, 140, 0, 0.3);
+            }
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(184, 134, 11, 0.4),
+                0 0 50px rgba(255, 140, 0, 0.4);
+            animation: none;
+        }
+
+        /* === CONTENT SECTIONS === */
+        .content-container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: clamp(2rem, 6vw, 4rem) 5%;
+        }
+
+        .dedication, .preface, .prologue, .chapter {
+            margin-bottom: clamp(3rem, 8vw, 5rem);
+            background: rgba(255, 255, 255, 0.96);
+            padding: clamp(2.5rem, 6.5vw, 4.5rem);
+            border-radius: 25px;
+            box-shadow: 
+                0 15px 50px var(--shadow),
+                0 0 30px rgba(255, 140, 0, 0.1);
+            animation: slideInUp 0.8s ease-out both;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 140, 0, 0.1);
+        }
+
+        .dedication:hover, .preface:hover, .prologue:hover, .chapter:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                0 0 40px rgba(255, 140, 0, 0.2);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        .dedication { animation-delay: 0.1s; }
+        .preface { animation-delay: 0.2s; }
+        .prologue { animation-delay: 0.3s; }
+        .chapter { animation-delay: 0.4s; }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5.5vw, 2.8rem);
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.6vw, 4px);
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--burgundy);
+            transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .dedication:hover .section-title::after,
+        .preface:hover .section-title::after,
+        .prologue:hover .section-title::after,
+        .chapter:hover .section-title::after {
+            width: 100%;
+        }
+
+        .inline-image-container {
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .inline-image-container img {
+            max-width: min(420px, 92%);
+            width: 100%;
+            height: auto;
+            margin: 2.5rem auto;
+            display: block;
+            border-radius: 20px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.25),
+                0 0 30px rgba(255, 140, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .inline-image-container img:hover {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.3),
+                0 0 40px rgba(255, 140, 0, 0.2);
+        }
+
+        .content-text {
+            text-align: justify;
+            text-indent: 2.5em;
+            margin-bottom: 1.8rem;
+            line-height: 2;
+            font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+        }
+
+        .content-text:first-of-type::first-letter {
+            font-size: clamp(3.5rem, 9vw, 4.5rem);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--burgundy);
+            float: left;
+            line-height: 0.75;
+            margin: 0.1em 0.15em 0 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+            color: var(--gold);
+            margin: 2.5rem 0;
+            padding: clamp(2rem, 4.5vw, 2.5rem);
+            border-left: 5px solid var(--burgundy);
+            background: rgba(128, 0, 32, 0.06);
+            border-radius: 0 15px 15px 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 20px rgba(128, 0, 32, 0.1);
+        }
+
+        .quote:hover {
+            background: rgba(128, 0, 32, 0.1);
+            transform: translateX(15px);
+            box-shadow: 0 8px 30px rgba(128, 0, 32, 0.15);
+        }
+
+        .character-name {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--burgundy);
+            text-align: center;
+            margin: 3.5rem 0 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: clamp(2px, 1vw, 5px);
+            position: relative;
+        }
+
+        .character-name::before,
+        .character-name::after {
+            content: '✦';
+            margin: 0 1.5rem;
+            color: var(--gold);
+            animation: sparkle 2.5s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+        }
+
+        @keyframes sparkle {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg); 
+                text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: scale(1.3) rotate(180deg); 
+                text-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+            }
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: clamp(3.5rem, 12vw, 7rem);
+            color: rgba(128, 0, 32, 0.04);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* === CTA SECTION === */
+        .purchase-cta {
+            text-align: center;
+            padding: clamp(2.5rem, 7vw, 5rem) 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(128, 0, 32, 0.08) 100%);
+            animation: slideInUp 0.8s ease-out 0.5s both;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5.5vw, 2.8rem);
+            color: var(--burgundy);
+            margin-bottom: 2.5rem;
+        }
+
+        .purchase-links {
+            display: flex;
+            gap: clamp(1.2rem, 3.5vw, 2.5rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .purchase-link {
+            padding: clamp(1.2rem, 2.8vw, 1.8rem) clamp(2rem, 4.5vw, 3.5rem);
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 6px 20px rgba(128, 0, 32, 0.4),
+                0 0 30px rgba(255, 140, 0, 0.2);
+            flex: 1 1 auto;
+            min-width: min(280px, 100%);
+        }
+
+        .purchase-link:hover {
+            background: var(--gold);
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 
+                0 12px 35px rgba(184, 134, 11, 0.4),
+                0 0 50px rgba(255, 140, 0, 0.4);
+        }
+
+        /* Back to Books button positioned last */
+        .purchase-cta .back-btn {
+            margin-top: 3rem;
+            order: 10;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .dedication, .preface, .prologue, .chapter {
+                padding: clamp(2rem, 6vw, 2.5rem);
+            }
+
+            .content-container {
+                padding: clamp(2rem, 6vw, 2.5rem) 5%;
+            }
+
+            .purchase-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .purchase-link {
+                width: 100%;
+            }
+
+            .flame-particle, .flame-wisp {
+                width: 6px;
+                height: 9px;
+            }
+
+            .flame-wisp {
+                width: 18px;
+                height: 28px;
+            }
+        }
+
+        /* Protection - keeping original */
+        * {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+    
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <canvas id="flame-canvas"></canvas>
+        <div class="main-fire-container" id="mainFire"></div>
+    </div>
+
+    <div id="main-content">
+        <!-- Enhanced Animated Background with Realistic Flames -->
+        <div class="animated-background">
+            <div class="gradient-layer"></div>
+            <canvas id="particles-canvas"></canvas>
+        </div>
+        
+        <div class="watermark">SAMPLE COPY</div>
+
+        <header class="book-header">
+            <h1 class="book-title">You Are Like a Flame to Me</h1>
+            <p class="book-subtitle">The Algorithm of Letting Go</p>
+            <div class="book-cover-display">
+                <img src="you are like a flame to me pic 1.png" alt="You Are Like a Flame to Me Book Cover" draggable="false">
+            </div>
+            <p class="author-name">Seethala Devi Chandu</p>
+        </header>
+
+        <div class="content-container">
+            
+            <section class="dedication">
+                <h2 class="section-title">Dedication</h2>
+                
+                <div class="inline-image-container">
+                    <img src="you are like a flame to me pic 2.png" alt="Book dedication illustration" draggable="false">
+                </div>
+                
+                <p class="content-text">
+                    For the woman whose strength is a quiet anchor, not a performance for the world's applause. Who balances the chaos of her life and the joy of her family drawing validation from within, not from the judgment of others.
+                </p>
+                <p class="content-text">
+                    For her who adorns herself in her own truth, whether in kurtas or western wear, not as a weapon for jealousy or a plea for attention, but as a simple, beautiful expression of the self. For the woman who knows her worth is built in her character and her work, a beauty that no dress or makeup can contain.
+                </p>
+                <p class="content-text">
+                    And for the man who has stood at the edge of family pressure, career failure, and heartbreaking loss, and chose the hard path of living over the easy escape. For the one who rebuilt himself from the wreckage.
+                </p>
+                <p class="content-text">
+                    Finally, for the man called "old-fashioned" or a "red flag" in a world that moves too fast to see the difference. To the one who loves protectively, and who truly understands the sacred, invisible line between caring for a heart and caging it.
+                </p>
+            </section>
+
+            <section class="preface">
+                <h2 class="section-title">Preface</h2>
+                <p class="content-text">
+                    We are all architects of the lives we think we're supposed to want. We build facades of independence, wear confidence like a costume, and post our #NewBeginnings from the bathroom floor. We are all performers in the theater of being "okay."
+                </p>
+                <p class="content-text">
+                    This is a story about what happens when the performance ends and the set collapses. What happens when love, in its most desperate and protective form, builds a cage instead of a sanctuary? Where is the invisible, sacred line between a hand that holds you and a hand that holds you back?
+                </p>
+                <p class="content-text">
+                    This is not a story about how love conquers all. It is a story about the wreckage - and the painful, necessary architecture of rebuilding.
+                </p>
+                <p class="content-text">
+                    It is for every person who has ever loved so hard they dissolved. For the "old-fashioned" heart that loved so protectively it suffocated the very thing it was trying to save. And for the woman who had to burn down her entire life to find the person she was before she became someone else's "everything".
+                </p>
+                <p class="content-text">
+                    It asks: What if the real happy ending isn't finding a home in someone else, but finally, terrifyingly, building one within yourself?
+                </p>
+            </section>
+
+            <section class="prologue">
+                <h2 class="section-title">Prologue</h2>
+                <p class="content-text">
+                    There are two ways to drown. The first is violent. A sudden fall, the shock of cold, water in the lungs. It is a fight - a desperate thrashing against the inevitable, ending in a terrible, final silence.
+                </p>
+                <p class="content-text">
+                    The second is slow. It begins not as a flood, but as a comfort. A warmth that starts at your ankles. You tell yourself it's fine; you can still breathe. The water rises to your waist, and you accommodate it. You make yourself smaller to fit the space it leaves you.
+                </p>
+                <p class="content-text">
+                    By the time the water is at your neck, you have forgotten what it feels like to stand on solid ground. You have forgotten how to swim. You have accepted the rising tide as your reality, mistaking the anchor that holds you under for the safety of a hand holding you steady.
+                </p>
+                <p class="content-text">
+                    This is how love can kill you. Not with the violence of a storm, but with the slow, patient suffocation of a rising sea.
+                </p>
+                <p class="content-text">
+                    For Rohan, love was a fortress he built to keep Priya safe. For Priya, that fortress was a cage.
+                </p>
+                <p class="content-text">
+                    This is not the story of their drowning. This is the story of what comes after. It is the story of what you find at rock bottom, after the water has receded and left you gasping on the shore. It is the story of two people who must, for the first time, learn to breathe on their own.
+                </p>
+                
+                <div class="quote">
+                    They ask me what love is. And I tell them: For me, it's not about losing yourself to someone, it's about finding peace beside them. Love meant giving her a home not made of walls, but of warmth. A space where she could drop all her masks, and breathe without pretending.
+                </div>
+            </section>
+
+            <section class="chapter">
+                <h2 class="section-title">Chapter One: The Art of Falling Apart</h2>
+                
+                <div class="character-name">ROHAN</div>
+                
+                <p class="content-text">
+                    There's a specific kind of rock bottom that comes with a soundtrack. Mine sounds like this: my mother crying in the kitchen at 3 AM, my phone buzzing with increasingly aggressive messages from debt collectors, and somewhere in the distance, a dog barking at absolutely nothing because even the universe's pets are losing their shit.
+                </p>
+                <p class="content-text">
+                    I'm on the bathroom floor cold tiles, fluorescent lighting that makes my skin look like a corpse, the faint smell of the cleaning chemicals Ma uses every Sunday and I'm staring at my bank balance like it might spontaneously regenerate the two lakhs I just set on fire.
+                </p>
+                <p class="content-text">
+                    Balance: ₹347
+                </p>
+                <p class="content-text">
+                    Three hundred and forty-seven rupees. That's what's left of my father's retirement fund after I gave it to a "company" that turned out to be three guys in a rented office with fake business cards and very convincing smiles.
+                </p>
+                <p class="content-text">
+                    My phone lights up. Another message.
+                </p>
+                <p class="content-text">
+                    Priya: we need to talk
+                </p>
+                <p class="content-text">
+                    Four words. Lowercase. No punctuation. No emojis. The digital equivalent of a funeral notice.
+                </p>
+                <p class="content-text">
+                    I should've known we were over when she stopped using hearts. Then she stopped capitalizing my name. Then she stopped responding with anything except single-word answers that felt like tiny acts of violence.
+                </p>
+                <p class="content-text">
+                    But I kept trying. Kept texting. Kept showing up. Kept shrinking myself smaller and smaller, convinced that if I just disappeared enough, she'd finally have room to love me again.
+                </p>
+                <p class="content-text">
+                    Turns out, you can't love someone into staying. You can only suffocate them so slowly they don't realize they're dying until they're already gone.
+                </p>
+                <p class="content-text">
+                    The bathroom door opens without knocking because privacy is a Western concept and this is a middle-class Indian household where your breakdown is a family affair.
+                </p>
+                <p class="content-text">
+                    Ma. Of course it's Ma. She's wearing that ancient night-gown, the one with the faded flowers that she's had since I was in school and she's holding two cups of chai like she's about to negotiate a hostage situation.
+                </p>
+                <p class="content-text">
+                    Which, technically, she is.
+                </p>
+                <p class="content-text">
+                    "How much?" she asks, sitting down on the floor beside me like this is normal. Like her son having a complete mental collapse at 3 AM on bathroom tiles is just another Tuesday.
+                </p>
+
+                <div class="character-name">PRIYA</div>
+                
+                <p class="content-text">
+                    I'm going to throw up. Not metaphorically. Actually, literally vomit on the bathroom floor of Café Noir while my friends are outside doing shots and wondering where I've disappeared to for the last twenty minutes.
+                </p>
+                <p class="content-text">
+                    My phone is in my hand. Screen cracked I dropped it last week and can't afford to fix it because I spent my stipend on this outfit I'm wearing that makes me look confident but feel like a fraud.
+                </p>
+                <p class="content-text">
+                    Seventeen missed calls from Rohan. Three voicemails I can't bring myself to listen to. And one text I just sent that's going to end everything:
+                </p>
+                <p class="content-text">
+                    Me: we need to talk. tomorrow. call me.
+                </p>
+                <p class="content-text">
+                    My hands are shaking. The bathroom smells like expensive perfume and poor choices. Someone's written "HE'S NOT WORTH IT BABE" on the mirror in lipstick, and I want to laugh because how do they know? How does some drunk girl with a Maybelline tube know exactly what I'm going through?
+                </p>
+                <p class="content-text">
+                    There's a knock on the door.
+                </p>
+                <p class="content-text">
+                    "Priya? You've been in there for like twenty minutes. Are you okay?"
+                </p>
+                <p class="content-text">
+                    Shreya's voice. Concerned but also impatient because we have bottle service and apparently that expires or something.
+                </p>
+                <p class="content-text">
+                    "Yeah. Just... upset stomach. Go ahead. I'll be out soon."
+                </p>
+                <p class="content-text">
+                    "Okay but hurry. Aditya's here and he keeps asking about you."
+                </p>
+                <p class="content-text">
+                    Aditya. Tall, handsome, emotionally unavailable Aditya who treats relationships like Tinder swipe through until something better comes along. The exact kind of guy Rohan was terrified I'd meet.
+                </p>
+                <p class="content-text">
+                    And the worst part? I'm considering it. Actually, considering going out there and flirting with him just to prove... what? That I can? That I'm not Rohan's anymore? That the girl who used to wear kurtas and go to bed at 10 PM is dead and buried under this crop top and four shots of tequila?
+                </p>
+                <p class="content-text">
+                    When did I become this person?
+                </p>
+                
+                <div class="quote">
+                    I've never done well with closed spaces. The air feels too heavy, my chest tightens, and my heart beats like it's trying to escape. It's scary that kind of fear that makes you feel trapped, helpless. But the closed space isn't this bathroom. It's me.
+                </div>
+            </section>
+
+        </div>
+
+        <section class="purchase-cta">
+            <h2 class="cta-title">Continue Reading</h2>
+            <p style="font-size: clamp(1.2rem, 3.2vw, 1.5rem); margin-bottom: 2.5rem; color: var(--text-dark);">
+                This is just a glimpse. Experience the complete journey of Rohan and Priya.
+            </p>
+            <div class="purchase-links">
+                <a href="https://www.amazon.com/dp/B0FXG6PZ6Z" target="_blank" rel="noopener" class="purchase-link">
+                    📚 Buy Paperback on Amazon
+                </a>
+                <a href="https://www.amazon.in/dp/B0FXBR5C9B" target="_blank" rel="noopener" class="purchase-link">
+                    📱 Buy Kindle Edition
+                </a>
+                <a href="https://play.google.com/store/audiobooks/details?id=AQAAAEBqlj3WRM" target="_blank" rel="noopener" class="purchase-link">
+                    🎧 Listen on Google Play
+                </a>
+            </div>
+            <br><br>
+            <a href="index.html#books" class="back-btn">← Back to All Books</a>
+        </section>
+
+    </div>
+
+    <script>
+        // === ENHANCED SPLASH SCREEN FLAME ANIMATION ===
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+            const canvas = document.getElementById('flame-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            ctx.globalCompositeOperation = "lighter";
+            
+            const flames = [];
+            const maxFlames = 250;
+            
+            class EnhancedFlame {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.baseSize = 18 + Math.random() * 30;
+                    this.size = this.baseSize;
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 4 + Math.random() * 10;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed - 3;
+                    
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+                    
+                    this.life = 90;
+                    this.age = 0;
+                    
+                    this.flickerPhase = Math.random() * Math.PI * 2;
+                    this.flickerSpeed = 0.18 + Math.random() * 0.12;
+                    this.intensity = 0.8 + Math.random() * 0.4;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    this.vy -= 0.15;
+                    this.vx *= 0.96;
+                    this.vy *= 0.97;
+                    
+                    this.rotation += this.rotationSpeed;
+                    this.age++;
+                    this.flickerPhase += this.flickerSpeed;
+                    
+                    const pulse = 1 + Math.sin(this.flickerPhase) * 0.25;
+                    this.size = this.baseSize * pulse;
+                }
+                
+                draw() {
+                    const lifeRatio = 1 - (this.age / this.life);
+                    if (lifeRatio <= 0) return;
+                    
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    
+                    let r, g, b, coreAlpha;
+                    
+                    if (lifeRatio > 0.8) {
+                        r = 255;
+                        g = 255;
+                        b = 250;
+                        coreAlpha = lifeRatio * 0.95 * this.intensity;
+                    } else if (lifeRatio > 0.6) {
+                        r = 255;
+                        g = 220 + (lifeRatio - 0.6) * 175;
+                        b = 100 + (lifeRatio - 0.6) * 375;
+                        coreAlpha = lifeRatio * 0.85 * this.intensity;
+                    } else if (lifeRatio > 0.3) {
+                        r = 255;
+                        g = 140 + (lifeRatio - 0.3) * 267;
+                        b = 40;
+                        coreAlpha = lifeRatio * 0.75 * this.intensity;
+                    } else {
+                        r = 220 + (lifeRatio * 117);
+                        g = 50 + (lifeRatio * 150);
+                        b = 15;
+                        coreAlpha = lifeRatio * 0.65 * this.intensity;
+                    }
+                    
+                    const flicker = 0.75 + Math.sin(this.flickerPhase) * 0.25;
+                    coreAlpha *= flicker;
+                    
+                    // Main flame body
+                    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${coreAlpha})`);
+                    gradient.addColorStop(0.25, `rgba(${r}, ${g * 0.95}, ${b * 0.8}, ${coreAlpha * 0.9})`);
+                    gradient.addColorStop(0.5, `rgba(${r * 0.95}, ${g * 0.7}, ${b * 0.5}, ${coreAlpha * 0.6})`);
+                    gradient.addColorStop(0.75, `rgba(${r * 0.9}, ${g * 0.4}, ${b * 0.3}, ${coreAlpha * 0.3})`);
+                    gradient.addColorStop(1, `rgba(${r * 0.8}, ${g * 0.2}, ${b * 0.1}, 0)`);
+                    
+                    ctx.fillStyle = gradient;
+                    
+                    // Flame shape
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size * 0.7, this.size * 1.4, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Inner core
+                    const coreGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 0.5);
+                    coreGradient.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha * 0.7})`);
+                    coreGradient.addColorStop(0.3, `rgba(255, 250, 200, ${coreAlpha * 0.5})`);
+                    coreGradient.addColorStop(0.7, `rgba(255, 180, 80, ${coreAlpha * 0.3})`);
+                    coreGradient.addColorStop(1, `rgba(255, 100, 30, 0)`);
+                    
+                    ctx.fillStyle = coreGradient;
+                    ctx.beginPath();
+                    ctx.arc(0, -this.size * 0.3, this.size * 0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Outer glow
+                    const glowGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 1.8);
+                    glowGradient.addColorStop(0, `rgba(255, 140, 0, ${coreAlpha * 0.3})`);
+                    glowGradient.addColorStop(0.5, `rgba(255, 69, 0, ${coreAlpha * 0.15})`);
+                    glowGradient.addColorStop(1, `rgba(139, 0, 0, 0)`);
+                    
+                    ctx.fillStyle = glowGradient;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size * 1.8, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+                
+                isDead() {
+                    return this.age >= this.life;
+                }
+            }
+            
+            function getFirePosition() {
+                const container = document.getElementById('mainFire');
+                if (!container) return { x: canvas.width / 2, y: canvas.height / 2 };
+                const rect = container.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+            }
+            
+            function createEnhancedFlames() {
+                const pos = getFirePosition();
+                
+                for (let i = 0; i < 15; i++) {
+                    if (flames.length < maxFlames) {
+                        const offsetAngle = Math.random() * Math.PI * 2;
+                        const offsetDist = Math.random() * 50;
+                        const x = pos.x + Math.cos(offsetAngle) * offsetDist;
+                        const y = pos.y + Math.sin(offsetAngle) * offsetDist;
+                        flames.push(new EnhancedFlame(x, y));
+                    }
+                }
+            }
+            
+            let flameInterval;
+            function animateEnhancedFlames() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = flames.length - 1; i >= 0; i--) {
+                    flames[i].update();
+                    flames[i].draw();
+                    
+                    if (flames[i].isDead()) {
+                        flames.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animateEnhancedFlames);
+            }
+            
+            flameInterval = setInterval(createEnhancedFlames, 35);
+            animateEnhancedFlames();
+            
+            setTimeout(() => {
+                clearInterval(flameInterval);
+            }, 6500);
+            
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.style.display = 'block';
+                    initEnhancedBackgroundAnimations();
+                }, 1500);
+            }, 7000);
+        });
+        
+        // === ENHANCED BACKGROUND ANIMATIONS WITH REALISTIC FLAMES ===
+        function initEnhancedBackgroundAnimations() {
+            const particlesCanvas = document.getElementById('particles-canvas');
+            const ctx = particlesCanvas.getContext('2d');
+            
+            function resizeCanvas() {
+                particlesCanvas.width = window.innerWidth;
+                particlesCanvas.height = document.body.scrollHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Enhanced particle system
+            const particles = [];
+            const particleCount = Math.min(120, Math.floor(window.innerWidth / 12));
+            
+            class EnhancedParticle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * particlesCanvas.width;
+                    this.y = Math.random() * particlesCanvas.height;
+                    this.size = Math.random() * 3 + 0.8;
+                    this.speedX = (Math.random() - 0.5) * 0.8;
+                    this.speedY = (Math.random() - 0.5) * 0.8;
+                    this.opacity = Math.random() * 0.6 + 0.3;
+                    this.hue = 25 + Math.random() * 40; // Orange to red hues
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x < 0 || this.x > particlesCanvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > particlesCanvas.height) this.speedY *= -1;
+                    
+                    this.hue += 0.2;
+                    if (this.hue > 65) this.hue = 25;
+                }
+                
+                draw() {
+                    ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = `hsla(${this.hue}, 100%, 50%, 0.8)`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new EnhancedParticle());
+            }
+            
+            function animateEnhancedParticles() {
+                ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                // Enhanced connections with flame colors
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 120) {
+                            const avgHue = (particles[i].hue + particles[j].hue) / 2;
+                            ctx.strokeStyle = `hsla(${avgHue}, 80%, 50%, ${0.3 * (1 - distance / 120)})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animateEnhancedParticles);
+            }
+            
+            animateEnhancedParticles();
+            
+            // Create realistic floating flames
+            createRealisticFlames();
+        }
+        
+        function createRealisticFlames() {
+            const background = document.querySelector('.animated-background');
+            
+            // Create flame particles
+            const flameParticleCount = Math.min(40, Math.floor(window.innerWidth / 30));
+            for (let i = 0; i < flameParticleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'flame-particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.setProperty('--drift-small', `${(Math.random() - 0.5) * 100}px`);
+                particle.style.setProperty('--drift-mid', `${(Math.random() - 0.5) * 200}px`);
+                particle.style.setProperty('--drift-large', `${(Math.random() - 0.5) * 300}px`);
+                particle.style.setProperty('--drift-final', `${(Math.random() - 0.5) * 400}px`);
+                particle.style.setProperty('--rotation', `${(Math.random() - 0.5) * 360}deg`);
+                particle.style.animationDuration = `${18 + Math.random() * 12}s`;
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.width = `${Math.random() * 6 + 4}px`;
+                particle.style.height = `${Math.random() * 8 + 8}px`;
+                background.appendChild(particle);
+            }
+            
+            // Create flame wisps
+            const flameWispCount = Math.min(20, Math.floor(window.innerWidth / 60));
+            for (let i = 0; i < flameWispCount; i++) {
+                const wisp = document.createElement('div');
+                wisp.className = 'flame-wisp';
+                wisp.style.left = `${Math.random() * 100}%`;
+                wisp.style.setProperty('--wisp-drift-1', `${(Math.random() - 0.5) * 150}px`);
+                wisp.style.setProperty('--wisp-drift-2', `${(Math.random() - 0.5) * 250}px`);
+                wisp.style.setProperty('--wisp-drift-3', `${(Math.random() - 0.5) * 350}px`);
+                wisp.style.setProperty('--wisp-drift-final', `${(Math.random() - 0.5) * 450}px`);
+                wisp.style.setProperty('--wisp-rotation', `${(Math.random() - 0.5) * 180}deg`);
+                wisp.style.animationDuration = `${25 + Math.random() * 15}s`;
+                wisp.style.animationDelay = `${Math.random() * 20}s`;
+                wisp.style.width = `${Math.random() * 15 + 20}px`;
+                wisp.style.height = `${Math.random() * 20 + 30}px`;
+                background.appendChild(wisp);
+            }
+            
+            // Create ember trails
+            const emberCount = Math.min(60, Math.floor(window.innerWidth / 20));
+            for (let i = 0; i < emberCount; i++) {
+                const ember = document.createElement('div');
+                ember.className = 'ember-trail';
+                ember.style.left = `${Math.random() * 100}%`;
+                ember.style.setProperty('--ember-drift', `${(Math.random() - 0.5) * 300}px`);
+                ember.style.animationDuration = `${12 + Math.random() * 8}s`;
+                ember.style.animationDelay = `${Math.random() * 12}s`;
+                ember.style.width = `${Math.random() * 3 + 2}px`;
+                ember.style.height = ember.style.width;
+                background.appendChild(ember);
+            }
+        }
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.dedication, .preface, .prologue, .chapter');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Anti-copy protection (keeping original)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+    </script>
+
+</body>
+</html>
