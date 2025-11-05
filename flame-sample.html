@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You Are Like a Flame to Me - Free Sample | Seethala Devi Chandu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src='https://code.jquery.com/jquery-2.1.0.min.js'></script>
     <style>
         * {
             margin: 0;
@@ -229,61 +230,48 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(ellipse at center, #2a1510 0%, #1a0f0a 40%, #000000 100%);
+            background: #000000;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             transition: opacity 1.5s ease-out;
             overflow: hidden;
+            cursor: crosshair;
         }
 
-        #flame-canvas {
+        #splash-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        .splash-instruction {
+            position: absolute;
+            bottom: 15%;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: rgba(255, 140, 0, 0.9);
+            text-align: center;
+            animation: pulseGlow 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.8), 0 0 40px rgba(255, 69, 0, 0.6);
+            z-index: 10;
             pointer-events: none;
         }
 
-        .main-fire-container {
-            position: absolute;
-            width: clamp(150px, 30vw, 220px);
-            height: clamp(180px, 35vw, 280px);
-            animation: fire-travel 7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-            filter: drop-shadow(0 0 80px rgba(255, 140, 0, 1)) drop-shadow(0 0 120px rgba(255, 69, 0, 0.8));
-            will-change: transform;
-            z-index: 10;
-        }
-
-        @keyframes fire-travel {
-            0% {
-                transform: translate(-40vw, 70vh) scale(0.4) rotate(-25deg);
-                opacity: 0;
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
             }
-            8% {
+            50% {
                 opacity: 1;
-            }
-            20% {
-                transform: translate(0vw, 40vh) scale(1.3) rotate(-5deg);
-            }
-            35% {
-                transform: translate(30vw, 20vh) scale(1.6) rotate(10deg);
-            }
-            55% {
-                transform: translate(60vw, 25vh) scale(1.8) rotate(-15deg);
-            }
-            75% {
-                transform: translate(85vw, 10vh) scale(1.5) rotate(25deg);
-            }
-            88% {
-                transform: translate(110vw, -5vh) scale(1.2) rotate(-20deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(140vw, -20vh) scale(0.3) rotate(15deg);
-                opacity: 0;
+                transform: scale(1.05);
             }
         }
 
@@ -295,7 +283,7 @@
             backdrop-filter: blur(15px);
         }
 
-        /* === HEADER - REARRANGED LAYOUT === */
+        /* === HEADER === */
         .book-header {
             text-align: center;
             padding: clamp(2rem, 8vw, 4rem) 5%;
@@ -316,7 +304,6 @@
             }
         }
 
-        /* Title moved to top */
         .book-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 6.5vw, 4rem);
@@ -325,7 +312,6 @@
             font-weight: 700;
             animation: fadeIn 1.2s ease-out 0.1s both;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-            order: 1;
         }
 
         .book-subtitle {
@@ -335,10 +321,8 @@
             font-style: italic;
             margin-bottom: 2rem;
             animation: fadeIn 1.2s ease-out 0.2s both;
-            order: 2;
         }
 
-        /* Image after title */
         .book-cover-display {
             max-width: min(380px, 85vw);
             margin: 0 auto 2rem;
@@ -349,22 +333,21 @@
                 0 0 50px rgba(255, 140, 0, 0.2);
             transition: transform 0.5s ease;
             animation: floatIn 1.5s ease-out 0.3s both;
-            order: 3;
         }
 
         @keyframes floatIn {
             from {
                 opacity: 0;
-                transform: translateY(100px) scale(0.8) rotateY(-15deg);
+                transform: translateY(100px) scale(0.8);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1) rotateY(0deg);
+                transform: translateY(0) scale(1);
             }
         }
 
         .book-cover-display:hover {
-            transform: scale(1.08) rotateY(8deg) rotateX(2deg);
+            transform: scale(1.08) rotateY(8deg);
         }
 
         .book-cover-display img {
@@ -382,7 +365,6 @@
             letter-spacing: clamp(1px, 0.6vw, 4px);
             animation: fadeIn 1.2s ease-out 0.4s both;
             margin-bottom: 2rem;
-            order: 4;
         }
 
         @keyframes fadeIn {
@@ -414,30 +396,20 @@
                 0 6px 20px rgba(128, 0, 32, 0.4),
                 0 0 30px rgba(255, 140, 0, 0.2);
             animation: pulse 2.5s ease-in-out infinite;
-            order: 5;
         }
 
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 
-                    0 6px 20px rgba(128, 0, 32, 0.4),
-                    0 0 30px rgba(255, 140, 0, 0.2);
             }
             50% {
                 transform: scale(1.05);
-                box-shadow: 
-                    0 8px 25px rgba(128, 0, 32, 0.5),
-                    0 0 40px rgba(255, 140, 0, 0.3);
             }
         }
 
         .back-btn:hover {
             background: var(--gold);
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 
-                0 12px 35px rgba(184, 134, 11, 0.4),
-                0 0 50px rgba(255, 140, 0, 0.4);
             animation: none;
         }
 
@@ -472,11 +444,11 @@
         @keyframes slideInUp {
             from {
                 opacity: 0;
-                transform: translateY(60px) rotateX(10deg);
+                transform: translateY(60px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) rotateX(0deg);
+                transform: translateY(0);
             }
         }
 
@@ -578,7 +550,6 @@
         .quote:hover {
             background: rgba(128, 0, 32, 0.1);
             transform: translateX(15px);
-            box-shadow: 0 8px 30px rgba(128, 0, 32, 0.15);
         }
 
         .character-name {
@@ -599,19 +570,16 @@
             margin: 0 1.5rem;
             color: var(--gold);
             animation: sparkle 2.5s ease-in-out infinite;
-            text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
         }
 
         @keyframes sparkle {
             0%, 100% { 
                 opacity: 1; 
-                transform: scale(1) rotate(0deg); 
-                text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+                transform: scale(1); 
             }
             50% { 
                 opacity: 0.6; 
-                transform: scale(1.3) rotate(180deg); 
-                text-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+                transform: scale(1.3); 
             }
         }
 
@@ -677,10 +645,8 @@
                 0 0 50px rgba(255, 140, 0, 0.4);
         }
 
-        /* Back to Books button positioned last */
         .purchase-cta .back-btn {
             margin-top: 3rem;
-            order: 10;
         }
 
         /* === RESPONSIVE === */
@@ -713,7 +679,7 @@
             }
         }
 
-        /* Protection - keeping original */
+        /* Protection */
         * {
             -webkit-touch-callout: none !important;
             -webkit-user-select: none !important;
@@ -726,10 +692,10 @@
 </head>
 <body oncopy="return false" oncut="return false" onpaste="return false">
     
-    <!-- SPLASH SCREEN -->
+    <!-- ENHANCED SPLASH SCREEN WITH CURSOR-FOLLOWING FLAMES -->
     <div id="splash-screen">
-        <canvas id="flame-canvas"></canvas>
-        <div class="main-fire-container" id="mainFire"></div>
+        <canvas id="splash-canvas"></canvas>
+        <p class="splash-instruction">Move your cursor to create flames...</p>
     </div>
 
     <div id="main-content">
@@ -865,7 +831,7 @@
                 <p class="content-text">
                     "How much?" she asks, sitting down on the floor beside me like this is normal. Like her son having a complete mental collapse at 3 AM on bathroom tiles is just another Tuesday.
                 </p>
-
+                
                 <div class="character-name">PRIYA</div>
                 
                 <p class="content-text">
@@ -938,23 +904,109 @@
     </div>
 
     <script>
-        // === ENHANCED SPLASH SCREEN FLAME ANIMATION ===
-        window.addEventListener('load', () => {
-            const splash = document.getElementById('splash-screen');
-            const main = document.getElementById('main-content');
-            const canvas = document.getElementById('flame-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            ctx.globalCompositeOperation = "lighter";
-            
-            const flames = [];
-            const maxFlames = 250;
-            
-            class EnhancedFlame {
-                constructor(x, y) {
+        // === CURSOR-FOLLOWING REALISTIC FLAMES FOR SPLASH SCREEN (HOVER MODE) ===
+        $(function () {
+            var FlameSystem = function () {
+                var self = this;
+                var rand = function (rMi, rMa) {
+                    return ~~(Math.random() * (rMa - rMi + 1) + rMi);
+                };
+
+                self.init = function () {
+                    self.canvas = document.getElementById('splash-canvas');
+                    if (!self.canvas) return;
+                    
+                    self.canvas.width = self.cw = $(window).innerWidth();
+                    self.canvas.height = self.ch = $(window).innerHeight();
+                    self.ctx = self.canvas.getContext("2d");
+                    self.ctx.globalCompositeOperation = "lighter";
+                    
+                    self.flames = [];
+                    self.maxFlames = 300;
+                    self.mx = self.cw / 2;
+                    self.my = self.ch / 2;
+                    self.lastFlameTime = 0;
+                    self.flameInterval = 80; // Create flames every 80ms during hover
+                    
+                    self.bindEvents();
+                    self.canvasLoop();
+                    
+                    self.canvas.onselectstart = function () {
+                        return false;
+                    };
+                };
+
+                self.bindEvents = function () {
+                    $(window).on("resize", function () {
+                        clearTimeout(self.timeout);
+                        self.timeout = setTimeout(function () {
+                            self.canvas.width = self.cw = $(window).innerWidth();
+                            self.canvas.height = self.ch = $(window).innerHeight();
+                        }, 100);
+                    });
+
+                    // Mouse hover/move - create flames automatically
+                    $(self.canvas).on("mousemove", function (e) {
+                        var rect = self.canvas.getBoundingClientRect();
+                        self.mx = e.clientX - rect.left;
+                        self.my = e.clientY - rect.top;
+                        
+                        // Throttle flame creation
+                        var currentTime = Date.now();
+                        if (currentTime - self.lastFlameTime > self.flameInterval) {
+                            self.createFlames(self.mx, self.my);
+                            self.lastFlameTime = currentTime;
+                        }
+                    });
+                    
+                    // Touch move support for mobile
+                    $(self.canvas).on("touchmove", function (e) {
+                        e.preventDefault();
+                        var rect = self.canvas.getBoundingClientRect();
+                        var touch = e.originalEvent.touches[0];
+                        self.mx = touch.clientX - rect.left;
+                        self.my = touch.clientY - rect.top;
+                        
+                        // Throttle flame creation
+                        var currentTime = Date.now();
+                        if (currentTime - self.lastFlameTime > self.flameInterval) {
+                            self.createFlames(self.mx, self.my);
+                            self.lastFlameTime = currentTime;
+                        }
+                    });
+                    
+                    // Touch start for single tap
+                    $(self.canvas).on("touchstart", function (e) {
+                        e.preventDefault();
+                        var rect = self.canvas.getBoundingClientRect();
+                        var touch = e.originalEvent.touches[0];
+                        self.mx = touch.clientX - rect.left;
+                        self.my = touch.clientY - rect.top;
+                        self.createFlames(self.mx, self.my);
+                    });
+                    
+                    // Click for extra flames
+                    $(self.canvas).on("click", function (e) {
+                        var rect = self.canvas.getBoundingClientRect();
+                        self.mx = e.clientX - rect.left;
+                        self.my = e.clientY - rect.top;
+                        self.createFlames(self.mx, self.my);
+                    });
+                };
+
+                self.createFlames = function (x, y) {
+                    for (var i = 0; i < 12; i++) {
+                        if (self.flames.length < self.maxFlames) {
+                            const offsetAngle = Math.random() * Math.PI * 2;
+                            const offsetDist = Math.random() * 25;
+                            const fx = x + Math.cos(offsetAngle) * offsetDist;
+                            const fy = y + Math.sin(offsetAngle) * offsetDist;
+                            self.flames.push(new EnhancedFlame(fx, fy));
+                        }
+                    }
+                };
+
+                function EnhancedFlame(x, y) {
                     this.x = x;
                     this.y = y;
                     this.baseSize = 18 + Math.random() * 30;
@@ -976,7 +1028,7 @@
                     this.intensity = 0.8 + Math.random() * 0.4;
                 }
                 
-                update() {
+                EnhancedFlame.prototype.update = function() {
                     this.x += this.vx;
                     this.y += this.vy;
                     
@@ -990,9 +1042,9 @@
                     
                     const pulse = 1 + Math.sin(this.flickerPhase) * 0.25;
                     this.size = this.baseSize * pulse;
-                }
+                };
                 
-                draw() {
+                EnhancedFlame.prototype.draw = function(ctx) {
                     const lifeRatio = 1 - (this.age / this.life);
                     if (lifeRatio <= 0) return;
                     
@@ -1066,255 +1118,244 @@
                     ctx.fill();
                     
                     ctx.restore();
-                }
-                
-                isDead() {
-                    return this.age >= this.life;
-                }
-            }
-            
-            function getFirePosition() {
-                const container = document.getElementById('mainFire');
-                if (!container) return { x: canvas.width / 2, y: canvas.height / 2 };
-                const rect = container.getBoundingClientRect();
-                return {
-                    x: rect.left + rect.width / 2,
-                    y: rect.top + rect.height / 2
                 };
-            }
-            
-            function createEnhancedFlames() {
-                const pos = getFirePosition();
                 
-                for (let i = 0; i < 15; i++) {
-                    if (flames.length < maxFlames) {
-                        const offsetAngle = Math.random() * Math.PI * 2;
-                        const offsetDist = Math.random() * 50;
-                        const x = pos.x + Math.cos(offsetAngle) * offsetDist;
-                        const y = pos.y + Math.sin(offsetAngle) * offsetDist;
-                        flames.push(new EnhancedFlame(x, y));
-                    }
-                }
-            }
-            
-            let flameInterval;
-            function animateEnhancedFlames() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                for (let i = flames.length - 1; i >= 0; i--) {
-                    flames[i].update();
-                    flames[i].draw();
-                    
-                    if (flames[i].isDead()) {
-                        flames.splice(i, 1);
-                    }
-                }
-                
-                requestAnimationFrame(animateEnhancedFlames);
-            }
-            
-            flameInterval = setInterval(createEnhancedFlames, 35);
-            animateEnhancedFlames();
-            
-            setTimeout(() => {
-                clearInterval(flameInterval);
-            }, 6500);
-            
-            setTimeout(() => {
-                splash.style.opacity = '0';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    main.style.display = 'block';
-                    initEnhancedBackgroundAnimations();
-                }, 1500);
-            }, 7000);
-        });
-        
-        // === ENHANCED BACKGROUND ANIMATIONS WITH REALISTIC FLAMES ===
-        function initEnhancedBackgroundAnimations() {
-            const particlesCanvas = document.getElementById('particles-canvas');
-            const ctx = particlesCanvas.getContext('2d');
-            
-            function resizeCanvas() {
-                particlesCanvas.width = window.innerWidth;
-                particlesCanvas.height = document.body.scrollHeight;
-            }
-            
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            
-            // Enhanced particle system
-            const particles = [];
-            const particleCount = Math.min(120, Math.floor(window.innerWidth / 12));
-            
-            class EnhancedParticle {
-                constructor() {
-                    this.reset();
-                }
-                
-                reset() {
-                    this.x = Math.random() * particlesCanvas.width;
-                    this.y = Math.random() * particlesCanvas.height;
-                    this.size = Math.random() * 3 + 0.8;
-                    this.speedX = (Math.random() - 0.5) * 0.8;
-                    this.speedY = (Math.random() - 0.5) * 0.8;
-                    this.opacity = Math.random() * 0.6 + 0.3;
-                    this.hue = 25 + Math.random() * 40; // Orange to red hues
-                }
-                
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    
-                    if (this.x < 0 || this.x > particlesCanvas.width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > particlesCanvas.height) this.speedY *= -1;
-                    
-                    this.hue += 0.2;
-                    if (this.hue > 65) this.hue = 25;
-                }
-                
-                draw() {
-                    ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = `hsla(${this.hue}, 100%, 50%, 0.8)`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
-            }
-            
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new EnhancedParticle());
-            }
-            
-            function animateEnhancedParticles() {
-                ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
-                
-                particles.forEach(particle => {
-                    particle.update();
-                    particle.draw();
-                });
-                
-                // Enhanced connections with flame colors
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
+                EnhancedFlame.prototype.isDead = function() {
+                    return this.age >= this.life;
+                };
+
+                self.updateFlames = function () {
+                    for (let i = self.flames.length - 1; i >= 0; i--) {
+                        self.flames[i].update();
                         
-                        if (distance < 120) {
-                            const avgHue = (particles[i].hue + particles[j].hue) / 2;
-                            ctx.strokeStyle = `hsla(${avgHue}, 80%, 50%, ${0.3 * (1 - distance / 120)})`;
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
+                        if (self.flames[i].isDead()) {
+                            self.flames.splice(i, 1);
                         }
                     }
+                };
+
+                self.drawFlames = function () {
+                    for (let i = 0; i < self.flames.length; i++) {
+                        self.flames[i].draw(self.ctx);
+                    }
+                };
+
+                self.canvasLoop = function () {
+                    requestAnimationFrame(self.canvasLoop);
+                    self.ctx.clearRect(0, 0, self.cw, self.ch);
+                    self.updateFlames();
+                    self.drawFlames();
+                };
+
+                self.init();
+            };
+
+            // === SPLASH SCREEN INITIALIZATION ===
+            window.addEventListener('load', () => {
+                const splash = document.getElementById('splash-screen');
+                const main = document.getElementById('main-content');
+                
+                // Initialize hover-triggered flames
+                var flameSystem = new FlameSystem();
+                
+                // Hide splash after 7 seconds
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                        main.style.display = 'block';
+                        initEnhancedBackgroundAnimations();
+                    }, 1500);
+                }, 7000);
+            });
+            
+            // === ENHANCED BACKGROUND ANIMATIONS WITH REALISTIC FLAMES ===
+            function initEnhancedBackgroundAnimations() {
+                const particlesCanvas = document.getElementById('particles-canvas');
+                const ctx = particlesCanvas.getContext('2d');
+                
+                function resizeCanvas() {
+                    particlesCanvas.width = window.innerWidth;
+                    particlesCanvas.height = document.body.scrollHeight;
                 }
                 
-                requestAnimationFrame(animateEnhancedParticles);
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                // Enhanced particle system
+                const particles = [];
+                const particleCount = Math.min(120, Math.floor(window.innerWidth / 12));
+                
+                class EnhancedParticle {
+                    constructor() {
+                        this.reset();
+                    }
+                    
+                    reset() {
+                        this.x = Math.random() * particlesCanvas.width;
+                        this.y = Math.random() * particlesCanvas.height;
+                        this.size = Math.random() * 3 + 0.8;
+                        this.speedX = (Math.random() - 0.5) * 0.8;
+                        this.speedY = (Math.random() - 0.5) * 0.8;
+                        this.opacity = Math.random() * 0.6 + 0.3;
+                        this.hue = 25 + Math.random() * 40; // Orange to red hues
+                    }
+                    
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        
+                        if (this.x < 0 || this.x > particlesCanvas.width) this.speedX *= -1;
+                        if (this.y < 0 || this.y > particlesCanvas.height) this.speedY *= -1;
+                        
+                        this.hue += 0.2;
+                        if (this.hue > 65) this.hue = 25;
+                    }
+                    
+                    draw() {
+                        ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = `hsla(${this.hue}, 100%, 50%, 0.8)`;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+                
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new EnhancedParticle());
+                }
+                
+                function animateEnhancedParticles() {
+                    ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+                    
+                    particles.forEach(particle => {
+                        particle.update();
+                        particle.draw();
+                    });
+                    
+                    // Enhanced connections with flame colors
+                    for (let i = 0; i < particles.length; i++) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x;
+                            const dy = particles[i].y - particles[j].y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < 120) {
+                                const avgHue = (particles[i].hue + particles[j].hue) / 2;
+                                ctx.strokeStyle = `hsla(${avgHue}, 80%, 50%, ${0.3 * (1 - distance / 120)})`;
+                                ctx.lineWidth = 1;
+                                ctx.beginPath();
+                                ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                    
+                    requestAnimationFrame(animateEnhancedParticles);
+                }
+                
+                animateEnhancedParticles();
+                
+                // Create realistic floating flames
+                createRealisticFlames();
             }
             
-            animateEnhancedParticles();
-            
-            // Create realistic floating flames
-            createRealisticFlames();
-        }
-        
-        function createRealisticFlames() {
-            const background = document.querySelector('.animated-background');
-            
-            // Create flame particles
-            const flameParticleCount = Math.min(40, Math.floor(window.innerWidth / 30));
-            for (let i = 0; i < flameParticleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'flame-particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.setProperty('--drift-small', `${(Math.random() - 0.5) * 100}px`);
-                particle.style.setProperty('--drift-mid', `${(Math.random() - 0.5) * 200}px`);
-                particle.style.setProperty('--drift-large', `${(Math.random() - 0.5) * 300}px`);
-                particle.style.setProperty('--drift-final', `${(Math.random() - 0.5) * 400}px`);
-                particle.style.setProperty('--rotation', `${(Math.random() - 0.5) * 360}deg`);
-                particle.style.animationDuration = `${18 + Math.random() * 12}s`;
-                particle.style.animationDelay = `${Math.random() * 15}s`;
-                particle.style.width = `${Math.random() * 6 + 4}px`;
-                particle.style.height = `${Math.random() * 8 + 8}px`;
-                background.appendChild(particle);
+            function createRealisticFlames() {
+                const background = document.querySelector('.animated-background');
+                
+                // Create flame particles
+                const flameParticleCount = Math.min(40, Math.floor(window.innerWidth / 30));
+                for (let i = 0; i < flameParticleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'flame-particle';
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.setProperty('--drift-small', `${(Math.random() - 0.5) * 100}px`);
+                    particle.style.setProperty('--drift-mid', `${(Math.random() - 0.5) * 200}px`);
+                    particle.style.setProperty('--drift-large', `${(Math.random() - 0.5) * 300}px`);
+                    particle.style.setProperty('--drift-final', `${(Math.random() - 0.5) * 400}px`);
+                    particle.style.setProperty('--rotation', `${(Math.random() - 0.5) * 360}deg`);
+                    particle.style.animationDuration = `${18 + Math.random() * 12}s`;
+                    particle.style.animationDelay = `${Math.random() * 15}s`;
+                    particle.style.width = `${Math.random() * 6 + 4}px`;
+                    particle.style.height = `${Math.random() * 8 + 8}px`;
+                    background.appendChild(particle);
+                }
+                
+                // Create flame wisps
+                const flameWispCount = Math.min(20, Math.floor(window.innerWidth / 60));
+                for (let i = 0; i < flameWispCount; i++) {
+                    const wisp = document.createElement('div');
+                    wisp.className = 'flame-wisp';
+                    wisp.style.left = `${Math.random() * 100}%`;
+                    wisp.style.setProperty('--wisp-drift-1', `${(Math.random() - 0.5) * 150}px`);
+                    wisp.style.setProperty('--wisp-drift-2', `${(Math.random() - 0.5) * 250}px`);
+                    wisp.style.setProperty('--wisp-drift-3', `${(Math.random() - 0.5) * 350}px`);
+                    wisp.style.setProperty('--wisp-drift-final', `${(Math.random() - 0.5) * 450}px`);
+                    wisp.style.setProperty('--wisp-rotation', `${(Math.random() - 0.5) * 180}deg`);
+                    wisp.style.animationDuration = `${25 + Math.random() * 15}s`;
+                    wisp.style.animationDelay = `${Math.random() * 20}s`;
+                    wisp.style.width = `${Math.random() * 15 + 20}px`;
+                    wisp.style.height = `${Math.random() * 20 + 30}px`;
+                    background.appendChild(wisp);
+                }
+                
+                // Create ember trails
+                const emberCount = Math.min(60, Math.floor(window.innerWidth / 20));
+                for (let i = 0; i < emberCount; i++) {
+                    const ember = document.createElement('div');
+                    ember.className = 'ember-trail';
+                    ember.style.left = `${Math.random() * 100}%`;
+                    ember.style.setProperty('--ember-drift', `${(Math.random() - 0.5) * 300}px`);
+                    ember.style.animationDuration = `${12 + Math.random() * 8}s`;
+                    ember.style.animationDelay = `${Math.random() * 12}s`;
+                    ember.style.width = `${Math.random() * 3 + 2}px`;
+                    ember.style.height = ember.style.width;
+                    background.appendChild(ember);
+                }
             }
-            
-            // Create flame wisps
-            const flameWispCount = Math.min(20, Math.floor(window.innerWidth / 60));
-            for (let i = 0; i < flameWispCount; i++) {
-                const wisp = document.createElement('div');
-                wisp.className = 'flame-wisp';
-                wisp.style.left = `${Math.random() * 100}%`;
-                wisp.style.setProperty('--wisp-drift-1', `${(Math.random() - 0.5) * 150}px`);
-                wisp.style.setProperty('--wisp-drift-2', `${(Math.random() - 0.5) * 250}px`);
-                wisp.style.setProperty('--wisp-drift-3', `${(Math.random() - 0.5) * 350}px`);
-                wisp.style.setProperty('--wisp-drift-final', `${(Math.random() - 0.5) * 450}px`);
-                wisp.style.setProperty('--wisp-rotation', `${(Math.random() - 0.5) * 180}deg`);
-                wisp.style.animationDuration = `${25 + Math.random() * 15}s`;
-                wisp.style.animationDelay = `${Math.random() * 20}s`;
-                wisp.style.width = `${Math.random() * 15 + 20}px`;
-                wisp.style.height = `${Math.random() * 20 + 30}px`;
-                background.appendChild(wisp);
-            }
-            
-            // Create ember trails
-            const emberCount = Math.min(60, Math.floor(window.innerWidth / 20));
-            for (let i = 0; i < emberCount; i++) {
-                const ember = document.createElement('div');
-                ember.className = 'ember-trail';
-                ember.style.left = `${Math.random() * 100}%`;
-                ember.style.setProperty('--ember-drift', `${(Math.random() - 0.5) * 300}px`);
-                ember.style.animationDuration = `${12 + Math.random() * 8}s`;
-                ember.style.animationDelay = `${Math.random() * 12}s`;
-                ember.style.width = `${Math.random() * 3 + 2}px`;
-                ember.style.height = ember.style.width;
-                background.appendChild(ember);
-            }
-        }
 
-        // Enhanced scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            // Enhanced scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            $(document).ready(() => {
+                const sections = document.querySelectorAll('.dedication, .preface, .prologue, .chapter');
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            });
+
+            // Anti-copy protection
+            document.addEventListener('contextmenu', event => event.preventDefault());
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+                    e.preventDefault();
+                    return false;
+                }
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                    e.preventDefault();
+                    return false;
                 }
             });
-        }, observerOptions);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.dedication, .preface, .prologue, .chapter');
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+            document.addEventListener('dragstart', event => event.preventDefault());
+            document.addEventListener('selectstart', event => event.preventDefault());
         });
-
-        // Anti-copy protection (keeping original)
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
-                e.preventDefault();
-                return false;
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-        document.addEventListener('dragstart', event => event.preventDefault());
-        document.addEventListener('selectstart', event => event.preventDefault());
     </script>
+
 
 </body>
 </html>
