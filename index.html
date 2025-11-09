@@ -398,14 +398,182 @@
 
                     <p>Beyond his corporate life, Chandu is a budding entrepreneur and co-founder of the startup Shore and Summits. He believes that every wrong turn is a part of the map and that the most profound love stories are often the ones that feel like coming home. He writes for anyone who has ever been brilliant at everything except love.</p>
 
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/seethala-devi-chandu/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">LinkedIn</a>
-                        <a href="https://seethaladevichandu.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio Website">Portfolio</a>
-                        <a href="https://www.instagram.com/before_it_faded/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">Instagram</a>
-                        <a href="https://www.instagram.com/chandu_seethala_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">Check my Instagram</a>
-                        <a href="mailto:sdcpublication.1@gmail.com" aria-label="Email Contact">Email</a>
-                        <a href="mailto:seethalachandu2003@gmail.com" aria-label="Email Contact">Personal Email</a>
+                    <!-- Business Links Section -->
+                    <div class="social-section">
+                        <h3 class="section-heading">📚 AUTHOR'S CORNER</h3>
+                        <div class="social-links">
+                            <a href="https://www.amazon.com/author/seethala_devi_chandu" target="_blank" rel="noopener noreferrer" aria-label="Amazon Authors profile" class="social-btn">
+                                AMAZON | MY PUBLISHED WORKS
+                            </a>
+                            <a href="https://www.google.co.in/search?hl=en&q=inauthor:%22SEETHALA+DEVI+CHANDU%22&tbm=bks&sa=X&ved=2ahUKEwixjJjazeSQAxVASmwGHbgkEkEQmxN6BAgNEAI&sxsrf=AE3TifP0vTfEr1ntn2EK3MdB8__A9KyC_w:1762675436990" target="_blank" rel="noopener noreferrer" aria-label="Google Books Author profile" class="social-btn">
+                                GOOGLE PLAY | READ MY STORIES
+                            </a>
+                            <a href="https://www.goodreads.com/author/show/58857133.Seethala_Devi_Chandu" target="_blank" rel="noopener noreferrer" aria-label="Goodreads Author profile" class="social-btn">
+                                GOODREADS | JOIN THE COMMUNITY
+                            </a>
+                            <a href="mailto:sdcpublication.1@gmail.com" aria-label="Email Contact" class="social-btn">
+                                EMAIL | COLLABORATE WITH ME
+                            </a>
+                            <a href="https://www.instagram.com/before_it_faded/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" class="social-btn">
+                                INSTAGRAM | BEFORE IT FADED
+                            </a>
+                        </div>
                     </div>
+
+                    <!-- Personal Links Section -->
+                    <div class="social-section">
+                        <h3 class="section-heading">✨ THE HUMAN BEHIND THE WORDS</h3>
+                        <div class="social-links">
+                            <a href="https://seethaladevichandu.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio Website" class="social-btn">
+                                PORTFOLIO | EXPLORE MY UNIVERSE
+                            </a>
+                            <a href="https://www.linkedin.com/in/seethala-devi-chandu/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="social-btn">
+                                LINKEDIN | CONNECT PROFESSIONALLY
+                            </a>
+                            <a href="https://www.instagram.com/chandu_seethala_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" class="social-btn">
+                                INSTAGRAM | MY PERSONAL CANVAS
+                            </a>
+                        </div>
+                    </div>
+
+                    <style>
+                    /* Section Container */
+                    .social-section {
+                        margin-bottom: 4rem;
+                        animation: fadeInUp 0.8s ease-out;
+                    }
+
+                    /* Section Heading */
+                    .section-heading {
+                        font-family: 'EB Garamond', serif;
+                        color: var(--gold);
+                        font-size: 2rem;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 4px;
+                        margin-bottom: 2.5rem;
+                        text-align: center;
+                        background: linear-gradient(135deg, var(--gold) 0%, var(--accent-1) 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        position: relative;
+                        animation: headingGlow 2s ease-in-out infinite;
+                    }
+
+                    .section-heading::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -10px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 100px;
+                        height: 3px;
+                        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+                        animation: lineExpand 2s ease-in-out infinite;
+                    }
+
+                    /* Button Container - Center aligned */
+                    .social-links {
+                        display: flex;
+                        gap: 1.5rem;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                    }
+
+                    /* Individual Button Styling */
+                    .social-btn {
+                        min-width: 320px;
+                        max-width: 420px;
+                        text-align: center;
+                        animation: buttonFloat 3s ease-in-out infinite;
+                    }
+
+                    /* Stagger animation delays for buttons */
+                    .social-links a:nth-child(1) { animation-delay: 0s; }
+                    .social-links a:nth-child(2) { animation-delay: 0.3s; }
+                    .social-links a:nth-child(3) { animation-delay: 0.6s; }
+                    .social-links a:nth-child(4) { animation-delay: 0.9s; }
+                    .social-links a:nth-child(5) { animation-delay: 1.2s; }
+
+                    /* Keyframe Animations */
+                    @keyframes fadeInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(30px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    @keyframes headingGlow {
+                        0%, 100% {
+                            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                        }
+                        50% {
+                            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+                        }
+                    }
+
+                    @keyframes lineExpand {
+                        0%, 100% {
+                            width: 100px;
+                            opacity: 0.5;
+                        }
+                        50% {
+                            width: 200px;
+                            opacity: 1;
+                        }
+                    }
+
+                    @keyframes buttonFloat {
+                        0%, 100% {
+                            transform: translateY(0px);
+                        }
+                        50% {
+                            transform: translateY(-8px);
+                        }
+                    }
+
+                    /* Enhanced hover effects for buttons */
+                    .social-links a:hover {
+                        animation: none;
+                        transform: translateY(-8px) scale(1.05) !important;
+                    }
+
+                    /* Responsive Design */
+                    @media (max-width: 768px) {
+                        .section-heading {
+                            font-size: 1.4rem;
+                            letter-spacing: 2px;
+                        }
+                        
+                        .social-btn {
+                            min-width: 280px;
+                            max-width: 100%;
+                        }
+                        
+                        .social-links {
+                            gap: 1.2rem;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .social-btn {
+                            min-width: 100%;
+                            font-size: 0.85rem;
+                            padding: 1rem 2rem;
+                        }
+                        
+                        .section-heading {
+                            font-size: 1.2rem;
+                        }
+                    }
+                    </style>
                 </div>
             </div>
         </section>
