@@ -1,0 +1,2010 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Slap That Broke Everything — Realistic Footprints</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-top:#071021;
+  --sky-mid:#0f2a45;
+  --sky-bottom:#071726;
+  --snow-top:#f8fbfc;
+  --snow-mid:#e6eef4;
+  --snow-bottom:#c9d7e1;
+  --text-dark:#1f2b35;
+  --paw-color:#0f1e2a;
+}
+
+/* Reset & Base */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Crimson Text',serif;
+  background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 50%,var(--sky-bottom) 100%);
+  color:var(--text-dark);
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+}
+
+/* Disable copy/paste/context menu */
+body{
+  -webkit-touch-callout:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Canvases */
+canvas.bg-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;display:block}
+#grainCanvas{z-index:6}
+#snowCanvas{z-index:7}
+#printsCanvas{z-index:10}
+#sprayCanvas{z-index:11}
+
+/* Mountains */
+.mountains{position:fixed;left:0;right:0;bottom:0;height:62vh;z-index:5;pointer-events:none;transform-style:preserve-3d}
+.m-back,.m-mid,.m-front{position:absolute;left:0;right:0;bottom:0;height:100%;transform-origin:center bottom;will-change:transform}
+.m-back{z-index:1;background:linear-gradient(180deg, rgba(8,16,32,0.98) 0%, rgba(10,18,30,1) 90%);clip-path:polygon(0% 100%,0% 36%,8% 30%,18% 22%,28% 18%,38% 20%,48% 16%,58% 18%,68% 24%,78% 30%,88% 36%,100% 40%,100% 100%);filter:blur(0.5px)}
+.m-mid{z-index:2;background:linear-gradient(180deg, rgba(14,26,40,0.98) 0%, rgba(12,20,32,1) 85%);clip-path:polygon(0% 100%,0% 48%,12% 42%,24% 36%,36% 38%,48% 42%,60% 44%,72% 48%,84% 52%,100% 54%,100% 100%);box-shadow:inset 0 -60px 120px rgba(0,0,0,0.4)}
+.m-front{z-index:3;background:linear-gradient(180deg, rgba(20,32,48,1) 0%, rgba(10,16,24,1) 100%);clip-path:polygon(0% 100%,0% 54%,15% 48%,28% 42%,42% 44%,56% 48%,70% 52%,84% 56%,100% 60%,100%100%);box-shadow:inset 0 -40px 80px rgba(0,0,0,0.3)}
+.m-rim{position:absolute;left:0;right:0;bottom:46%;height:12%;z-index:4;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));mix-blend-mode:screen;filter:blur(4px);opacity:0.12;clip-path:polygon(0% 100%,0% 0%,10% 5%,20% 2%,30% 4%,40% 1%,50% 0%,60% 3%,70% 8%,80% 12%,90% 16%,100% 20%,100% 100%)}
+
+/* Snow ground */
+.snowGround{position:fixed;left:0;right:0;bottom:0;height:36vh;z-index:9;background:linear-gradient(180deg,var(--snow-top) 0%, var(--snow-mid) 55%, var(--snow-bottom) 100%);box-shadow:inset 0 -30px 50px rgba(50,70,94,0.12);pointer-events:none}
+.snowGloss{position:absolute;left:8%;right:8%;top:6%;height:70%;border-radius:50%;mix-blend-mode:screen;opacity:0.12;filter:blur(24px);background:radial-gradient(closest-side, rgba(255,255,255,0.9), rgba(255,255,255,0.15), transparent)}
+
+/* Aurora layers */
+.container-aurora { position: fixed; inset: 0; overflow: hidden; z-index: 2; pointer-events: none; }
+@keyframes aura { 0%{transform:rotate(20deg)}20%{transform:translateY(100px) rotate(1deg)}40%{transform:rotate(-15deg)}60%{transform:rotate(-1deg)}80%{transform:translateY(-10px) rotate(16deg)}100%{transform:rotate(1deg)} }
+@keyframes northern { 0%{transform:translate(5%,-2%)}25%{transform:translate(10%,7%)}40%{transform:rotate(-10deg)}60%{transform:translate(7%,-2%)}85%{transform:translate(6%,3%) rotate(12deg)}100%{transform:none} }
+.auroral-agrabah,.auroral-northern,.auroral-northern-intense,.auroral-northern-dimmed,.auroral-northern-dusk,.auroral-northern-warm{position:absolute;left:-50%;top:-50%;width:200%;height:200%;animation-timing-function:linear;animation-iteration-count:infinite;animation-direction:alternate;mix-blend-mode:screen;filter:blur(26px)}
+.auroral-agrabah{animation-name:aura;animation-duration:2s;background:linear-gradient(-20deg, rgba(26,0,192,0.36) 40%, rgba(215,0,67,0.36)), linear-gradient(60deg,#1a00c0 10%,#d70043);opacity:0.9;filter:blur(36px)}
+.auroral-northern{animation-name:northern;animation-duration:10s;background:linear-gradient(10deg,#a1d9b4 20%,#32988a 40%,#000e3c 70%);filter:blur(34px);opacity:0.95}
+.auroral-northern-intense{animation-name:aura;animation-duration:10s;background:linear-gradient(10deg,#b7a841 20%,#a1006a 40%,#371d40 60%);filter:blur(30px);opacity:0.65}
+.auroral-northern-dimmed{animation-name:northern;animation-duration:10s;background:linear-gradient(-45deg, rgba(237,124,148,0.28) 20%, rgba(35,82,154,0.28) 70%), linear-gradient(10deg,#916b63 7%,#b8ba6f 20%,#ed7c94 40%,#23529a 60%);filter:blur(26px);opacity:0.55}
+.auroral-northern-dusk{animation-name:northern;animation-duration:15s;background:linear-gradient(-35deg, rgba(145,107,99,0.42) 15%, rgba(184,186,111,0.42) 25%, transparent 60%), linear-gradient(10deg,#916b63 9%,#b8ba6f 30%,#ed7c94 45%,#23529a 65%);filter:blur(22px);opacity:0.45}
+.auroral-northern-warm{animation-name:aura;animation-duration:10s;background:linear-gradient(5deg, transparent 70%, #da7712 95%), linear-gradient(160deg,#432c24 30%,#d96d7d 62%,#da7712 95%);filter:blur(28px);opacity:0.35}
+.auroral-stars{position:fixed;top:0;left:0;width:1px;height:1px;border-radius:50%;background:white;box-shadow:119vw 46vh 0 1px rgba(255,255,255,0.7),17vw 47vh 0 2px rgba(255,255,255,0.7),98vw 35vh 0 1px rgba(255,255,255,0.7)}
+
+/* Prints container */
+.prints{position:fixed;left:0;right:0;bottom:0;height:36vh;z-index:12;pointer-events:none;overflow:visible}
+
+/* Footprint styling */
+.footprint {
+  position:absolute;
+  transform-origin:center center;
+  will-change:transform,opacity;
+  pointer-events:none;
+  transition: transform 380ms cubic-bezier(.2,.9,.2,1), opacity 320ms;
+  opacity:0;
+}
+.fp-shadow {
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  pointer-events:none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.08) 30%, rgba(0,0,0,0) 70%);
+  border-radius:50%;
+  filter: blur(8px);
+  transition: opacity 320ms, transform 320ms;
+  opacity:0;
+}
+.footprint.show { opacity:1; }
+.footprint.show .fp-shadow { opacity:1; transform: translateX(-50%) scale(1); }
+.footprint.show .fp-svg { transform-origin:center center; transform: translateY(2px) scaleY(0.92); transition: transform 260ms; }
+
+/* Splash screen */
+#splash{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity 1.4s ease-out;background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.18))}
+#splash.fade-out{opacity:0;pointer-events:none}
+.splash-label{position:absolute;left:0;right:0;bottom:8vh;text-align:center;font-family:'Playfair Display',serif;color:#fff;font-size:clamp(1.4rem,4.5vw,3rem);letter-spacing:3px;z-index:1000;text-shadow:0 14px 45px rgba(0,0,0,0.6);font-weight:700;padding:14px 30px}
+
+/* Main content */
+#main-content{position:relative;z-index:20;display:none;padding-top:40vh;min-height:100vh}
+.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:clamp(3.5rem,8vw,7rem);font-weight:900;color:rgba(0,0,0,0.025);z-index:2;pointer-events:none;user-select:none;letter-spacing:0.25em;font-family:'Playfair Display',serif}
+
+/* Content containers */
+.book-header{max-width:980px;margin:0 auto 4rem;padding:2.6rem;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-radius:22px;box-shadow:0 22px 65px rgba(0,0,0,0.14)}
+.book-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;color:var(--text-dark);margin-bottom:0.7rem;letter-spacing:-0.02em;line-height:1.12}
+.book-subtitle{font-size:clamp(1.1rem,3vw,1.5rem);color:#666;margin-bottom:1.5rem;font-style:italic}
+.author-name{font-size:clamp(1rem,2.5vw,1.3rem);color:#888;margin-top:1.5rem;font-weight:600}
+.book-cover-display{max-width:360px;margin:1.8rem auto 0}
+.book-cover-display img{width:100%;height:auto;border-radius:11px;box-shadow:0 16px 42px rgba(0,0,0,0.13);display:block}
+
+.content-container{max-width:980px;margin:0 auto;padding:0 1.6rem 5rem}
+section{background:rgba(255,255,255,0.98);backdrop-filter:blur(8px);padding:2.8rem;border-radius:14px;margin-bottom:2.6rem;box-shadow:0 12px 45px rgba(0,0,0,0.13);position:relative;z-index:10}
+
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--text-dark);margin-bottom:1.8rem;letter-spacing:-0.01em}
+
+.content-text{font-size:clamp(1.05rem,2.2vw,1.25rem);line-height:1.8;color:#2a2a2a;margin-bottom:1.5rem;text-align:justify;white-space:pre-wrap}
+
+.character-name{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:700;color:#444;margin:2rem 0 1rem;text-align:center;letter-spacing:2px;text-transform:uppercase}
+
+.quote{font-style:italic;font-size:clamp(1.1rem,2.5vw,1.4rem);color:#555;margin:2rem 0;padding:1.5rem;background:rgba(0,0,0,0.03);border-left:4px solid #888;border-radius:8px;line-height:1.7}
+
+/* Image containers - responsive */
+.inline-image-container{margin:2rem 0;text-align:center;overflow:hidden;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
+.inline-image-container img{
+  width:100%;
+  max-width:100%;
+  height:auto;
+  display:block;
+  border-radius:12px;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+}
+
+/* Purchase CTA */
+.purchase-cta{text-align:center;padding:3rem 2rem}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--text-dark);margin-bottom:1rem}
+.purchase-links{display:flex;flex-direction:column;gap:1.2rem;max-width:500px;margin:0 auto 2rem;align-items:center}
+.purchase-link{
+  display:inline-block;
+  padding:1rem 2.5rem;
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color:#fff;
+  text-decoration:none;
+  border-radius:50px;
+  font-size:clamp(1.1rem,2.5vw,1.3rem);
+  font-weight:600;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 15px rgba(102,126,234,0.4);
+  width:100%;
+  max-width:400px;
+  text-align:center;
+}
+.purchase-link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(102,126,234,0.6);
+}
+.purchase-link:active{transform:translateY(0)}
+
+.back-btn{
+  display:inline-block;
+  padding:0.8rem 2rem;
+  background:rgba(0,0,0,0.1);
+  color:var(--text-dark);
+  text-decoration:none;
+  border-radius:50px;
+  font-size:clamp(1rem,2.2vw,1.2rem);
+  font-weight:600;
+  transition:all 0.3s ease;
+  margin-top:1rem;
+}
+.back-btn:hover{background:rgba(0,0,0,0.15);transform:translateY(-1px)}
+
+/* Responsive design */
+@media(max-width:768px){
+  .mountains{height:52vh}
+  .snowGround,.prints{height:30vh}
+  .splash-label{font-size:clamp(1.1rem,5.5vw,2.2rem);bottom:6vh}
+  #main-content{padding-top:32vh}
+  section{padding:1.8rem 1.2rem}
+  .book-header{padding:1.8rem 1.2rem}
+  .content-text{text-align:left}
+  .purchase-links{flex-direction:column;gap:1rem}
+  .purchase-link{padding:0.9rem 2rem;font-size:1rem}
+}
+
+@media(max-width:480px){
+  .mountains{height:45vh}
+  .snowGround,.prints{height:25vh}
+  #main-content{padding-top:28vh}
+  section{padding:1.5rem 1rem;margin-bottom:1.5rem}
+  .book-header{padding:1.5rem 1rem;margin-bottom:2rem}
+  .section-title{margin-bottom:1.2rem}
+  .content-container{padding:0 1rem 3rem}
+}
+
+/* Print styles */
+@media print{
+  .mountains, .snowGround, .prints, canvas, .container-aurora, #splash, .watermark{display:none !important}
+  body{background:white;color:black}
+  section{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:rgba(0,0,0,0.1)}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.3);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.5)}
+</style>
+</head>
+<body class="splash-active" oncontextmenu="return false" oncopy="return false" oncut="return false">
+
+  <!-- Aurora layers -->
+  <div class="container-aurora" aria-hidden="true">
+    <div class="auroral-agrabah"></div>
+    <div class="auroral-northern"></div>
+    <div class="auroral-northern-intense"></div>
+    <div class="auroral-northern-dimmed"></div>
+    <div class="auroral-northern-dusk"></div>
+    <div class="auroral-northern-warm"></div>
+    <div class="auroral-stars" aria-hidden="true"></div>
+  </div>
+
+  <!-- Mountains -->
+  <div class="mountains" aria-hidden="true">
+    <div class="m-back"></div>
+    <div class="m-mid"></div>
+    <div class="m-front"></div>
+    <div class="m-rim"></div>
+  </div>
+
+  <!-- Canvases -->
+  <canvas id="grainCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="snowCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="printsCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="sprayCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="snowGround" aria-hidden="true">
+    <div class="snowGloss"></div>
+  </div>
+
+  <!-- SVG definitions -->
+  <svg id="svg-defs" style="display:none">
+    <defs>
+      <linearGradient id="pawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1a2630" stop-opacity="0.98"/>
+        <stop offset="60%" stop-color="#0b1720" stop-opacity="0.95"/>
+      </linearGradient>
+      <filter id="insetShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feOffset dx="0" dy="2" result="off"/>
+        <feGaussianBlur in="off" stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over" result="comp"/>
+        <feMerge>
+          <feMergeNode in="comp"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <symbol id="paw-shape" viewBox="0 0 249 209.32">
+      <path d="M62 116c-12-16-18-34-10-52 6-12 20-20 34-18 9 1 17 7 22 14 7 11 6 26-2 36-10 14-29 20-44 20zM20 82c-6-10-5-24 3-34 7-10 20-14 30-9 8 4 13 13 12 22-1 6-6 12-12 16-12 7-26 6-33 5zM95 34c5-12 18-20 30-18 14 2 24 12 30 24 6 10 6 22-2 30-8 8-23 8-33 1-11-8-21-25-25-37zM148 110c12-8 28-8 40 2 10 9 14 24 11 36-3 14-12 24-24 30-13 6-30 5-40-6-9-10-11-26-5-39 3-7 10-13 18-23zM190 48c8-8 20-8 30-2 9 6 14 18 11 28-4 13-15 20-26 20-11 0-20-7-25-17-4-8-2-20 9-29z"
+            fill="url(#pawGrad)" filter="url(#insetShadow)"></path>
+    </symbol>
+  </svg>
+
+  <!-- Prints area -->
+  <div class="prints" id="prints" aria-hidden="true"></div>
+
+  <!-- Splash -->
+  <div id="splash"><div class="splash-label">The climb begins...</div></div>
+
+  <!-- Main content -->
+  <div id="main-content">
+    <div class="watermark">SAMPLE COPY</div>
+
+    <header class="book-header">
+      <h1 class="book-title">The Slap That Broke Everything</h1>
+      <p class="book-subtitle">When Love Wasn't Enough</p>
+      <div class="book-cover-display">
+        <img src="book_4_coverpage.png" alt="Book Cover">
+      </div>
+      <p class="author-name">Seethala Devi Chandu</p>
+    </header>
+
+    <div class="content-container">
+      <section class="preface">
+        <h2 class="section-title">Preface</h2>
+        <div class="inline-image-container">
+          <img src="book_4_overall_story.png" alt="Book illustration">
+        </div>
+        <p class="content-text">
+
+        On Words That Wound and Hands That Follow
+        The Ancient Truth We Choose to Forget
+        Let me tell you
+        about two women whose words burned kingdoms to ash.
+        Not metaphorically.
+        Actually.
+        
+        Kaikeyi.
+        A queen. A woman who'd
+        earned two boons through devotion, the kind of devotion that involves saving
+        your husband's life in battle, the kind that comes with promises attached.
+        She used those boons
+        like a blade to the throat.
+        "I want my
+        son on the throne. I want Rama exiled. Fourteen years."
+        Two sentences. That's
+        all it took.
+        King Dasharatha didn't
+        die from illness. Didn't fall in battle. His heart simply, stopped. Shattered
+        by grief so complete that his body gave up. The ancient texts don't sugarcoat
+        it: he died from her words. From loving someone whose language had turned
+        lethal.
+        The kingdom mourned.
+        Rama walked into exile. Sita followed. And every catastrophe that came after Sita's
+        abduction, Lanka's destruction, generations of bloodshed, traces back to this
+        moment.
+        To words spoken by a
+        woman who knew exactly what devastation they would cause.
+        Ask yourself: What
+        if she'd stayed silent?
+        Dasharatha lives. Rama
+        rules. Sita never meets Ravana. The war never happens. Entire bloodlines
+        survive.
+        But Kaikeyi spoke.
+        And a king died of a broken heart.
+        We remember her as
+        villain. We dissect Ravana's choices. We debate Rama's dharma. We analyze every
+        consequence of those words.
+        But we never call
+        the words themselves what they were: a weapon that killed.
+        
+        Surpanakha.
+        A woman mutilated for
+        the crime of wanting what she couldn't have. Lakshmana severed her nose - brutal,
+        unforgivable, the kind of violence that makes you flinch even reading it
+        millennia later.
+        She went to her brother
+        Ravana. Bleeding. Humiliated. Burning with the particular rage of someone who's
+        been made powerless and knows exactly how to reclaim power.
+        And she spoke.
+        "Your sister
+        was dishonored while you sat in luxury. Sita's beauty surpasses mine, take her.
+        Remind them who you are."
+        Calculated. Precise.
+        Every word designed to wound Ravana's pride in exactly the place that would
+        make him react.
+        And he did.
+        Lanka burned. Ravana
+        died. His entire lineage erased. Thousands dead in pyres. An era ended.
+        Because of words.
+        We remember the war.
+        Condemn Lakshmana's violence as we should. Debate whether Rama should have
+        protected her differently. Analyze Sita's fire ordeal and what it means for
+        women's agency.
+        But Surpanakha's words?
+        The deliberate provocation? The weaponized shame designed to manufacture
+        exactly the catastrophe that followed?
+        Barely mentioned. A
+        footnote. Background noise.
+        As if words were
+        harmless. As if language couldn't murder.
+        What if she'd accepted
+        rejection with grace? Her nose remains intact. Ravana never learns of Sita. The
+        war never ignites. Lanka survives.
+        But she spoke. And a
+        kingdom burned.
+        We examine every angle
+        of the violence that followed. But the match that struck the flame? That, we
+        pretend, was just... complicated feelings.
+        
+        The Line That Cannot
+        Be Crossed
+        Raising a hand
+        against a woman is a sin.
+        Full stop. No
+        asterisks. No footnotes about provocation or accumulated suffering or
+        psychological warfare.
+        A sin.
+        The ancient texts knew
+        this. Made it absolute. A man who strikes a woman carries that mark forever deserves
+        to carry it regardless of what came before.
+        Arjun raised his hand.
+        Once. In a moment when everything inside him detonated.
+        He deserves the red
+        flag.
+        Every consequence.
+        Every whisper. Every woman who recoils when she hears his name. Every blocked
+        number, every ruined opportunity, every label society has designed for men who
+        cross that line.
+        This book does not
+        absolve him.
+        Will not try.
+        Cannot. Should not.
+        
+        The Question That
+        Rots in Silence
+        But here's what
+        haunts me:
+        Why does nobody
+        count the words that came before?
+        Kaikeyi's demands
+        killed a king. His heart stopped. He died of grief of words so devastating his
+        body couldn't survive them.
+        Do we call that
+        murder?
+        Or do we call it
+        consequence? His weakness? The inevitable price of loving unwisely?
+        Surpanakha's
+        provocation burned a kingdom. Thousands died. Generations ended.
+        Do we count those
+        deaths as hers?
+        Or do we assign them to
+        Ravana's pride, to fate, to the warriors who actually swung the swords?
+        When a woman's words
+        systematically dismantle a man call his love insufficient, his devotion
+        "bare minimum," his sacrifices manipulative and he breaks under that
+        weight.
+        Do we ask what those
+        words cost him?
+        Or do we just catalog
+        his breaking and call it justice?
+        
+        The Weapon We
+        Pretend Is Harmless
+        Ancient wisdom
+        understood something we've abandoned:
+        Words are weapons.
+        Not poetically.
+        Literally.
+        You can murder someone
+        slowly with nothing but language. Cell by cell. Conviction by conviction. Until
+        the person they were simply... stops existing.
+        You can cage someone
+        with redefinition. Gaslight them until they doubt their own sanity. Destroy
+        their self-worth by treating extraordinary devotion as baseline expectation, then
+        calling anything less neglect.
+        Call it
+        "setting boundaries." Call it "finding yourself." Call it
+        "refusing to settle."
+        The knife is still a
+        knife when you've labelled it something prettier.
+        
+        Kaikeyi's words were
+        selfish. Dasharatha died anyway. Both true.
+        Surpanakha's
+        provocation was calculated. The war still burned real people. Both true.
+        Why can we hold this
+        complexity for ancient stories but not modern ones?
+        Why can we acknowledge
+        Kaikeyi's role without dismissing Dasharatha's death as weakness?
+        Why can we recognize
+        Surpanakha's weaponized shame without absolving Ravana?
+        Why can our mythology
+        contain multitudes, righteous words and violent responses, victims who become
+        provocateurs, choices that cascade into catastrophe, but our modern discourse
+        demands we choose?
+        One villain. One
+        victim. Pick a side.
+        
+        What This Book
+        Offers (And What It Doesn't)
+        This is not
+        justification.
+        Arjun crossed the line.
+        That moment rewrote everything. Physical violence is the boundary we've drawn
+        for good reason - visible, documentable, undeniable.
+        But this is autopsy.
+        An examination of what
+        came before. The systematic dismantling. The weaponized language. The
+        redefinition of devotion as control, sacrifice as manipulation, love as
+        insufficiency.
+        The slow murder that
+        happens in sentences before it explodes into a single, unforgivable second.
+        Our mythology
+        understood: A woman's words can topple kingdoms. Kill kings. Manufacture wars.
+        Not because women
+        are villains. Because language is powerful. Emotional violence is real.
+        Psychological warfare destroys as thoroughly as any blade.
+        Modern wisdom
+        refuses this truth:
+        When we only count
+        one kind of violence. When emotional devastation "doesn't count"
+        unless it escalates to something visible. When we've decided that systematic
+        abuse only becomes abuse when it leaves marks we can photograph
+        We're not preventing
+        violence. We're just choosing whose pain to ignore until it becomes impossible
+        to deny.
+        
+        The Pattern Staring Us
+        in the Face
+        What if Kaikeyi had
+        stayed silent?
+        Dasharatha lives. Rama
+        rules. Sita never meets Ravana. Lanka survives. The entire cascade of tragedy, prevented
+        by silence.
+        What if Surpanakha had
+        walked away?
+        Her nose intact. Ravana
+        never provoked. The war never ignited. Generations survive.
+        What if the words that
+        slowly murdered someone's sanity had never been spoken?
+        What if "bare
+        minimum" had been recognized as extraordinary devotion? What if
+        gaslighting had been called abuse before it drove someone to breaking? What if
+        systematic emotional warfare had been intervened upon before the hand was
+        raised?
+        Would the line have
+        been crossed?
+        We'll never know.
+        Because we've decided
+        only the visible violence matters. Only the moment of breaking. Only the
+        response.
+        The year of
+        destruction that preceded it? Just... complicated relationship dynamics. Two
+        incompatible people. Not abuse. Never abuse.
+        We've reserved that
+        word for bruises.
+        
+        Read This With Your
+        Eyes Open
+        The protagonist is
+        guilty. This isn't redemption. Not absolution. Not an attempt to justify the
+        unjustifiable.
+        But guilt doesn't erase
+        what came before.
+        The months of
+        gaslighting. The financial exploitation. The weaponized mental health. The
+        systematic redefinition of reality until he no longer knew what was true.
+        He was victim before he
+        became perpetrator.
+        Two truths coexist:
+        Violence is always -always the perpetrator's responsibility.
+        And some people are
+        destroyed long before they destroy others.
+        This is the story of
+        what came before the slap. Before the red flag. Before the Instagram stories
+        about toxic men and survivors. Before the narrative calcified into comfortable
+        simplicity.
+        This is the story of
+        how "bare minimum" costs everything.
+        Your savings. Your
+        sanity. Your self-respect. And finally, catastrophically, your humanity.
+        The ancient texts knew:
+        Words wound. Emotional violence destroys. The person bleeding in the street was
+        often cut months before the visible wound appeared.
+        Modern wisdom says it
+        doesn't matter. Only visible violence counts.
+        Maybe that's right.
+        Maybe the physical line is all we can measure, document, hold up as evidence.
+        But then stop
+        pretending words are harmless.
+        Stop pretending
+        systematic emotional abuse isn't violence just because it doesn't photograph
+        well.
+        Stop pretending that
+        when someone breaks under accumulated weight, their breaking exists in a
+        vacuum.
+        
+        The Uncomfortable
+        Truth
+        He hit her. That
+        makes him the monster he'll be remembered as.
+        Deservedly.
+        And she destroyed him
+        first. Slowly. With words that redefined his reality until he no longer
+        recognized himself.
+        That makes her. what?
+        Complicated?
+        Self-actualizing? Someone setting healthy boundaries?
+        Or the red flag nobody
+        wanted to see because we've decided only physical violence counts?
+        
+        The Question That
+        Haunts Every Page
+        In the Mahabharata,
+        kingdoms burned from righteous questions.
+        In the Ramayana,
+        kingdoms burned from selfish demands and calculated provocations.
+        We remember the fires.
+        Debate the warriors. Analyze the aftermath.
+        But we barely speak of
+        the words that struck the match.
+        This book asks: What if
+        we did?
+        What if we examined
+        emotional violence with the same rigor as physical violence?
+        What if "bare
+        minimum" was recognized as the weapon it is?
+        What if gaslighting,
+        financial exploitation, systematic psychological warfare were called abuse, even
+        when the abuser is female and the victim is male?
+        What if we cared about
+        preventing violence instead of just punishing it after it becomes visible?
+        
+        You're about to read a
+        story where both people are red flags.
+        Where victim and
+        perpetrator are roles that blur and switch until the only clear truth is: two
+        people destroyed each other.
+        He'll be remembered
+        as the monster. She'll be remembered as the survivor.
+        Maybe that's fair.
+        Maybe one moment of
+        physical violence outweighs a year of emotional devastation.
+        Maybe society is
+        right to draw the line at raised hands and ignore everything before.
+        But maybe we're missing
+        the point entirely.
+        Maybe if we'd counted
+        Kaikeyi's words as violence, Dasharatha doesn't die of grief.
+        Maybe if we'd
+        recognized Surpanakha's provocation as weaponized, we intervene before kingdoms
+        burn.
+        Maybe if we'd called
+        Meera's systematic abuse what it was, Arjun doesn't break.
+        Maybe prevention
+        requires acknowledging that violence begins long before hands are raised.
+        
+        This book will not
+        comfort you.
+        Won't give you a
+        villain to hate or a hero to root for.
+        Won't fit into the neat
+        categories social media has built for trauma and accountability.
+        But it will ask you to
+        consider:
+        What if the ancient
+        stories were trying to teach us something we've deliberately forgotten?
+        That words wound. That
+        emotional violence destroys. That some provocations are designed to manufacture
+        exactly the catastrophe that follows.
+        Not to excuse the
+        response. Never.
+        But to understand it.
+        To prevent it. To recognize that if we only intervene after the hurt becomes
+        visible, we've already failed.
+        
+        Welcome to the
+        wreckage.
+        To the story of a
+        man who deserved his red flag. Earned it. Owns it.
+        And the woman whose
+        red flag nobody saw because we've decided words aren't weapons.
+        Welcome to the
+        conversation nobody wants to have.
+        The one about Kaikeyi's
+        deadly demands and Surpanakha's calculated provocations and why we remember the
+        kingdoms that burned but not the matches that lit them.
+        The one about how hurt
+        people hurt people, and if we're only counting one kind of hurt, we're not
+        solving anything, just choosing whose pain to ignore.
+        Let us have it anyway.
+        With the gravity it
+        deserves. With the complexity our ancient texts understood. With the honesty
+        modern discourse has abandoned for comfortable simplicity.
+        This is the story of
+        what came before.
+        The words. The
+        wounds. The slow murder that happened in sentences before it detonated in a
+        single, unforgivable second.
+        May it haunt you the
+        way it haunts everyone who lived it.
+        May it make you ask the
+        question nobody wants asked:
+        What if we'd counted
+        all the violence, not just the kind that leaves visible scars?
+        -       Seethala Devi Chandu
+                        </p>
+                    </section>
+
+                    <section class="prologue">
+                        <h2 class="section-title">A Conversation We're Not Supposed to Have</h2>
+                        
+                        <div class="inline-image-container">
+                            <img src="book_4_bare_minimum.png" alt="Book illustration" draggable="false">
+                        </div>
+                        
+                        <p class="content-text">
+        Here's the thing about respect: real men practice it like
+        breathing - automatic, essential, non-negotiable. We hold doors. We listen. We
+        learn about things we'll never experience (menstrual cramps, workplace
+        misogyny, the particular terror of walking alone at night) because
+        understanding someone's reality is the baseline cost of loving them.
+        And sometimes – sometimes - we fuck up anyway.
+        Not because we're monsters. Not because respect was
+        performative. But because we're human, and humans break under enough pressure,
+        and breaking doesn't always look like quiet tears and therapy appointments.
+        Sometimes it looks like the thing you swore you'd never do. The line you
+        promised you'd never cross.
+        And when that happens, we own it.
+        We don't justify. Don't deflect. Don't pull out
+        scorecards of prior good behavior like they're Get Out of Jail Free cards. We
+        say: "I did this. It was wrong. I will carry this. And I will make damn
+        sure it never happens again."
+        That's what accountability looks like when you actually mean
+        it.
+        But here's what nobody wants to talk about - the
+        conversation that gets you labeled a misogynist before you finish the sentence:
+        What happens in the year before the break?
+        What happens when you're giving everything - time, money,
+        sanity, the future you'd been building since you were twenty-two and stupid
+        with hope - and it's met with a word that's become a weapon: bare minimum.
+        Bare minimum.
+        Like learning her body's patterns was just checking boxes.
+        Like going into debt for her dreams was merely adequate. Like carrying her - literally,
+        physically carrying her when altitude sickness hit - was the baseline
+        requirement instead of the kind of devotion most people only pretend to offer.
+        Bare minimum.
+        For the women reading this who've used that phrase - and
+        you know who you are, because it tastes like power when you say it - I need you
+        to understand something:
+        You have no idea what it cost him to do that "bare
+        minimum" thing for you.
+        You don't know about the overtime he worked so he could
+        afford the dinner he pretended was casual. The dreams he postponed because
+        yours seemed more urgent. The panic attacks he had in bathroom stalls at work
+        because the cognitive dissonance of loving someone who kept lying to him was
+        literally making him sick.
+        You don't know because he didn't tell you. Because men are
+        taught that vulnerability is weakness, that needing support is failure, that if
+        we can't handle it silently we don't deserve to handle it at all.
+        So we suffer quietly. Accumulate damage like interest. And
+        hope God, we hope that if we just give more, sacrifice deeper,
+        prove ourselves harder, it'll be enough.
+        It's never enough.
+        Because "bare minimum" isn't about what you're
+        receiving. It's about what you've decided you deserve. And when you've decided
+        you deserve everything, when you've been taught by Instagram feminism and
+        girl-boss culture that accepting less than perfection is betraying yourself,
+        then even extraordinary devotion looks like the starting line.
+        
+        This book isn't an excuse. Isn't a justification. Isn't a
+        manifesto for men who want permission to be shitty partners.
+        This book is a question:
+        What happens when we only care about male pain when
+        it's convenient? When we acknowledge male victimhood only if it doesn't
+        complicate the narrative? When we've decided that empathy is a finite resource
+        and men have already received their quota?
+        What happens when "believe all women"
+        becomes "believe only women"?
+        What happens when we stop asking why and only ever ask what?
+        
+        If you're a woman who's been genuinely abused and
+        statistically, that's 70% of you reading this.., this book is not dismissing
+        your experience. Your pain is real. Your trauma matters. The men who hurt you
+        deserved every consequence.
+        But if you're the other 30% if you're the woman who lied
+        systematically, manipulated financially, gaslit psychologically, and then
+        clutched your pearls when he finally broke, this book is your mirror.
+        Look at it. Really look.
+        See the year before the slap. The months of provocation. The
+        systematic button-pushing. The weaponization of his mental health. The casual
+        cruelty dressed up as "setting boundaries."
+        And ask yourself: Am I the red flag I convinced everyone
+        he was?
+        
+        For the men reading this: you're not absolved. Violence
+        is violence. One moment of harm doesn't get erased by a year of devotion. You
+        crossed a line, and you'll carry that mark forever.
+        But your pain before that moment? That was real too.
+        And you're allowed to say so. Allowed to acknowledge that
+        you were drowning before you dragged her under. Allowed to recognize that abuse
+        isn't gendered, that manipulation doesn't check chromosomes, that financial
+        exploitation and emotional warfare work just as well with female perpetrators.
+        You're allowed to be both victim and perpetrator. Both
+        destroyed and destroyer.
+        Society doesn't want that complexity. But complexity is
+        the truth.
+        
+        This book won't make you popular at dinner parties. Won't
+        get quote-tweeted by the empowerment accounts. Won't be recommended by
+        therapists who've built entire practices on the comfortable binary of male
+        perpetrator, female victim.
+        But it will tell the truth that 30% of us are living:
+        Sometimes the woman is the abuser. Sometimes "bare
+        minimum" is actually extraordinary sacrifice that you've decided doesn't
+        count. Sometimes the man who broke was breaking for months before he became the
+        monster you told everyone he was.
+        And sometimes .., just sometimes .., we need to
+        ask why instead of just what.
+        Not to justify violence. Never to justify violence.
+        But to understand it. To prevent it. To recognize that
+        hurt people hurt people, and if we're only intervening after the hurt
+        becomes visible, we're missing the entire fucking point.
+        
+        Read this book with an open heart or don't read it at
+        all.
+        It won't comfort you. Won't give you easy answers. Won't
+        fit into the neat little boxes social media has built for trauma and
+        accountability.
+        But it will ask you to consider that pain isn't gendered.
+        That empathy shouldn't be conditional. That the 30% of men who genuinely loved,
+        sacrificed completely, and still became villains deserve to have their stories
+        told too.
+        Even if especially if those stories make us
+        uncomfortable.
+        Welcome to the conversation we're not supposed to have.
+        Let's have it anyway.
+                        </p>
+                    </section>
+
+                    <section class="dedication">
+                        <h2 class="section-title">Dedication</h2>
+                        <p class="content-text">
+        For the 30% who burned themselves to keep someone else
+        warm, only to be remembered as the flame that got out of control.
+        For every man who learned that "I love you"
+        sometimes means "I love what you can give me," who discovered too
+        late that sacrifice without reciprocity isn't devotion - it's just slow-motion
+        self-destruction with better PR. For the ones who carried her through
+        mountains, literal and metaphorical, who went into debt funding dreams that
+        were never really shared, who postponed their own futures believing "our
+        future" meant something mutual. For the men who respected deeply, loved
+        genuinely, and still got recast as villains in someone else's redemption arc.
+        For everyone who's been gaslit so consistently they started doubting their own
+        sanity, who had panic attacks weaponized against them, who learned that
+        emotional abuse only counts as "real abuse" when the victim checks
+        the right demographic boxes. For those who broke once - just once - after
+        months of systematic psychological warfare, and discovered that one visible
+        moment of violence erases a year of invisible suffering. For anyone who's
+        realized that society's empathy is gendered, conditional, and cruelly selective
+        about whose pain deserves acknowledgment. This book won't absolve you. Won't
+        make you the hero. Won't rewrite history or change how you're remembered. But
+        it will say what nobody else will: 
+        You hurt too. And that counted. Even if they never
+        counted it.
+                        </p>
+                    </section>
+
+                    <section class="author-note">
+                        <h2 class="section-title">Author's Note</h2>
+                        
+                        <div class="inline-image-container">
+                            <img src="book_4_Letter_to_me.png" alt="Author's note illustration" draggable="false">
+                        </div>
+
+                        <p class="content-text">
+        Let's get something straight before you turn another page:
+        I know most men are the problem. Roughly 70% of
+        domestic abuse, manipulation, and control comes from men. This book isn't for
+        them. It won't comfort them, won't validate their bullshit, won't give them
+        ammunition for their "but what about men" Reddit threads.
+        This book is for the other 30%.
+        For the men who genuinely loved, who sacrificed without
+        keeping score, who respected their partners as equals and still got destroyed.
+        The ones who gave everything time, money, sanity, dreams and were discarded
+        like trash. The men who behaved like actual men: strong without being
+        controlling, protective without being possessive, vulnerable without being
+        weak.
+        If that's you, if you poured yourself into someone who was
+        systematically destroying you, if you broke once and became the villain while
+        she rewrote history this is for you.
+        This is for the men who really defines the true meaning
+        of testosterone. 
+        
+        Here's what I believe:
+        When someone truly loves and sacrifices for their partner man
+        or woman ,they've earned the right to hurt when that partner betrays
+        them. Not the right to cause harm. Never that. But the right to feel
+        devastation, to break down, to say "this is destroying me" without
+        being dismissed.
+        This applies to women too. When your man deviates, when he
+        takes you for granted, when he blames you for his failures, you have every
+        right to confront him, to demand he see what he's become. And if he won't
+        listen? Leave. Don't martyr yourself. Don't stay out of obligation or
+        sunk cost or hope he'll change.
+        Walk away before you break.
+        
+        
+        What I'm NOT saying:
+        I'm not condoning violence. Physical abuse is never
+        justified, not from emotional provocation, not from psychological warfare, not
+        from anything. Arjun hit Meera. That was wrong. Period.
+        But I am saying we need to ask why men break. Not to
+        excuse violence, but to understand it. To recognize emotional abuse, financial
+        exploitation, and systematic manipulation as real abuse even when the victim is
+        male.
+        Because if we only care about male pain when it's
+        convenient, if we only acknowledge male victimhood when it doesn't complicate
+        the narrative, we're not solving the problem. We're just deciding whose
+        suffering counts.
+        
+        This book is for:
+        The men drowning in relationships where their sacrifices are
+        "bare minimum" but her lies are "complicated feelings."
+        The women who burn themselves to light the way for their
+        partners, who respect their man's efforts instead of exploiting them.
+        Anyone who's learned that love without reciprocity isn't
+        love , it's consumption.
+        And for society: stop ignoring men when they're breaking.
+        Real friends don't just tell you to leave or man up, they sit with you, ask
+        what's wrong, help you see clearly. They intervene before you become the
+        cautionary tale.
+        
+        Final word:
+        Pain isn't gendered. Manipulation isn't gendered. The
+        capacity to be destroyed by someone you love doesn't check what's between your
+        legs.
+        If you're one of the 70% - the controlling, abusive,
+        entitled assholes, this book isn't your redemption arc. Do better or get
+        lost.
+        But if you're part of the 30% who loved genuinely and got
+        destroyed anyway?
+        Your pain is real. Your story matters. You're not alone.
+        Now let's talk about what happens when good men break and
+        why nobody asks them why.
+        -       The Author
+                        </p>
+                    </section>
+
+                    <section class="chapter">
+                        <h2 class="section-title">Chapter One: The Developer Who Dreamed of Mountains</h2>
+                        
+                        <div class="character-name">[ARJUN'S POV]</div>
+                        
+                        <div class="quote">
+        "The heart is a stupid organ - it mistakes
+        starvation for devotion, and calls it romance."
+                                                                -  A.K. (Me, three years too late)
+                        </div>
+
+                        <div class="inline-image-container">
+                            <img src="book_4_questions.png" alt="Chapter illustration" draggable="false">
+                        </div>
+
+                        <p class="content-text">
+        The fluorescent lights in Tech Solutions Pvt. Ltd. hummed
+        like dying wasps trapped in glass coffins.
+        I'd been staring at the same block of code for twenty
+        minutes - not debugging it, not fixing it, just staring while the cursor
+        blinked its judgment at me. Accusatory. Patient. Infinite. Like a metronome
+        counting down to my eventual corporate death.
+        Some men are born for cubicles. Others have cubicles thrust
+        upon them like ill-fitting straitjackets.
+        I was the latter. Twenty-six years old. Software developer
+        by necessity, wanderer by nature, and a complete fucking idiot when it came to
+        love. But I didn't know that last part yet. That particular education was still
+        waiting for me in a café three weeks from now, wearing a yellow sundress and a
+        smile that could gut a man before he even realized he was bleeding.
+        My name's Arjun. Remember it. You'll need it for the eulogy.
+        "Arjun, you absolute madman!"
+        Vikram's voice cut through my code-induced stupor. He rolled
+        his chair over on a collision course with my desk, grinning like he'd just
+        discovered fire. "Did you really tell Sharma sir that his architectural
+        design looked like it was made by a drunk chimpanzee with a vendetta against
+        maintainable code?"
+        I leaned back until my spine cracked - a sound like bubble
+        wrap being systematically destroyed. Satisfying in a deeply concerning way. The
+        kind of small violence you inflict on yourself when you can't inflict it on
+        your surroundings.
+        "I said it looked like a blindfolded drunk
+        chimpanzee," I corrected. "Accuracy matters."
+        "Jesus Christ."
+        Priya appeared from behind her monitor like a judge emerging
+        from chambers, her hijab slightly askew from running her hands through it - her
+        telltale sign of stress or homicidal ideation. Hard to tell which. "One
+        day you're going to get fired, and I'm going to have to pretend to be sad about
+        it."
+        "You'd miss me."
+        "I'd miss the entertainment value. There's a
+        difference."
+        This was my team. My people. The ones who understood that
+        corporate life was a slow death by PowerPoint presentation, that the only way
+        to survive it was with sharp tongues and sharper code. We'd built a small
+        fortress of competence in a wasteland of mediocrity, and we defended it with
+        the ferocity of people who knew exactly how rare it was.
+        I'd taken this job eighteen months ago with a plan so clear
+        it hurt to look at directly: save every rupee like a miser hoarding gold, build
+        a cushion thick enough to land on, then walk away from this fluorescent
+        purgatory and start my real life.
+        A travel startup. Not the sanitized Instagram kind where
+        trust-fund kids pretend to rough it while staying in boutique hotels. Real
+        travel. The kind where you sleep in bus stations and eat street food that might
+        kill you and wake up in places that don't have names on Google Maps.
+        I had a notebook. Seventy-three pages of plans - routes
+        plotted like battle campaigns, partnerships with local guides, budget
+        breakdowns calculated down to the last chai and samosa. The notebook lived in
+        my desk drawer, under a stack of forgotten sprint retrospective notes that no
+        one ever read.
+        I touched it sometimes. Just to remember why I was here. Why
+        I was drowning in Java and JavaScript and corporate jargon that made my teeth
+        ache.
+        "Lunch?" Vikram was already standing, keys
+        jangling.
+        "Can't. Code review with Sharma in ten."
+        "The chimpanzee himself?" Priya smirked.
+        "Good luck, soldier. Try not to compare any more of his work to primate
+        disasters. HR's starting to notice."
+        "I'll be diplomatic."
+        "That'll be a first."
+                        </p>
+
+                        <div class="inline-image-container">
+                            <img src="promotional2_book_4.png" alt="Chapter illustration" draggable="false">
+                        </div>
+
+                        <div class="quote">
+        "Anger doesn't burn , it rusts. Slow corrosion from
+        the inside, until you realize you've been hollow for years."
+                                                        - Also me, learning the hard way
+                        </div>
+
+                        <p class="content-text">
+        The thing about me and anger - we were old friends. Intimate
+        friends. The kind who show up uninvited at three in the morning and overstay
+        their welcome by decades.
+        I knew it was a problem. Had known since college when I'd
+        punched a wall over a failed exam and broken two knuckles. Knew it when I'd
+        screamed at my father for suggesting I was wasting my life with "travel
+        fantasies." Knew it every time I felt that hot copper taste in my mouth
+        when someone pushed the wrong button.
+        Knowing and fixing are different countries, separated by an
+        ocean of good intentions and shipwrecked willpower.
+        I'd been stuck at the border for years.
+        Sharma's code review went exactly as expected. Him
+        nitpicking variable names like he was grading a literature essay. Me explaining
+        why his suggestions would break everything in production. Him pulling rank like
+        a weapon. Me pulling facts like a shield. The temperature rising degree by
+        degree until the conference room felt like a pressure cooker about to blow.
+        The rage came up hot and quick, tasting like copper and
+        battery acid.
+        "Arjun, you need to learn some diplomacy," he
+        said, in that tone managers use when they mean shut up and obey, peasant.
+        My jaw clenched. My hands curled into fists under the table
+        where he couldn't see them, nails digging into palms until I felt the sting.
+        The pain was good. Grounding. Better than the alternative.
+        But I swallowed it. Smiled. Nodded like a good little
+        employee.
+        "Sure, Sharma sir. I'll work on that."
+        Professional. Diplomatic. Completely full of shit.
+        I walked out before I said something that would require an
+        HR intervention and a police escort.
+        Priya caught up with me at the coffee machine - that
+        ancient, temperamental beast that dispensed something vaguely coffee-adjacent
+        if you sacrificed the right combination of buttons and prayers.
+        "You okay?"
+        "Fantastic."
+        "That's your 'I'm about to punch a wall and regret it
+        later' voice."
+        "I don't have a -"
+        "You absolutely do." She handed me a cup of the
+        machine's latest crime against coffee. Dark. Bitter. Appropriate. "Look, I
+        get it. He's an idiot with authority. But you're brilliant, and brilliant
+        people don't last here if they keep telling idiots they're idiots. Even when
+        they're right. Especially when they're right."
+        "What's the alternative? Pretend?"
+        "Yes, Arjun. Welcome to adulthood. It's disappointing.
+        The food is mediocre and everyone's lying about being fine."
+        I laughed despite myself, despite the rage still cooling in
+        my chest like molten metal hardening into something permanent and jagged. This
+        was why I kept this job. Not the salary - though the savings account was
+        growing slowly, like a plant in bad soil. But the people. The ones who got it.
+        Who understood that we were all just trying to survive with our sanity mostly
+        intact and our dignity only partially compromised.
+        By evening, the office had emptied. I stayed late, debugging
+        a critical feature while the city outside turned from gold to indigo - that
+        particular shade of sky that made you believe in things. Hope. Change. Futures
+        that didn't involve fluorescent lights and passive-aggressive Slack messages.
+        My phone buzzed.
+        Vikram in the group chat: "Drinks this weekend?
+        Or has Arjun found another reason to be antisocial?"
+        Me: "I'm not antisocial. I'm selectively
+        social."
+        Priya: "That's literally what antisocial people
+        say."
+        Me: "I'll come if you stop psychoanalyzing
+        me."
+        Vikram: "Impossible. You're our pet project.
+        We're trying to make you into a functional human being."
+        I grinned at the screen. Saved another thousand rupees this
+        month. The startup fund was at ₹3.2 lakhs now - a number I checked daily like a
+        man checking his pulse. Another year, maybe eighteen months, and I'd have
+        enough to risk it.
+        To leave.
+        To live.
+        The mountains were waiting.
+        </p>
+
+                        <div class="inline-image-container">
+                            <img src="promotional_book_4.png" alt="Chapter illustration" draggable="false">
+                        </div>
+
+                        <p class="content-text">
+        The cafe was called Brew & Banter.
+        Overpriced coffee. Pretentious playlist full of indie bands
+        no one had heard of. Exactly the kind of place I normally avoided like a
+        communicable disease. But Vikram had insisted some new barista he wanted to
+        impress, and he needed wingmen because apparently his charm didn't work without
+        backup.
+        "You're literally using me as a prop in your romantic
+        comedy," I told him.
+        "Yes. And?"
+        "And I respect the honesty. At least you're upfront
+        about your manipulation."
+        It was a Saturday afternoon. The café was crowded with the
+        kind of people who photograph their lattes before drinking them, as if
+        Instagram would validate their caffeine choices. Couples leaning into each
+        other like sunflowers tracking the sun. Freelancers with MacBooks covered in
+        stickers proclaiming their uniqueness while they all ordered the same drink.
+        The air smelled like cinnamon and desperation and expensive
+        beans ground to overpriced perfection.
+        I ordered black coffee. Sat in the corner like a noir
+        detective waiting for trouble. Pulled out my notebook.
+        That's when I saw her.
+        Yellow sundress. Hair catching the afternoon light like
+        water catching fire. She was laughing at something her friend said, and the
+        sound cut through the café noise like a blade through silk - sharp, clean,
+        impossible to ignore.
+        I'm not a believer in love at first sight. I'm a software
+        developer. I deal in logic, in loops and conditionals, in things that make
+        sense when you read the documentation.
+        But something in my chest lurched sideways like a car
+        hitting ice.
+        She had this way of moving - like she was dancing to music
+        only she could hear, like gravity was optional and she'd decided to participate
+        out of politeness rather than necessity. Her hands gestured when she talked,
+        painting pictures in the air that her friend leaned in to see. And her perfume
+        - even from across the room, I caught it. Something floral and expensive, like
+        jasmine drowning in expensive alcohol. That scent. I'd learn to recognize it in
+        the dark, to associate it with every beautiful mistake I was about to make.
+        And her smile.
+        Christ, her smile was dangerous. The kind that promised
+        everything and warned you of nothing, like a contract written in invisible ink.
+        "Dude." Vikram nudged me hard enough to spill
+        coffee on my notebook. "You're staring."
+        "I'm observing."
+        "You're drooling."
+        "I don't drool."
+        "You're doing the emotional equivalent. The code in
+        your brain just crashed. I can see the error message in your eyes."
+        She glanced over. Our eyes met for maybe two seconds - long
+        enough for every synapse in my brain to rewire itself, short enough that I
+        could pretend it didn't matter. She smiled - polite, distant, already looking
+        away.
+        But those two seconds were enough.
+        I'd spent twenty-six years being careful. Guarded. Building
+        walls and checking the foundation every six months. Love was for people who
+        could afford the risk, and I was saving every rupee for a dream that didn't
+        include anyone else.
+        But looking at her, I thought: What if this is the dream?
+        Vikram was right.
+        I was absolutely, irredeemably fucked.
+        </p>
+
+                        <div class="inline-image-container">
+                            <img src="book_4_bare.png" alt="Chapter illustration" draggable="false">
+                        </div>
+                        
+                        <p class="content-text">
+        I didn't talk to her that day. Didn't even learn her name.
+        Just watched her leave, yellow dress disappearing into the Bangalore afternoon
+        like something out of a film I couldn't afford to see. But that perfume
+        lingered - jasmine and expensive mistakes. It clung to the air like a prophecy.
+        "You should've said something," Vikram told me on
+        the way back, his voice thick with secondhand disappointment.
+        "Like what? 'Hi, I've been creepily staring at you for
+        thirty minutes while pretending to look at my notebook, want to grab dinner and
+        discuss my emotional unavailability?'"
+        "I mean, honesty points."
+        "That's not honesty. That's a restraining order with
+        extra steps."
+        But I couldn't stop thinking about her. That laugh. That
+        dress. The way she tucked her hair behind her ear, revealing a small scar on
+        her temple, proof that she'd lived, that she had stories, that she was real and
+        not just a figment of my caffeine-addled imagination.
+        I went back to Brew & Banter the next weekend.
+        And the next.
+        Like a ghost haunting the scene of its own demise.
+        The third time, she was alone.
+        My heart hammered against my ribs like it was trying to
+        escape the cage of my chest and make better life choices. I walked over before
+        my brain could veto the decision with logic and fear.
+        "Hey," I said.
+        Smooth. Real fucking smooth.
+        She looked up from her book, some design theory thing with a
+        cover that looked like a Rorschach test. Her eyes were darker up close. Brown
+        with flecks of amber, like whiskey held up to sunlight.
+        "Hi?"
+        "I've seen you here before." I offered my hand
+        like I was presenting evidence. "I'm Arjun."
+        She took it. Her fingers were warm, her grip confident. That
+        perfume hit me again jasmine and something darker underneath. Vetiver maybe. Or
+        my own impending doom.
+        "Meera."
+        Meera.
+        Even her name sounded like a promise. Like something you'd
+        whisper in the dark, over and over, until it lost all meaning except the shape
+        of her mouth saying it back.
+        "Can I... can I join you? Or is that weird? It might be
+        weird. I'm making it weird, aren't I?"
+        She laughed that same laugh that had rewired my brain two
+        weeks ago. "You can join me. But only if you stop spiraling. I can see the
+        panic in your eyes."
+        I sat. Ordered another coffee I didn't need, my third of the
+        day. We talked about books, about the city, about nothing and everything. She
+        was studying design. Had dreams of working abroad, seeing Switzerland, standing
+        in snow for the first time like a character in a story she was still writing.
+        Her eyes lit up when she talked about travel, about
+        mountains and unknown horizons. Like there was a fire inside her that needed
+        feeding, that would consume everything in its path if you got too close.
+        I should've run then.
+        I told her about the startup instead. About the notebook
+        full of routes and dreams.
+        "A traveller and a dreamer," she said, studying me
+        like I was a design problem she was trying to solve. "Dangerous
+        combination."
+        "Why dangerous?"
+        "Because dreamers get hurt." She took a sip of her
+        coffee, something complicated with foam art. Her lipstick left a mark on the
+        rim rust-coloured, like dried blood. "And travellers leave. They're always
+        leaving."
+        "What if I'm the kind who wants someone to come
+        with?"
+        She smiled then, really smiled, not the polite version but
+        something real and raw and slightly cruel. "Then you're the worst
+        kind. The kind who makes you believe."
+        There it was. The first cut. So subtle I almost missed it.
+        The kind who makes you believe.
+        As if belief were the crime. As if hope were something to be
+        mocked. But I heard what she wasn't saying: I've been hurt before. I'll hurt
+        you first.
+        I should've heard the warning in that. Should've recognized
+        the poetry as prophecy.
+        But I was already falling.
+        Already gone.
+        We exchanged numbers. Started texting. He was funny self-deprecating
+        in a way that felt genuine rather than fishing for compliments. He'd send me
+        screenshots of terrible code with commentary that made me laugh at one in the
+        morning when I couldn't sleep.
+        I liked him.
+        Really liked him.
+        But liking someone and being ready for them are different
+        countries, separated by an ocean I had no intention of crossing.
+        </p>
+
+                        <div class="character-name">[MEERA'S POV]</div>
+
+                        <div class="inline-image-container">
+                            <img src="book_4_final_truth.png" alt="Chapter illustration" draggable="false">
+                        </div>
+
+                        <p class="content-text">
+        He was staring at me. Had been for weeks.
+        I noticed him the first time corner table, black coffee,
+        notebook full of what looked like either brilliant plans or elaborate
+        conspiracy theories. Most guys stare differently. Hungry. Entitled. Like women
+        are meals and they're starving.
+        This one stared like he was trying to memorize something
+        before it disappeared.
+        It was... different.
+        Maybe even flattering, in a slightly stalker-ish way.
+        When he finally approached, I almost laughed. He was nervous
+        hands fidgeting, words tripping over themselves like they were racing to escape
+        his mouth. Sweet, really. Most guys led with confidence they hadn't earned.
+        This one led with honesty and barely concealed panic.
+        "I'm Arjun."
+        "Meera."
+        We talked. He was easy to talk to not trying too hard, not
+        performing masculinity like it was a job interview. Just... present. Listening.
+        Actually listening, not waiting for his turn to talk about himself.
+        He told me about his travel dreams, pulling out this worn
+        notebook like it was a religious text. Pages and pages of plans routes, costs,
+        partnerships. The kind of detail that spoke of obsession or passion.
+        Maybe both.
+        "You really want to do this," I said, tracing a
+        route through Ladakh with my finger.
+        "More than anything." His eyes were bright. Alive.
+        Almost painfully earnest. "What about you? What do you want?"
+        Switzerland. Snow. A life that wasn't here, wasn't this,
+        wasn't the suffocating weight of expectations and unfulfilled potential.
+        But I didn't say all that.
+        "I want to see places that don't exist on a map yet.
+        Places I haven't ruined with my imagination."
+        He smiled. "That's beautifully cynical."
+        "That's me. Beautiful cynic."
+        I liked him.
+        But I wasn't sure I could afford to.
+        </p>
+
+                        <div class="character-name">[ARJUN'S POV]</div>
+
+                        <div class="inline-image-container">
+                            <img src="book_4_the_End.png" alt="Chapter illustration" draggable="false">
+                        </div>
+
+                        <p class="content-text">
+        Two weeks after we met, I asked her out properly. Dinner.
+        Just the two of us.
+        I stared at my phone for five minutes before responding. The
+        three dots appeared and disappeared like Morse code for anxiety.
+        Meera: "Are you asking me on a date,
+        Arjun?"
+        Me: "I'm asking you to let me buy you food while
+        we sit across from each other and pretend to be normal humans who know how to
+        socially interact."
+        Meera: "That's the worst date pitch I've ever
+        heard."
+        Me: "Is that a yes?"
+        Meera: "It's a yes."
+        I told Vikram. He cheered like I'd won something instead of
+        just agreeing to dinner with a near-stranger who already made my chest ache in
+        ways I didn't fully understand.
+        I changed my shirt three times, each one making me look
+        progressively more like I was trying too hard or not trying at all. Vikram
+        watched me spiral from his perch on my bed, eating my chips and offering
+        exactly zero helpful advice.
+        "You look like you're going to a funeral, not
+        dinner."
+        "What if I fuck this up?"
+        "Then you fuck it up. Welcome to dating. Population:
+        everyone who's ever tried." He crunched another chip. "You're
+        overthinking this. She already said yes. That's the hard part."
+        "What if she regrets it?"
+        "Then she's human. Most decisions are regrettable.
+        Doesn't mean they're not worth making."
+        I settled on the blue shirt, the one Priya said made me look
+        "like an actual adult instead of a confused teenager playing
+        dress-up."
+        High praise from her.
+        Meera wanted to try this new place in Indiranagar - Italian,
+        expensive, the kind of restaurant that puts three pieces of pasta on a plate
+        and calls it artisanal. My savings account wept silently. I told it to shut up
+        and remember what we were saving for.
+        She arrived fifteen minutes late, which should've been the
+        first sign.
+        But she was wearing this black dress that made my brain
+        short-circuit and reboot in safe mode, so I forgave her immediately and without
+        reservation. That perfume jasmine and vetiver and expensive mistakes hit me
+        like a physical thing.
+        "Sorry," she said, not sounding sorry at all.
+        "Traffic was murder. This city is trying to kill me through gridlock and
+        exhaust fumes."
+        "You look..." I gestured vaguely at all of her, my
+        vocabulary temporarily offline.
+        Smooth. Real smooth.
+        "I look like I took two hours getting ready and will
+        absolutely pretend it was effortless?"
+        "I was going to say beautiful, but your version is more
+        accurate. And funnier."
+        She laughed. That laugh. I was learning it had variations, the
+        polite one for strangers, the genuine one for friends, the one that meant she
+        was laughing at you but affectionately.
+        This was the genuine one.
+        I was collecting them like rare coins, hoarding them in my
+        memory like a dragon with treasure that would eventually burn him alive.
+        Dinner was good. Overpriced, but good. She ordered wine, something
+        French with a name I couldn't pronounce without sounding like I was choking.
+        "You don't drink?" she asked, swirling her glass
+        like she was performing wine sorcery.
+        "Teetotaller. Have been since college."
+        "Boring."
+        She said it lightly, but something in her eyes sharpened.
+        Like she was filing this information away under disappointments.
+        "Responsible," I corrected.
+        "Same thing. All responsible people are boring. It's
+        the price of virtue." She took a long sip, watching me over the rim.
+        "You're going to be one of those guys who's in bed by ten and considers a
+        wild Friday staying up to watch a documentary."
+        There it was again. Another cut. Casual. Almost playful.
+        But it landed.
+        Boring.
+        The word sat in my chest like a stone. I'd heard it before from
+        my father, from friends who stopped inviting me out because I always said no.
+        But hearing it from her hurt differently. Like she'd already
+        decided who I was and found me lacking.
+        "Is that a deal breaker?" I asked, keeping my
+        voice light.
+        "I don't know yet." She smiled, but it didn't
+        reach her eyes. "I'm still deciding if you're worth the effort."
+        Worth the effort.
+        As if I were a project. A fixer-upper. Something to be
+        assessed and potentially discarded if the return on investment wasn't high
+        enough.
+        I swallowed the hurt. Smiled. Changed the subject.
+        "So tell me about Switzerland. Why there
+        specifically?"
+        Her face lit up, and just like that, the warmth was back.
+        She talked about snow, about mountains, about this fantasy she'd built in her
+        head. And I listened, storing away every detail like I'd be quizzed on it
+        later.
+        This was how it would be, I was starting to realize. Hot and
+        cold. Close and distant. She'd cut me, then kiss the wound before I could
+        process the pain.
+        And I'd let her.
+        Because when she smiled - really smiled, not the
+        performative version. it felt like sunlight after months of rain.
+        Worth it, I told myself. She's worth it.
+        The bill came. ₹3,200.
+        I didn't flinch. Didn't let her see the mental calculation
+        of how many hours of code that represented, how many days of rice and dal I'd
+        need to balance it out.
+        Outside, the sky was doing that pre-monsoon thing where it
+        couldn't decide whether to break or hold. The air smelled like wet earth and
+        promises waiting to be broken. Thunder rumbled in the distance like a warning
+        no one would heed.
+        "Walk with me?" she asked.
+        We walked. No destination, just movement through streets
+        that smelled like rain and jasmine and street food. She talked about
+        Switzerland again, about this life she wanted that was always somewhere else,
+        always out of reach.
+        "You don't like it here?" I asked.
+        "I like the idea of somewhere else more." She
+        glanced at me, something unreadable in her expression. "Isn't that the
+        human condition? Always wanting the elsewhere?"
+        "Maybe. Or maybe we just
+        haven't learned to love where
+        we are."
+        "God, you're earnest." She laughed, but there was
+        an edge to it. "It's almost painful. Like watching a puppy trying to
+        understand why its owner left."
+        Another cut. Deeper this time.
+        Like a puppy.
+        Naive. Trusting. Pathetic.
+        I felt something crack inside my chest - small, but
+        definite. Like the first sign of structural damage you ignore because
+        acknowledging it means admitting the whole thing might collapse.
+        The rain started slowly fat drops that left dark circles on
+        the pavement like Morse code. Then all at once, the way Bangalore rain does,
+        like the sky giving up on subtlety and going straight for drowning.
+        We ran, laughing, completely soaked within seconds. My shirt
+        stuck to my skin. Her dress clung to her body like a second skin, and even
+        drenched and shivering, she was the most beautiful thing I'd ever seen.
+        We looked like drowned rats with good intentions and bad
+        judgment.
+        My flat was closer than hers. I said it without thinking,
+        without calculating the implications.
+        "We can wait it out. I have towels. Tea. No ulterior
+        motives, I swear on my codebase."
+        She looked at me - really looked, like she was solving an
+        equation with too many variables and not enough time.
+        Then nodded.
+        "Okay."
+        </p>
+                        <div class="quote">
+        "The worst mistakes arrive dressed as the best
+        decisions, and you open the door smiling."
+                        </div>
+
+                        <p class="content-text">
+        My flat was small. One bedroom, a kitchen that was more
+        suggestion than reality, furniture from IKEA that I'd assembled wrong and was
+        too stubborn to fix. But it was mine. Paid for. Independent. A space I'd carved
+        out of the world through nothing but code and stubborn determination.
+        Meera stepped inside, dripping rainwater on my floor, and I
+        saw my space through her eyes: the laptop on the dining table, the notebook
+        beside it like a religious text, the walls bare except for a single poster of
+        Ladakh mountains reaching toward a sky so blue it looked photoshopped.
+        Minimal. Intentional.
+        Lonely.
+        "It's very... you," she said, wringing water from
+        her hair. That perfume jasmine and vetiver filled my small space, marking it as
+        hers now, whether I wanted it or not.
+        "Is that good or bad?"
+        "It's honest." She walked around slowly, taking it
+        all in. "Everything else is just performance art. But this is sad, Arjun.
+        Like looking at a monk's cell, but the monk doesn't even believe in God
+        anymore. He's just going through the motions."
+        Jesus Christ.
+        Sad.
+        The word landed like a fist to the gut. I'd been proud of
+        this place. My independence. My discipline. The proof that I didn't need much
+        to survive, that I was saving for something better.
+        But she'd walked in and diagnosed it in thirty seconds.
+        Sad.
+        Empty.
+        The home of a man who was too busy waiting for his real life
+        to start to actually live one.
+        "You should change," I said, trying not to let the
+        hurt show, trying not to think about how easily she'd dismantled everything I'd
+        built. "You'll get sick. Bangalore rain is basically dirty ice
+        water."
+        "Into what? I didn't exactly pack a backup outfit for
+        accidental monsoon scenarios."
+        I gave her one of my t-shirts and track pants. She
+        disappeared into the bathroom. Came back looking impossibly smaller, swimming
+        in my clothes, her hair wet and curling around her face like dark water.
+        Something in my heart lurched sideways.
+        Again.
+        Harder this time.
+        "Better?" I asked.
+        "Warmer." She accepted the tea, wrapping her hands
+        around the mug like it was precious. "You're being very gentlemanly about
+        this. Most guys would see this as an opportunity. A wet girl in their
+        apartment. It's like the setup to a bad porno."
+        "I'm not most guys."
+        "I'm starting to realize that." She looked at me
+        over the rim of her cup, something calculating in her gaze. "You're the
+        good guy. The one who'll do everything right and still get hurt because women
+        like me don't know what to do with good guys. We're conditioned for
+        chaos."
+        There it was.
+        The warning I should've heeded.
+        Women like me.
+        You'll still get hurt.
+        She was telling me, point-blank, that this would end badly.
+        That I would be collateral damage in whatever war she was fighting with
+        herself.
+        And I heard her.
+        I did.
+        But then she smiled soft, almost shy, so different from her
+        usual sharp edges and all the warnings dissolved like sugar in rain.
+        We talked until 2 AM. The rain hammered against the windows
+        like it was trying to get in, to become part of the conversation. She told me
+        about her family overbearing mother who measured love in criticism, absent
+        father who measured it in silence, the pressure to be perfect in a world that
+        kept moving the goalposts.
+        I told her about mine, simple people with simple dreams,
+        confused by their son who wanted to wander instead of settle, who saw stability
+        as a cage rather than safety.
+        For a few hours, the cuts stopped. The edges softened. She
+        laughed at my jokes without the cruel undertone. Listened to my travel dreams
+        without calling them naive.
+        For a few hours, I forgot that she'd called me boring, sad,
+        like a puppy.
+        For a few hours, it felt like maybe this could work.
+        "You can stay," I said eventually, when the rain
+        showed no signs of stopping and the clock showed no mercy. "The couch is
+        comfortable. Or you can take the bed. I'll take the couch."
+        "Very gentlemanly."
+        "I try. It's exhausting, but I try."
+        She took the bed. I took the couch.
+        Lay there staring at the ceiling, hyperaware that she was
+        twenty feet away, breathing, existing in my space, wearing my clothes,
+        disrupting the careful equilibrium I'd built. Her perfume had settled into the
+        fabric of everything - my couch, my air, my lungs.
+        This was dangerous. This feeling. This want.
+        I'd saved ₹3.2 lakhs by being careful. By saying no. By not
+        letting anyone get close enough to derail the plan, to make me doubt the dream.
+        But lying there, listening to the rain and knowing she was
+        here, I thought: Fuck the plan.
+        Some things are worth the risk.
+        Some people are worth bleeding for.
+        I had no idea how wrong I was.
+        I had no idea that in three years, I'd be sitting in this
+        same flat, alone, staring at an empty bed and wondering when exactly I'd
+        stopped being a person and started being her emotional punching bag.
+        But that night, in the rain, with her perfume drowning my
+        carefully ordered life.
+        That night, I was just a man falling in love.
+        The impact would come later.
+        
+        </p>
+      </section>
+
+      <section class="purchase-cta">
+        <h2 class="cta-title">Continue Reading</h2>
+        <p style="font-size: clamp(1.2rem, 3.2vw, 1.5rem); margin-bottom: 2.5rem;">
+          This is just a glimpse. Experience the full story.
+        </p>
+        <div class="purchase-links">
+          <a href="https://www.amazon.in/dp/B0G26VPFCG" target="_blank" rel="noopener" class="purchase-link">
+            📚 Buy on Amazon
+          </a>
+          <a href="https://www.goodreads.com/book/show/243921782-the-slap-that-broke-everything" target="_blank" rel="noopener" class="purchase-link">
+            🌟 Read Reviews on Goodreads
+          </a>
+        </div>
+        <br><br>
+        <a href="index.html#books" class="back-btn">← Back to All Books</a>
+      </section>
+    </div>
+  </div>
+
+<script>
+// Disable right-click, copy, cut, drag
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('cut', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
+document.addEventListener('selectstart', e => {
+  if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
+});
+
+// Disable keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+    e.preventDefault();
+    return false;
+  }
+  if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+/* Canvas sizing helper */
+function setCanvasSize(canvas) {
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const w = Math.floor(canvas.clientWidth * dpr);
+  const h = Math.floor(canvas.clientHeight * dpr);
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w; canvas.height = h;
+  }
+  return dpr;
+}
+
+/* Grain overlay */
+const Grain = (function () {
+  const canvas = document.getElementById('grainCanvas'), ctx = canvas.getContext('2d', { alpha:true });
+  function init(){
+    setCanvasSize(canvas);
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    ctx.globalAlpha = 0.04;
+    for(let i=0;i<7000;i++){
+      const x=Math.random()*w, y=Math.random()*h*0.6, s=Math.random()*1.6;
+      ctx.fillStyle = `rgba(0,0,0,${0.04 + Math.random()*0.06})`;
+      ctx.fillRect(x,y,s,s);
+    }
+    ctx.globalAlpha =1;
+  }
+  return { init };
+})();
+
+/* Snow particles */
+const Snow = (function () {
+  const canvas = document.getElementById('snowCanvas'), ctx = canvas.getContext('2d', { alpha:true });
+  let particles = [], lastTime=0;
+  function createParticle(w,h,randomY=true){
+    const depth = Math.random()*0.86 + 0.06;
+    return { 
+      x:Math.random()*w, 
+      y: randomY?Math.random()*h:-15 - Math.random()*h*0.25, 
+      r:(1.1-depth)*(Math.random()*2.6+0.8), 
+      vx:(Math.random()-0.5)*(0.08+(1-depth)*0.35), 
+      vy:(0.08+(1-depth)*1.05)*(Math.random()*0.95+0.65), 
+      alpha:0.5+(1-depth)*0.5, 
+      depth, 
+      rotation:Math.random()*Math.PI*2, 
+      rotSpeed:(Math.random()-0.5)*0.02 
+    };
+  }
+  function init(){ 
+    particles=[]; 
+    setCanvasSize(canvas); 
+    const w=canvas.clientWidth,h=canvas.clientHeight; 
+    for(let i=0;i<220;i++) particles.push(createParticle(w,h,true)); 
+    lastTime=performance.now(); 
+  }
+  function spawnBurst(x,y,count=12){ 
+    const w=canvas.clientWidth,h=canvas.clientHeight; 
+    for(let i=0;i<count;i++){ 
+      const p=createParticle(w,h,false); 
+      p.x=x+(Math.random()-0.5)*32; 
+      p.y=y+(Math.random()-0.5)*18; 
+      p.vx=(Math.random()-0.5)*2.6; 
+      p.vy*=Math.random()*2.6+0.6; 
+      p.r*=Math.random()*1.7+0.6; 
+      p.alpha=0.95; 
+      particles.push(p); 
+    } 
+  }
+  function updateAndDraw(ts){
+    const dt = Math.min(50, ts-lastTime)/1000; lastTime=ts;
+    setCanvasSize(canvas); 
+    const dpr = Math.max(1, window.devicePixelRatio||1); 
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const w=canvas.clientWidth,h=canvas.clientHeight; 
+    ctx.clearRect(0,0,w,h);
+    const time = ts * 0.0001; 
+    const windX = Math.sin(time*1.2)*0.15 + 0.05; 
+    const windY = Math.cos(time*0.8)*0.03;
+    for(let i=particles.length-1;i>=0;i--){ 
+      const p=particles[i]; 
+      p.rotation+=p.rotSpeed; 
+      p.x += (p.vx + windX*(1.1-p.depth))*(dt*60); 
+      p.y += (p.vy+windY)*(dt*60);
+      if(p.y>h+70){ 
+        particles[i]=createParticle(w,h,false); 
+        particles[i].y=-15-Math.random()*70; 
+        continue; 
+      }
+      ctx.save(); 
+      ctx.translate(p.x,p.y); 
+      ctx.rotate(p.rotation); 
+      ctx.globalAlpha = p.alpha * (0.96 - p.depth*0.5);
+      const rx=p.r, ry=Math.max(1, p.r*(0.65 + 0.35*p.depth));
+      const grad=ctx.createRadialGradient(0,0,0,0,0,rx*2); 
+      grad.addColorStop(0,'rgba(255,255,255,1)'); 
+      grad.addColorStop(0.55,'rgba(255,255,255,0.92)'); 
+      grad.addColorStop(1,'rgba(255,255,255,0.06)');
+      ctx.beginPath(); 
+      ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2); 
+      ctx.fillStyle=grad; 
+      ctx.fill(); 
+      ctx.restore();
+    }
+    ctx.globalAlpha=1;
+  }
+  return { init, spawnBurst, updateAndDraw, resize: init };
+})();
+
+/* Spray particles */
+const Spray = (function () {
+  const canvas = document.getElementById('sprayCanvas'), ctx = canvas.getContext('2d', { alpha:true });
+  let particles = [], lastTime = 0;
+  function init(){ 
+    particles=[]; 
+    setCanvasSize(canvas); 
+    lastTime = performance.now(); 
+  }
+  function spawn(x,y,count=8){ 
+    for(let i=0;i<count;i++){ 
+      particles.push({ 
+        x: x + (Math.random()-0.5)*36, 
+        y: y + (Math.random()-0.5)*18, 
+        vx:(Math.random()-0.5)*2.6, 
+        vy:-Math.random()*1.8 - 0.8, 
+        life:400 + Math.random()*420, 
+        age:0, 
+        r:1.2 + Math.random()*2.6, 
+        alpha:0.95, 
+        rot:Math.random()*Math.PI*2 
+      }); 
+    } 
+  }
+  function updateAndDraw(ts){ 
+    const dt = Math.min(50, ts-lastTime)/1000; 
+    lastTime = ts; 
+    setCanvasSize(canvas); 
+    const dpr = Math.max(1, window.devicePixelRatio||1); 
+    ctx.setTransform(dpr,0,0,dpr,0,0); 
+    const w=canvas.clientWidth,h=canvas.clientHeight; 
+    ctx.clearRect(0,0,w,h);
+    for(let i=particles.length-1;i>=0;i--){ 
+      const p=particles[i]; 
+      p.age += dt*1000; 
+      p.x += p.vx*(dt*60); 
+      p.y += p.vy*(dt*60); 
+      p.vy += 0.06*(dt*60); 
+      p.alpha = Math.max(0, p.alpha - dt*1.2);
+      if(p.age>p.life || p.alpha<=0){ 
+        particles.splice(i,1); 
+        continue; 
+      }
+      ctx.save(); 
+      ctx.translate(p.x,p.y); 
+      ctx.rotate(p.rot); 
+      ctx.globalAlpha = p.alpha; 
+      const rx=p.r, ry=Math.max(1,p.r*0.7);
+      const grad = ctx.createRadialGradient(0,0,0,0,0,rx*2); 
+      grad.addColorStop(0,'rgba(255,255,255,1)'); 
+      grad.addColorStop(0.5,'rgba(255,255,255,0.9)'); 
+      grad.addColorStop(1,'rgba(255,255,255,0.05)');
+      ctx.beginPath(); 
+      ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2); 
+      ctx.fillStyle=grad; 
+      ctx.fill(); 
+      ctx.restore();
+    }
+  }
+  return { init, spawn, updateAndDraw, resize: init };
+})();
+
+/* Prints canvas drawing */
+const PrintsCanvas = (function(){
+  const canvas = document.getElementById('printsCanvas');
+  const ctx = canvas.getContext('2d', { alpha:true });
+  function init(){ setCanvasSize(canvas); clear(); }
+  function clear(){ ctx.clearRect(0,0,canvas.width,canvas.height); }
+  function drawImprint(cx, cy, wPx, hPx, angle=0, strength=0.22){
+    setCanvasSize(canvas);
+    const cw = canvas.clientWidth, ch = canvas.clientHeight;
+    const scale = canvas.width / cw;
+    const x = cx * scale;
+    const y = cy * scale;
+    const w = wPx * scale;
+    const h = hPx * scale;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle * Math.PI / 180);
+    ctx.filter = 'blur(10px)';
+    ctx.globalCompositeOperation = 'source-over';
+    const grad = ctx.createRadialGradient(0,0,0, 0,0, Math.max(w,h));
+    grad.addColorStop(0, `rgba(0,0,0,${0.14 * strength})`);
+    grad.addColorStop(0.6, `rgba(0,0,0,${0.06 * strength})`);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, w*0.6, h*0.45, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.filter = 'none';
+
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = `rgba(0,0,0,${0.08 * strength})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, w*0.44, h*0.32, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = `rgba(255,255,255,${0.03 * strength})`;
+    ctx.beginPath();
+    ctx.ellipse( -w*0.15, -h*0.12, w*0.55, h*0.28, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.restore();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  return { init, drawImprint, clear, resize: init };
+})();
+
+/* Mountain parallax */
+function updateMountains(t){ 
+  const slowTime = t * 0.00006; 
+  const px = Math.sin(slowTime*1.2)*8; 
+  const py = Math.cos(slowTime*0.9)*3;
+  const scBack = 1 - 0.004 + Math.sin(slowTime*1.5)*0.0012; 
+  const scMid = 1 - 0.002 + Math.sin(slowTime*1.1)*0.0008; 
+  const scFront = 1 + Math.sin(slowTime*1.3)*0.0015;
+  const rotBack = Math.sin(slowTime*0.8)*0.15; 
+  const rotMid = Math.sin(slowTime*1.0)*0.1; 
+  const rotFront = Math.sin(slowTime*1.2)*0.08;
+  document.querySelector('.m-back').style.transform = `translate(${px*0.35}px, ${py*0.6}px) scale(${scBack}) rotate(${rotBack}deg)`;
+  document.querySelector('.m-mid').style.transform = `translate(${px*0.65}px, ${py*0.4}px) scale(${scMid}) rotate(${rotMid}deg)`;
+  document.querySelector('.m-front').style.transform = `translate(${px}px, ${py*0.2}px) scale(${scFront}) rotate(${rotFront}deg)`;
+}
+
+/* Resize handler */
+function resizeAll(){
+  setCanvasSize(document.getElementById('grainCanvas'));
+  setCanvasSize(document.getElementById('snowCanvas'));
+  setCanvasSize(document.getElementById('printsCanvas'));
+  setCanvasSize(document.getElementById('sprayCanvas'));
+  Grain.init(); 
+  Snow.resize(); 
+  PrintsCanvas.resize(); 
+  Spray.resize();
+}
+let resizeTimer;
+window.addEventListener('resize', ()=>{ 
+  clearTimeout(resizeTimer); 
+  resizeTimer = setTimeout(resizeAll,160); 
+});
+
+let started=false;
+function startAnimation(){ 
+  if(started) return; 
+  started=true; 
+  Grain.init(); 
+  Snow.init(); 
+  PrintsCanvas.init(); 
+  Spray.init(); 
+  requestAnimationFrame(loop); 
+}
+function loop(ts){ 
+  Snow.updateAndDraw(ts); 
+  Spray.updateAndDraw(ts); 
+  updateMountains(ts); 
+  requestAnimationFrame(loop); 
+}
+
+/* Footprint Bezier Path */
+function bezierPoint(points, t){
+  if(points.length === 1) return points[0];
+  const newPoints = [];
+  for (let i=0;i<points.length-1;i++){
+    newPoints.push({ 
+      x: points[i].x + (points[i+1].x - points[i].x)*t, 
+      y: points[i].y + (points[i+1].y - points[i].y)*t 
+    });
+  }
+  return bezierPoint(newPoints, t);
+}
+
+function createFootprintElement(pxWidth, rotationDeg, isLeft){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'footprint';
+  wrapper.style.width = pxWidth + 'px';
+  wrapper.style.height = Math.round(pxWidth * 0.86) + 'px';
+
+  const s = document.createElement('div');
+  s.className = 'fp-shadow';
+  s.style.width = Math.max(16, Math.round(pxWidth*0.9)) + 'px';
+  s.style.height = Math.max(8, Math.round(pxWidth*0.28)) + 'px';
+  s.style.bottom = '-6px';
+  wrapper.appendChild(s);
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 249 209.32');
+  svg.setAttribute('class','fp-svg');
+  svg.style.width = '100%';
+  svg.style.height = '100%';
+  const use = document.createElementNS('http://www.w3.org/2000/svg','use');
+  use.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href','#paw-shape');
+  svg.appendChild(use);
+  wrapper.appendChild(svg);
+
+  wrapper.style.transform = `translateY(18px) scale(0.96) rotate(${rotationDeg}deg) ${isLeft ? '' : 'scaleX(-1)'}`;
+
+  return { wrapper, shadow: s, svgEl: svg };
+}
+
+function spawnFootprintsAlongPath(opts){
+  const { steps=24, delayBetween=170, path=[
+    {x:0.08,y:0.08},{x:0.18,y:0.25},{x:0.35,y:0.45},{x:0.58,y:0.62},{x:0.85,y:0.75}
+  ] } = opts;
+
+  const printsDiv = document.getElementById('prints');
+  const box = printsDiv.getBoundingClientRect();
+  const total = steps;
+  for (let i=0;i<total;i++){
+    (function(index){
+      const t = index/(total-1);
+      const pt = bezierPoint(path,t);
+      const xPx = Math.round(pt.x * box.width);
+      const bottomPx = Math.round((1 - pt.y) * box.height);
+
+      setTimeout(()=>{
+        const isLeft = (index % 2 === 0);
+        const sizeScale = 0.74 + Math.pow(t, 0.75) * 0.6;
+        const baseSize = Math.round(sizeScale * 48);
+        const rot = (isLeft ? -10 : 10) + Math.sin(t*Math.PI)*5;
+
+        const { wrapper, shadow, svgEl } = createFootprintElement(baseSize, rot, isLeft);
+        wrapper.style.left = (box.left + xPx - baseSize/2) + 'px';
+        wrapper.style.bottom = (bottomPx - 6) + 'px';
+
+        printsDiv.appendChild(wrapper);
+
+        requestAnimationFrame(()=>{
+          wrapper.classList.add('show');
+          wrapper.style.transform = `translateY(0px) scale(1) rotate(${rot}deg) ${isLeft ? '' : 'scaleX(-1)'}`;
+          shadow.style.opacity = '0.88';
+        });
+
+        requestAnimationFrame(()=>{
+          const wr = wrapper.getBoundingClientRect();
+          const cx = wr.left + wr.width/2;
+          const cy = wr.top + wr.height*0.7;
+          const imprintW = baseSize * 1.6;
+          const imprintH = Math.max(10, baseSize * 0.6);
+          PrintsCanvas.drawImprint(cx, cy, imprintW, imprintH, rot, 1.0);
+        });
+
+        requestAnimationFrame(()=>{
+          const wr = wrapper.getBoundingClientRect();
+          const cx = wr.left + wr.width/2;
+          const cy = wr.top + wr.height/2;
+          const sprayCanvas = document.getElementById('sprayCanvas');
+          const snowCanvas = document.getElementById('snowCanvas');
+          const sx = (cx / window.innerWidth) * sprayCanvas.clientWidth;
+          const sy = (cy / window.innerHeight) * sprayCanvas.clientHeight;
+          const snowx = (cx / window.innerWidth) * snowCanvas.clientWidth;
+          const snowy = (cy / window.innerHeight) * snowCanvas.clientHeight;
+          Spray.spawn(sx, sy, 10);
+          Snow.spawnBurst(snowx, snowy, 14);
+        });
+
+      }, index * delayBetween);
+    })(i);
+  }
+}
+
+/* Boot sequence */
+window.addEventListener('load', ()=>{
+  resizeAll();
+  startAnimation();
+
+  setTimeout(()=>{
+    const w = window.innerWidth, h = window.innerHeight;
+    Spray.spawn(w*0.12, h*0.78, 6); 
+    Snow.spawnBurst(w*0.12, h*0.78, 8);
+    Spray.spawn(w*0.88, h*0.78, 6); 
+    Snow.spawnBurst(w*0.88, h*0.78, 8);
+  }, 700);
+
+  function runSequence(){ 
+    spawnFootprintsAlongPath({ steps: 26, delayBetween: 160 }); 
+  }
+  runSequence();
+  setInterval(runSequence, 5200);
+
+  setTimeout(()=>{
+    const splash = document.getElementById('splash');
+    splash.classList.add('fade-out');
+    setTimeout(()=>{ 
+      splash.style.display = 'none'; 
+      document.getElementById('main-content').style.display = 'block'; 
+      document.body.classList.remove('splash-active'); 
+    }, 1100);
+  }, 2400);
+});
+
+// Smooth scroll for anchor links
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
